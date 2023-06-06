@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.saul</groupId>
-	<artifactId>padelManager</artifactId>
+	<artifactId>padelManager-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>padelManager</name>
 	<description>Demo project for Spring Boot</description>
