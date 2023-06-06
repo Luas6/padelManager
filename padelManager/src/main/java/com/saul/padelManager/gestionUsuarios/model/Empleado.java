@@ -1,4 +1,4 @@
-package com.saul.padelManager.model;
+package com.saul.padelManager.gestionUsuarios.model;
 
 import jakarta.persistence.*;
 
