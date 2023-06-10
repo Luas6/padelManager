@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Empleado } from '../empleado';
+import { EmpleadoService } from '../empleado.service';
 
 @Component({
   selector: 'app-lista-empleados',
@@ -8,8 +9,19 @@ import { Empleado } from '../empleado';
 })
 export class ListaEmpleadosComponent {
   empleados!: Empleado[];
-constructor(){}
+
+constructor(private empleadosService: EmpleadoService){}
+
+private getEmpleados(){
+  this.empleadosService.getListaEmpleados().subscribe(data =>{
+    this.empleados = data;
+  });
+}
+
 ngOnInit(): void{
+this.getEmpleados();
+console.log("Datos: "+ this.empleados);
+  /*
   this.empleados=  [{
     id: 1,
     nombre: "Juan",
@@ -28,6 +40,6 @@ ngOnInit(): void{
     apellidos: "López",
     correo: "carlos.lopez@example.com"
   }
-];
+];*/
 }
 }
