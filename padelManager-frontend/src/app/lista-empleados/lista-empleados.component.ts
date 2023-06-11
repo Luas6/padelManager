@@ -20,26 +20,12 @@ private getEmpleados(){
 
 ngOnInit(): void{
 this.getEmpleados();
-console.log("Datos: "+ this.empleados);
   /*
   this.empleados=  [{
     id: 1,
     nombre: "Juan",
     apellidos: "Pérez",
     correo: "juan.perez@example.com"
-  },
-  {
-    id: 2,
-    nombre: "María",
-    apellidos: "Gómez",
-    correo: "maria.gomez@example.com"
-  },
-  {
-    id: 3,
-    nombre: "Carlos",
-    apellidos: "López",
-    correo: "carlos.lopez@example.com"
-  }
-];*/
+  }*/
 }
 }
