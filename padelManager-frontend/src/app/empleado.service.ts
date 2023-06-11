@@ -15,4 +15,8 @@ export class EmpleadoService {
   getListaEmpleados(): Observable<Empleado[]>{
     return this.httpClient.get<Empleado[]>(this.baseURL);
   }
+
+  crearEmpleado(empleado: Empleado): Observable<Empleado[]>{
+    return this.httpClient.post<Empleado[]>(this.baseURL,empleado);
+  }
 }

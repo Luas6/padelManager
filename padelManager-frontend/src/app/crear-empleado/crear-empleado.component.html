@@ -1,1 +1,26 @@
-<p>crear-empleado works!</p>
+<div class="col-md-6 offset-md-3">
+    <h3> Dar de alta al Empleado </h3>
+    <form (ngSubmit) = "onSubmit()">
+    
+        <div class="form-group py-2">
+            <label> Nombre</label>
+            <input type="text" class ="form-control" id = "nombre"
+                [(ngModel)] = "empleado.nombre" name = "nombre">
+        </div>
+    
+        <div class="form-group py-2">
+            <label> Last Name</label>
+            <input type="text" class ="form-control" id = "apellidos"
+                [(ngModel)] = "empleado.apellidos" name = "apellidos">
+        </div>
+    
+        <div class="form-group py-2">
+            <label> Email Id</label>
+            <input type="text" class ="form-control" id = "correo"
+                [(ngModel)] = "empleado.correo" name = "correo">
+        </div>
+    
+        <button class = "btn btn-success my-4" type ="submit">Submit</button>
+    
+    </form>
+</div> 
