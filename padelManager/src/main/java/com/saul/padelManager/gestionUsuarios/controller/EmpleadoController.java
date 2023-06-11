@@ -29,10 +29,10 @@ public class EmpleadoController {
 
     // Recuperar empleado por id
     @GetMapping("/empleados/{id}")
-    public ResponseEntity<Empleado> getEmployeeById(@PathVariable Long id) {
-        Empleado employee = empleadoRepository.findById(id)
+    public ResponseEntity<Empleado> getEmpleadoById(@PathVariable Long id) {
+        Empleado empleado = empleadoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
-        return ResponseEntity.ok(employee);
+        return ResponseEntity.ok(empleado);
     }
 
     // Crear Empleado
@@ -40,6 +40,29 @@ public class EmpleadoController {
     public Empleado createEmpleado(@RequestBody Empleado empleado) {
         return empleadoRepository.save(empleado);
     }
+
+    @PutMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> updateEmpleado(@PathVariable Long id,@RequestBody Empleado empleado) {
+        Empleado empleadoACambiar = empleadoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+        //Setteo los cambios con los nuevos
+        empleadoACambiar.setNombre(empleado.getNombre());
+        empleadoACambiar.setApellidos(empleado.getApellidos());
+        empleadoACambiar.setCorreo(empleado.getCorreo());
+        empleadoRepository.save(empleadoACambiar);
+        return ResponseEntity.ok(empleadoACambiar);
+    }
+
+    @DeleteMapping("/empleados/{id}")
+    public ResponseEntity<Empleado> deleteEmpleado(@PathVariable Long id) {
+        Empleado empleado = empleadoRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+        empleadoRepository.delete(empleado);
+        return ResponseEntity.ok(empleado);
+    }
+
+
+    /* Fin CRUD Empleados*/
 
     /* Solucionar Error CORS*/
     @Bean
