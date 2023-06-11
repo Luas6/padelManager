@@ -6,6 +6,7 @@
                 <th> Nombre</th>
                 <th> Apellidos </th>
                 <th> Email</th>
+                <th> Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -13,6 +14,7 @@
                 <td> {{ empleado.nombre }} </td>
                 <td> {{ empleado.apellidos }} </td>
                 <td> {{ empleado.correo }} </td>
+                <td> <button (click)="actualizarEmpleado(empleado.id)" class="btn btn-info">U</button></td>
             </tr>
         </tbody>
     </table>
