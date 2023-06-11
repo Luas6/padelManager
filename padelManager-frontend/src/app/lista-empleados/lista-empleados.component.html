@@ -14,7 +14,8 @@
                 <td> {{ empleado.nombre }} </td>
                 <td> {{ empleado.apellidos }} </td>
                 <td> {{ empleado.correo }} </td>
-                <td> <button (click)="actualizarEmpleado(empleado.id)" class="btn btn-info">U</button></td>
+                <td> <button (click)="actualizarEmpleado(empleado.id)" class="btn btn-info">U</button>
+                    <button (click)="eliminarEmpleado(empleado.id)" class="btn btn-danger">D</button></td>
             </tr>
         </tbody>
     </table>

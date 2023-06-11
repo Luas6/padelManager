@@ -26,6 +26,12 @@ actualizarEmpleado(id:number){
   this.router.navigate(['actualizar-empleado',id])
 }
 
+eliminarEmpleado(id:number){
+  this.empleadosService.borrarEmpleado(id).subscribe(data =>{
+    this.getEmpleados();
+  });
+}
+
 ngOnInit(): void{
 this.getEmpleados();
   /*
