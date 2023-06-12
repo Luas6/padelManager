@@ -23,13 +23,17 @@ private getEmpleados(){
 }
 
 actualizarEmpleado(id:number){
-  this.router.navigate(['actualizar-empleado',id])
+  this.router.navigate(['actualizar-empleado',id]) // Ver app-routing.module.ts
 }
 
 eliminarEmpleado(id:number){
   this.empleadosService.borrarEmpleado(id).subscribe(data =>{
     this.getEmpleados();
   });
+}
+
+visualizarEmpleado(id:number){
+  this.router.navigate(['visualizar-empleado',id]) // Ver app-routing.module.ts
 }
 
 ngOnInit(): void{

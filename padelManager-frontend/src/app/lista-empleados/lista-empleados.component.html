@@ -14,8 +14,13 @@
                 <td> {{ empleado.nombre }} </td>
                 <td> {{ empleado.apellidos }} </td>
                 <td> {{ empleado.correo }} </td>
-                <td> <button (click)="actualizarEmpleado(empleado.id)" class="btn btn-info">U</button>
-                    <button (click)="eliminarEmpleado(empleado.id)" class="btn btn-danger">D</button></td>
+                <td>
+                    <div class="d-flex justify-content-between">
+                        <button (click)="actualizarEmpleado(empleado.id)" class="btn btn-primary">U</button>
+                        <button (click)="visualizarEmpleado(empleado.id)" class="btn btn-secondary">R</button>
+                        <button (click)="eliminarEmpleado(empleado.id)" class="btn btn-danger">D</button>
+                    </div>
+                </td>
             </tr>
         </tbody>
     </table>
