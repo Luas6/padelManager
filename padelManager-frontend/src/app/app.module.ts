@@ -3,19 +3,19 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ListaEmpleadosComponent } from './lista-empleados/lista-empleados.component';
-import { CrearEmpleadoComponent } from './crear-empleado/crear-empleado.component';
+import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
+import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
 import { FormsModule } from '@angular/forms';
-import { ActualizarEmpleadoComponent } from './actualizar-empleado/actualizar-empleado.component';
-import { VisualizarEmpleadoComponent } from './visualizar-empleado/visualizar-empleado.component';
+import { ActualizarUsuarioComponent } from './actualizar-usuario/actualizar-usuario.component';
+import { VisualizarUsuarioComponent } from './visualizar-usuario/visualizar-usuario.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListaEmpleadosComponent,
-    CrearEmpleadoComponent,
-    ActualizarEmpleadoComponent,
-    VisualizarEmpleadoComponent
+    ListaUsuariosComponent,
+    CrearUsuarioComponent,
+    ActualizarUsuarioComponent,
+    VisualizarUsuarioComponent
   ],
   imports: [
     BrowserModule,

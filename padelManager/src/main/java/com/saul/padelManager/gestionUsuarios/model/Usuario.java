@@ -3,8 +3,8 @@ package com.saul.padelManager.gestionUsuarios.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="empleados")
-public class Empleado {
+@Table(name="usuarios")
+public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -15,10 +15,10 @@ public class Empleado {
     @Column(name= "correo")
     private String correo;
 
-    public Empleado() {
+    public Usuario() {
     }
 
-    public Empleado(String nombre, String apellidos, String correo) {
+    public Usuario(String nombre, String apellidos, String correo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
