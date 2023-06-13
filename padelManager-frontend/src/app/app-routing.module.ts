@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CrearUsuarioComponent } from './crear-usuario/crear-usuario.component';
-import { ListaUsuariosComponent } from './lista-usuarios/lista-usuarios.component';
-import { ActualizarUsuarioComponent } from './actualizar-usuario/actualizar-usuario.component';
-import { VisualizarUsuarioComponent } from './visualizar-usuario/visualizar-usuario.component';
+import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.component';
+import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';
+import { ActualizarUsuarioComponent } from './usuarios/actualizar-usuario/actualizar-usuario.component';
+import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visualizar-usuario.component';
 
 const routes: Routes = [
   {path: 'usuarios', component: ListaUsuariosComponent},
