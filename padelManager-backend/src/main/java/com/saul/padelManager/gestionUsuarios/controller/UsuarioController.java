@@ -64,18 +64,22 @@ public class UsuarioController {
 
     /* Fin CRUD Usuarios*/
 
-    /* Solucionar Error CORS*/
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:4200")
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowedHeaders("*");
-            }
-        };
-    }
 
+    /* Login Usuario*/
+
+    @PostMapping("/login")
+    public boolean loginUsuario(@RequestBody Usuario usuario) {
+
+        String correo = usuario.getCorreo();
+        String contrasena = usuario.getContrasena();
+
+        // Buscar el usuario por correo en la base de datos
+        Usuario usuarioEncontrado = usuarioRepository.findByCorreo(correo);
+
+        if (usuarioEncontrado != null && usuarioEncontrado.getContrasena().equals(contrasena)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

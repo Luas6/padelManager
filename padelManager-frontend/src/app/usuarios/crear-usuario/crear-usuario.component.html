@@ -19,6 +19,11 @@
             <input type="text" class ="form-control" id = "correo"
                 [(ngModel)] = "usuario.correo" name = "correo">
         </div>
+
+        <div class="form-group py-2">
+            <label>Contraseña</label>
+            <input type="password" class="form-control" id="contrasena" [(ngModel)]="usuario.contrasena" name="contrasena">
+          </div>
     
         <button class = "btn btn-success my-4" type ="submit">Submit</button>
     

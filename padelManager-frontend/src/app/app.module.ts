@@ -8,6 +8,7 @@ import { CrearUsuarioComponent } from './usuarios/crear-usuario/crear-usuario.co
 import { FormsModule } from '@angular/forms';
 import { ActualizarUsuarioComponent } from './usuarios/actualizar-usuario/actualizar-usuario.component';
 import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visualizar-usuario.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visual
     ListaUsuariosComponent,
     CrearUsuarioComponent,
     ActualizarUsuarioComponent,
-    VisualizarUsuarioComponent
+    VisualizarUsuarioComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

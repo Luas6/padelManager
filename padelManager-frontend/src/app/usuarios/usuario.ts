@@ -3,4 +3,6 @@ export class Usuario {
     apellidos?: string;
     correo?: string;
     nombre?: string;
+    contrasena?: string;
+    
 }
