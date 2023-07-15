@@ -1,31 +1,31 @@
-<div class="col-md-6 offset-md-3">
-    <h3> Dar de alta al Usuario </h3>
-    <form (ngSubmit) = "onSubmit()">
-    
-        <div class="form-group py-2">
-            <label> Nombre</label>
-            <input type="text" class ="form-control" id = "nombre"
-                [(ngModel)] = "usuario.nombre" name = "nombre">
-        </div>
-    
-        <div class="form-group py-2">
-            <label> Last Name</label>
-            <input type="text" class ="form-control" id = "apellidos"
-                [(ngModel)] = "usuario.apellidos" name = "apellidos">
-        </div>
-    
-        <div class="form-group py-2">
-            <label> Email Id</label>
-            <input type="text" class ="form-control" id = "correo"
-                [(ngModel)] = "usuario.correo" name = "correo">
-        </div>
+<section id="registro-usuarios">
+    <div class="col-md-6 offset-md-3">
+        <h3> Dar de alta al Usuario </h3>
+        <form (ngSubmit)="onSubmit()">
 
-        <div class="form-group py-2">
-            <label>Contraseña</label>
-            <input type="password" class="form-control" id="contrasena" [(ngModel)]="usuario.contrasena" name="contrasena">
-          </div>
-    
-        <button class = "btn btn-success my-4" type ="submit">Submit</button>
-    
-    </form>
-</div> 
+            <div class="form-group py-2">
+                <label> Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="usuario.nombre" name="nombre">
+            </div>
+
+            <div class="form-group py-2">
+                <label> Last Name</label>
+                <input type="text" class="form-control" id="apellidos" [(ngModel)]="usuario.apellidos" name="apellidos">
+            </div>
+
+            <div class="form-group py-2">
+                <label> Email Id</label>
+                <input type="text" class="form-control" id="correo" [(ngModel)]="usuario.correo" name="correo">
+            </div>
+
+            <div class="form-group py-2">
+                <label>Contraseña</label>
+                <input type="password" class="form-control" id="contrasena" [(ngModel)]="usuario.contrasena"
+                    name="contrasena">
+            </div>
+
+            <button class="btn btn-success my-4" type="submit">Submit</button>
+
+        </form>
+    </div>
+</section>

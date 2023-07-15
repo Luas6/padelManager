@@ -8,23 +8,28 @@ import { Usuario } from './usuario';
 })
 export class UsuarioService {
 
-  private baseURL = 'http://localhost:8080/api/v1/usuarios';
+  private usuariosURL = 'http://localhost:8080/api/v1/usuarios';
+  private loginURL = 'http://localhost:8080/api/v1/login';
 
   constructor( private httpClient : HttpClient) { }
 
   getListaUsuarios(): Observable<Usuario[]>{
-    return this.httpClient.get<Usuario[]>(this.baseURL);
+    return this.httpClient.get<Usuario[]>(this.usuariosURL);
   }
   getUsuarioById(id: number): Observable<Usuario>{
-    return this.httpClient.get<Usuario>(`${this.baseURL}/${id}`);
+    return this.httpClient.get<Usuario>(`${this.usuariosURL}/${id}`);
   }
   crearUsuario(usuario: Usuario): Observable<Usuario[]>{
-    return this.httpClient.post<Usuario[]>(this.baseURL,usuario);
+    return this.httpClient.post<Usuario[]>(this.usuariosURL,usuario);
   }
   actualizarUsuario(id: number, employee: Usuario): Observable<Object>{
-    return this.httpClient.put(`${this.baseURL}/${id}`, employee);
+    return this.httpClient.put(`${this.usuariosURL}/${id}`, employee);
   }
   borrarUsuario(id: number): Observable<Object>{
-    return this.httpClient.delete(`${this.baseURL}/${id}`);
+    return this.httpClient.delete(`${this.usuariosURL}/${id}`);
   }
+  loginUsuario(usuario: Usuario): Observable<Usuario[]>{
+    return this.httpClient.post<Usuario[]>(this.loginURL,usuario);
+  }
+
 }

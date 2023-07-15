@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { ActualizarUsuarioComponent } from './usuarios/actualizar-usuario/actualizar-usuario.component';
 import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visualizar-usuario.component';
 import { LoginComponent } from './login/login.component';
+import { HomeComponent } from './estaticos/home/home.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { LoginComponent } from './login/login.component';
     CrearUsuarioComponent,
     ActualizarUsuarioComponent,
     VisualizarUsuarioComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
