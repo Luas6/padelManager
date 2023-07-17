@@ -4,13 +4,12 @@ import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundExceptio
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -18,6 +17,10 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
+    public UsuarioController(BCryptPasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /* CRUD Usuarios*/
 
@@ -38,6 +41,7 @@ public class UsuarioController {
     // Crear Usuario
     @PostMapping("/usuarios")
     public Usuario createUsuario(@RequestBody Usuario usuario) {
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         return usuarioRepository.save(usuario);
     }
 
@@ -68,18 +72,28 @@ public class UsuarioController {
     /* Login Usuario*/
 
     @PostMapping("/login")
-    public boolean loginUsuario(@RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> loginUsuario(@RequestBody Usuario usuario) {
 
         String correo = usuario.getCorreo();
         String contrasena = usuario.getContrasena();
 
-        // Buscar el usuario por correo en la base de datos
-        Usuario usuarioEncontrado = usuarioRepository.findByCorreo(correo);
+        Optional<Usuario> usuarioEncontradoEmail = usuarioRepository.findByCorreo(correo);
+        if (usuarioEncontradoEmail.isPresent()) {
+            Usuario usuarioEncontrado = usuarioEncontradoEmail.get();
+            boolean contrasenasCoinciden = passwordEncoder.matches(usuarioEncontrado.getContrasena(), contrasena);
 
-        if (usuarioEncontrado != null && usuarioEncontrado.getContrasena().equals(contrasena)) {
-            return true;
+            if(!contrasenasCoinciden){
+                //Contraseña incorrecta
+                return ResponseEntity.notFound().build();
+            }
+                return ResponseEntity.ok(usuarioEncontrado);
+
         } else {
-            return false;
+            //Usuario no encontrado
+            return ResponseEntity.notFound().build();
         }
+
+
+
     }
 }
