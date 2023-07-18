@@ -15,13 +15,17 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .sessionManagement(customizer -> customizer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(HttpMethod.POST, "/api/v1/login").permitAll()
-                        .anyRequest().authenticated())
-        ;
-        return http.build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity security) throws Exception {
+        return security.csrf().disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/register", "api/v1/login").permitAll()
+                .and()
+                .authorizeHttpRequests().requestMatchers("/api/v1/usuarios")
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .build();
     }
 }

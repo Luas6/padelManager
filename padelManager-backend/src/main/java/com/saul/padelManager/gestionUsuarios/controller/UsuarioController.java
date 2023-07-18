@@ -1,6 +1,7 @@
 package com.saul.padelManager.gestionUsuarios.controller;
 
 import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundException;
+import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,42 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    @Autowired
     public UsuarioController(BCryptPasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
+    }
+    /* Login Usuario*/
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> loginUsuario(@RequestBody LoginCredenciales usuario) {
+
+        String correo = usuario.correo();
+        String contrasena = usuario.contrasena();
+
+        Optional<Usuario> usuarioEncontradoEmail = usuarioRepository.findByCorreo(correo);
+        if (usuarioEncontradoEmail.isPresent()) {
+            Usuario usuarioEncontrado = usuarioEncontradoEmail.get();
+            String passwordAVerificar=usuarioEncontrado.getContrasena();
+            System.out.println(passwordEncoder.encode(passwordAVerificar));
+            boolean contrasenasCoinciden = passwordEncoder.matches(passwordAVerificar, contrasena);
+
+            if(!contrasenasCoinciden){
+                //Contraseña incorrecta
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(usuarioEncontrado);
+
+        } else {
+            //Usuario no encontrado
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /*Register*/
+    // Crear Usuario
+    @PostMapping("/register")
+    public Usuario createUsuario(@RequestBody Usuario usuario) {
+        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        return usuarioRepository.save(usuario);
     }
 
     /* CRUD Usuarios*/
@@ -36,13 +71,6 @@ public class UsuarioController {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
         return ResponseEntity.ok(usuario);
-    }
-
-    // Crear Usuario
-    @PostMapping("/usuarios")
-    public Usuario createUsuario(@RequestBody Usuario usuario) {
-        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-        return usuarioRepository.save(usuario);
     }
 
     @PutMapping("/usuarios/{id}")
@@ -64,36 +92,6 @@ public class UsuarioController {
         usuarioRepository.delete(usuario);
         return ResponseEntity.ok(usuario);
     }
-
-
     /* Fin CRUD Usuarios*/
 
-
-    /* Login Usuario*/
-
-    @PostMapping("/login")
-    public ResponseEntity<Usuario> loginUsuario(@RequestBody Usuario usuario) {
-
-        String correo = usuario.getCorreo();
-        String contrasena = usuario.getContrasena();
-
-        Optional<Usuario> usuarioEncontradoEmail = usuarioRepository.findByCorreo(correo);
-        if (usuarioEncontradoEmail.isPresent()) {
-            Usuario usuarioEncontrado = usuarioEncontradoEmail.get();
-            boolean contrasenasCoinciden = passwordEncoder.matches(usuarioEncontrado.getContrasena(), contrasena);
-
-            if(!contrasenasCoinciden){
-                //Contraseña incorrecta
-                return ResponseEntity.notFound().build();
-            }
-                return ResponseEntity.ok(usuarioEncontrado);
-
-        } else {
-            //Usuario no encontrado
-            return ResponseEntity.notFound().build();
-        }
-
-
-
-    }
 }
