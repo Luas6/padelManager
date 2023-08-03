@@ -4,7 +4,10 @@ import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundExceptio
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
+import com.saul.padelManager.gestionUsuarios.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +22,16 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private JwtUtils jwtUtils;
     @Autowired
-    public UsuarioController(BCryptPasswordEncoder passwordEncoder) {
+    public UsuarioController(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+        this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
     }
     /* Login Usuario*/
     @PostMapping("/login")
-    public ResponseEntity<Usuario> loginUsuario(@RequestBody LoginCredenciales usuario) {
+    public ResponseEntity<String> loginUsuario(@RequestBody LoginCredenciales usuario) {
 
         String correo = usuario.correo();
         String contrasena = usuario.contrasena();
@@ -34,14 +40,20 @@ public class UsuarioController {
         if (usuarioEncontradoEmail.isPresent()) {
             Usuario usuarioEncontrado = usuarioEncontradoEmail.get();
             String passwordAVerificar=usuarioEncontrado.getContrasena();
-            System.out.println(passwordEncoder.encode(passwordAVerificar));
-            boolean contrasenasCoinciden = passwordEncoder.matches(passwordAVerificar, contrasena);
+            //System.out.println(passwordEncoder.encode(passwordAVerificar));
+            boolean contrasenasCoinciden = passwordEncoder.matches(contrasena, passwordAVerificar);
 
             if(!contrasenasCoinciden){
                 //Contraseña incorrecta
                 return ResponseEntity.notFound().build();
             }
-            return ResponseEntity.ok(usuarioEncontrado);
+
+            String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization",jwt);
+            return new ResponseEntity<>(headers, HttpStatus.OK);
+            //return ResponseEntity.ok(jwt);
+            //return ResponseEntity.ok(usuarioEncontrado);
 
         } else {
             //Usuario no encontrado
@@ -51,7 +63,7 @@ public class UsuarioController {
 
     /*Register*/
     // Crear Usuario
-    @PostMapping("/register")
+    @PostMapping("/registro")
     public Usuario createUsuario(@RequestBody Usuario usuario) {
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
         return usuarioRepository.save(usuario);

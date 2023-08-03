@@ -10,6 +10,7 @@ export class UsuarioService {
 
   private usuariosURL = 'http://localhost:8080/api/v1/usuarios';
   private loginURL = 'http://localhost:8080/api/v1/login';
+  private registroURL = 'http://localhost:8080/api/v1/registro';
 
   constructor( private httpClient : HttpClient) { }
 
@@ -20,7 +21,7 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.usuariosURL}/${id}`);
   }
   crearUsuario(usuario: Usuario): Observable<Usuario[]>{
-    return this.httpClient.post<Usuario[]>(this.usuariosURL,usuario);
+    return this.httpClient.post<Usuario[]>(this.registroURL,usuario);
   }
   actualizarUsuario(id: number, employee: Usuario): Observable<Object>{
     return this.httpClient.put(`${this.usuariosURL}/${id}`, employee);
