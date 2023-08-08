@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ListaUsuariosComponent } from './usuarios/lista-usuarios/lista-usuarios.component';
@@ -10,6 +10,7 @@ import { ActualizarUsuarioComponent } from './usuarios/actualizar-usuario/actual
 import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visualizar-usuario.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './estaticos/home/home.component';
+import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { HomeComponent } from './estaticos/home/home.component';
     HttpClientModule,
     FormsModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

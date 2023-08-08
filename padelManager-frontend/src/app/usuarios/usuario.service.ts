@@ -29,7 +29,7 @@ export class UsuarioService {
   borrarUsuario(id: number): Observable<Object>{
     return this.httpClient.delete(`${this.usuariosURL}/${id}`);
   }
-  loginUsuario(usuario: Usuario): Observable<Usuario[]>{
+  loginUsuario(usuario: Usuario): Observable<any>{
     return this.httpClient.post<Usuario[]>(this.loginURL,usuario);
   }
 

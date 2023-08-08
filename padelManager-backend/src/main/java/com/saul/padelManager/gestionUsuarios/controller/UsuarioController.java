@@ -50,8 +50,8 @@ public class UsuarioController {
 
             String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization",jwt);
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            headers.add("Authorization", "Bearer " + jwt);
+            return ResponseEntity.ok().headers(headers).body(usuarioEncontrado.getCorreo());
             //return ResponseEntity.ok(jwt);
             //return ResponseEntity.ok(usuarioEncontrado);
 
