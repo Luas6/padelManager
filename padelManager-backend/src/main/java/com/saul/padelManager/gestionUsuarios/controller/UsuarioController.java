@@ -31,7 +31,7 @@ public class UsuarioController {
     }
     /* Login Usuario*/
     @PostMapping("/login")
-    public ResponseEntity<String> loginUsuario(@RequestBody LoginCredenciales usuario) {
+    public ResponseEntity<Usuario> loginUsuario( @RequestBody LoginCredenciales usuario) {
 
         String correo = usuario.correo();
         String contrasena = usuario.contrasena();
@@ -51,7 +51,7 @@ public class UsuarioController {
             String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
             HttpHeaders headers = new HttpHeaders();
             headers.add("Authorization", "Bearer " + jwt);
-            return ResponseEntity.ok().headers(headers).body(usuarioEncontrado.getCorreo());
+            return ResponseEntity.ok().headers(headers).body(usuarioEncontrado);
             //return ResponseEntity.ok(jwt);
             //return ResponseEntity.ok(usuarioEncontrado);
 

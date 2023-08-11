@@ -19,14 +19,18 @@ export class LoginComponent {
   }
   loginUsuario() {
     this.usuarioService.loginUsuario(this.usuario).subscribe(response => {
-      console.log(response);
+      console.log(response.headers);
       const jwtToken = response.headers.get('Authorization');
+      console.log(jwtToken);
+      if (jwtToken) {
+        // Almacenar el token en el local storage para su uso posterior
+        localStorage.setItem('jwtToken', jwtToken);
 
-      // Almacenar el token en el local storage para su uso posterior
-      localStorage.setItem('jwtToken', jwtToken);
-
-      // Redireccionar a una página después del inicio de sesión exitoso
-      this.router.navigate(['']);
+        // Redireccionar a una página después del inicio de sesión exitoso
+        this.router.navigate(['']);
+      } else {
+        console.log('Response status not OK:', response);
+      }
 
     },
       error => console.log(error));

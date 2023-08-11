@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from './usuario';
 
@@ -29,8 +30,8 @@ export class UsuarioService {
   borrarUsuario(id: number): Observable<Object>{
     return this.httpClient.delete(`${this.usuariosURL}/${id}`);
   }
-  loginUsuario(usuario: Usuario): Observable<any>{
-    return this.httpClient.post<Usuario[]>(this.loginURL,usuario);
+  loginUsuario(usuario: Usuario): Observable<HttpResponse<any>>{
+    return this.httpClient.post(this.loginURL, usuario, { observe: 'response' });
   }
 
 }
