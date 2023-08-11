@@ -2,6 +2,7 @@ package com.saul.padelManager.gestionUsuarios.controller;
 
 import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundException;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
+import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import com.saul.padelManager.gestionUsuarios.security.JwtUtils;
@@ -31,7 +32,7 @@ public class UsuarioController {
     }
     /* Login Usuario*/
     @PostMapping("/login")
-    public ResponseEntity<Usuario> loginUsuario( @RequestBody LoginCredenciales usuario) {
+    public ResponseEntity<TokenResponse> loginUsuario(@RequestBody LoginCredenciales usuario) {
 
         String correo = usuario.correo();
         String contrasena = usuario.contrasena();
@@ -49,9 +50,10 @@ public class UsuarioController {
             }
 
             String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
-            HttpHeaders headers = new HttpHeaders();
-            headers.add("Authorization", "Bearer " + jwt);
-            return ResponseEntity.ok().headers(headers).body(usuarioEncontrado);
+            //HttpHeaders headers = new HttpHeaders();
+            //headers.add("Authorization", "Bearer " + jwt);
+            TokenResponse tokenResponse = new TokenResponse(jwt);
+            return ResponseEntity.ok(tokenResponse);
             //return ResponseEntity.ok(jwt);
             //return ResponseEntity.ok(usuarioEncontrado);
 
