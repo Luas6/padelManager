@@ -10,13 +10,26 @@ import { AuthService } from './auth-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  isLoggedIn: boolean = false;
   usuario: Usuario = new Usuario();
+
   constructor(private authService: AuthService,
     private router: Router) { }
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.authService.isLoggedIn(); // Verifica si la sesión está iniciada
+  }
+
+  logout(): void {
+    this.authService.logout(); // Lógica para cerrar la sesión en tu servicio de autenticación
+    this.isLoggedIn = false;
+  }
+  
   onSubmit() {
     //console.log(this.usuario);
     this.loginUsuario();
   }
+
   loginUsuario() {
     this.authService.loginUsuario(this.usuario).subscribe(data => {
       console.log(data);
