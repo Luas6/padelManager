@@ -11,6 +11,7 @@ import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visual
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './estaticos/home/home.component';
 import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
+import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagina-no-autorizado.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
     ActualizarUsuarioComponent,
     VisualizarUsuarioComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    PaginaNoAutorizadoComponent
   ],
   imports: [
     BrowserModule,

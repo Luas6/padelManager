@@ -6,13 +6,16 @@ import { ActualizarUsuarioComponent } from './usuarios/actualizar-usuario/actual
 import { VisualizarUsuarioComponent } from './usuarios/visualizar-usuario/visualizar-usuario.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './estaticos/home/home.component';
+import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagina-no-autorizado.component';
+import { guardAuthGuard } from './guard-auth.guard';
 
 const routes: Routes = [
-  {path: 'usuarios', component: ListaUsuariosComponent},
+  {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAuthGuard]},
   {path: 'crear-usuario', component: CrearUsuarioComponent},
   {path: 'actualizar-usuario/:id', component: ActualizarUsuarioComponent},
   {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent},
   {path: 'login-usuario', component: LoginComponent},
+  {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
   {path: '', component: HomeComponent} //Home
 ];
 @NgModule({
