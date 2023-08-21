@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Usuario } from '../usuarios/usuario';
-import { UsuarioService } from '../usuarios/usuario.service';
 import { Router } from '@angular/router';
 import { AuthService } from './auth-service.service';
 
@@ -10,6 +9,7 @@ import { AuthService } from './auth-service.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  mensajeError: string = '';
   isLoggedIn: boolean = false;
   usuario: Usuario = new Usuario();
 
@@ -41,10 +41,15 @@ export class LoginComponent {
         // Redireccionar a una página después del inicio de sesión exitoso
         this.router.navigate(['']);
       } else {
+        this.mensajeError = 'Usuario o Contraseña incorrectos';
         console.log('Response status not OK:', data);
       }
 
     },
-      error => console.log(error));
+    error => {
+      // Error en la solicitud
+      this.mensajeError = 'Error en la solicitud. Por favor, intenta nuevamente.';
+      console.log(error);
+    });
   }
 }
