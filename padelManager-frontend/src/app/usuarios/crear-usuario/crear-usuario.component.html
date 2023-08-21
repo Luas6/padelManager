@@ -1,31 +1,46 @@
 <section id="registro-usuarios">
     <div class="col-md-6 offset-md-3">
-        <h3> Dar de alta al Usuario </h3>
-        <form (ngSubmit)="onSubmit()">
-
-            <div class="form-group py-2">
-                <label> Nombre</label>
-                <input type="text" class="form-control" id="nombre" [(ngModel)]="usuario.nombre" name="nombre">
-            </div>
-
-            <div class="form-group py-2">
-                <label> Last Name</label>
-                <input type="text" class="form-control" id="apellidos" [(ngModel)]="usuario.apellidos" name="apellidos">
-            </div>
-
-            <div class="form-group py-2">
-                <label> Email Id</label>
-                <input type="text" class="form-control" id="correo" [(ngModel)]="usuario.correo" name="correo">
-            </div>
-
-            <div class="form-group py-2">
-                <label>Contraseña</label>
-                <input type="password" class="form-control" id="contrasena" [(ngModel)]="usuario.contrasena"
-                    name="contrasena">
-            </div>
-
-            <button class="btn btn-success my-4" type="submit">Submit</button>
-
-        </form>
+      <h3> Dar de alta al Usuario </h3>
+      <form (ngSubmit)="onSubmit(usuarioForm)" #usuarioForm="ngForm">
+  
+        <div class="form-group py-2">
+          <label> Nombre</label>
+          <input type="text" class="form-control" id="nombre" [(ngModel)]="usuario.nombre" name="nombre" required>
+          <div *ngIf="usuarioForm.controls['nombre'].invalid && (usuarioForm.controls['nombre'].dirty || usuarioForm.controls['nombre'].touched)">
+            <div *ngIf="usuarioForm.controls['nombre'].hasError('required')" class="error">El nombre es obligatorio.</div>
+          </div>
+        </div>
+  
+        <div class="form-group py-2">
+          <label> Last Name</label>
+          <input type="text" class="form-control" id="apellidos" [(ngModel)]="usuario.apellidos" name="apellidos" required>
+          <div *ngIf="usuarioForm.controls['apellidos'].invalid && (usuarioForm.controls['apellidos'].dirty || usuarioForm.controls['apellidos'].touched)">
+            <div *ngIf="usuarioForm.controls['apellidos'].hasError('required')" class="error">Los apellidos son obligatorios.</div>
+          </div>
+        </div>
+  
+        <div class="form-group py-2">
+          <label>Email</label>
+          <input type="text" class="form-control" id="correo" [(ngModel)]="usuario.correo" name="correo"
+                 required
+                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+          <div *ngIf="usuarioForm.controls['correo'].invalid && (usuarioForm.controls['correo'].dirty || usuarioForm.controls['correo'].touched)">
+            <div *ngIf="usuarioForm.controls['correo'].hasError('required')" class="error">El correo es obligatorio.</div>
+            <div *ngIf="usuarioForm.controls['correo'].hasError('pattern')" class="error">El correo no tiene un formato válido.</div>
+          </div>
+        </div>
+  
+        <div class="form-group py-2">
+          <label>Contraseña</label>
+          <input type="password" class="form-control" id="contrasena" [(ngModel)]="usuario.contrasena" name="contrasena" required>
+          <div *ngIf="usuarioForm.controls['contrasena'].invalid && (usuarioForm.controls['contrasena'].dirty || usuarioForm.controls['contrasena'].touched)">
+            <div *ngIf="usuarioForm.controls['contrasena'].hasError('required')" class="error">La contraseña es obligatoria.</div>
+          </div>
+        </div>
+  
+        <button class="btn btn-success my-4" type="submit">Submit</button>
+  
+      </form>
     </div>
-</section>
+  </section>
+  

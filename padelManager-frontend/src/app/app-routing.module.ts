@@ -12,8 +12,8 @@ import { guardAuthGuard } from './guard-auth.guard';
 const routes: Routes = [
   {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAuthGuard]},
   {path: 'crear-usuario', component: CrearUsuarioComponent},
-  {path: 'actualizar-usuario/:id', component: ActualizarUsuarioComponent},
-  {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent},
+  {path: 'actualizar-usuario/:id', component: ActualizarUsuarioComponent, canActivate: [guardAuthGuard]},
+  {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAuthGuard]},
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
   {path: '', component: HomeComponent} //Home

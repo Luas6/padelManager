@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Usuario } from '../usuario';
 import { UsuarioService } from '../usuario.service';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-crear-usuario',
@@ -27,8 +28,11 @@ export class CrearUsuarioComponent implements OnInit{
     this.router.navigate(['/usuarios']);
   }
   
-  onSubmit(){
-    console.log(this.usuario);
-    this.saveUsuario();
-  }
+  onSubmit(usuarioForm: NgForm) {
+    if (usuarioForm.valid) {
+        // El formulario es válido, realiza la acción
+        console.log(this.usuario);
+        this.saveUsuario();
+    }
+}
 }

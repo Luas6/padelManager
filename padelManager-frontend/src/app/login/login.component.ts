@@ -32,12 +32,12 @@ export class LoginComponent {
 
   loginUsuario() {
     this.authService.loginUsuario(this.usuario).subscribe(data => {
-      console.log(data);
+      //console.log(data);
       console.log(data.token);
       if (data.token) {
         // Almacenar el token en el local storage para su uso posterior
         localStorage.setItem('jwtToken', data.token);
-        console.log(this.authService.isLoggedIn());
+        //console.log(this.authService.isLoggedIn());
         // Redireccionar a una página después del inicio de sesión exitoso
         this.router.navigate(['']);
       } else {
