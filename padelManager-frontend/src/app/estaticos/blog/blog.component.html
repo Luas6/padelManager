@@ -1,0 +1,28 @@
+<section id="home-blog">
+    <div class="container">
+        <div class="row">
+          <div class="col">
+            <h1 class="mititulocarrusel">Mi Blog</h1>
+            <p>¡Descubre todas las novedades del club de pádel!</p>
+            <p> Y entérate de los eventos que más te interesan.</p>
+          </div>
+        </div>
+      
+        <div class="row">
+          <div class="col col-lg-10 col-xl-9">
+            <ngb-carousel>
+                <ng-template ngbSlide *ngFor="let blog of blogs; let i = index">
+                  <div class="blog-post p-4 pb-5"[ngClass]="'bg-color-' + (i + 1)">
+                    <div class="contenido-card-blog">
+                      <h2>{{ blog.titulo }}</h2>
+                      <p>Fecha de publicación: {{ blog.fecha }}</p>
+                      <p>{{ blog.contenido }}</p>
+                      <a class="enlace-blog" [href]="blog.enlace">Leer más</a>
+                    </div>
+                  </div>
+                </ng-template>
+              </ngb-carousel>
+          </div>
+        </div>
+      </div>
+</section>

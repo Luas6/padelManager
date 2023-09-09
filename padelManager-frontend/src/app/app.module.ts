@@ -13,6 +13,7 @@ import { HomeComponent } from './estaticos/home/home.component';
 import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagina-no-autorizado.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BlogComponent } from './estaticos/blog/blog.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     VisualizarUsuarioComponent,
     LoginComponent,
     HomeComponent,
-    PaginaNoAutorizadoComponent
+    PaginaNoAutorizadoComponent,
+    BlogComponent
   ],
   imports: [
     BrowserModule,

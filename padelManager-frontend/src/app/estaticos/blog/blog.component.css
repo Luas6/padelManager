@@ -1,0 +1,38 @@
+#home-blog .blog-post {
+    height: 100%;
+}
+
+#home-blog .enlace-blog {
+    color: #000203;
+    text-decoration: none;
+    transition: color 0.3s;
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+/* blog.component.css */
+#home-blog .bg-color-1 {
+    background-color: #08a7cf;
+    /* Color de fondo para la diapositiva 1 */
+}
+
+#home-blog .bg-color-2 {
+    background-color: #08cf5b;
+    /* Color de fondo para la diapositiva 2 */
+}
+
+#home-blog .bg-color-3 {
+    background-color: #cf08c5;
+    /* Color de fondo para la diapositiva 3 */
+}
+
+#home-blog .bg-color-4 {
+    background-color: #cfbb08;
+    /* Color de fondo para la diapositiva 4 */
+}
+
+#home-blog .contenido-card-blog {
+    margin-left: 53px;
+    margin-right: 53px;
+}
