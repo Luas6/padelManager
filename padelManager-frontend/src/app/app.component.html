@@ -1,26 +1,32 @@
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <ul class = "navbar-nav px-5">
-        <li class = "nav-item">
-            <a routerLink="usuarios" routerLinkActive="active" class="nav-link" >Usuarios</a>
+    <ul class="navbar-nav px-5">
+        <li class="nav-item">
+            <a routerLink="" routerLinkActive="active" class="nav-link">Home</a>
         </li>
-        <li class = "nav-item">
-            <a routerLink="crear-usuario" routerLinkActive="active" class="nav-link" >Crear Usuario</a>
+        <li class="nav-item">
+            <a routerLink="usuarios" routerLinkActive="active" class="nav-link">Usuarios</a>
         </li>
-        <li class = "nav-item">
-            <a routerLink="login-usuario" routerLinkActive="active" class="nav-link" >Login</a>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+            <a routerLink="crear-usuario" routerLinkActive="active" class="nav-link">Registro</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+            <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Login</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+            <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Cerrar sesión</a>
         </li>
     </ul>
 </nav>
 
-<section class = "container py-5">
+<section class="container py-5">
     <router-outlet></router-outlet>
 </section>
 
 <footer class="bg-light text-center text-lg-start">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-      © 2023 Copyright:
-      <a class="text-dark" href="https://github.com/Luas6">Saúl Matías Jiménez</a>
+        © 2023 Copyright:
+        <a class="text-dark" href="https://github.com/Luas6">Saúl Matías Jiménez</a>
     </div>
     <!-- Copyright -->
-  </footer>
+</footer>
