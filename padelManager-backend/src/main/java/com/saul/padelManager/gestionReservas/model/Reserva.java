@@ -11,14 +11,21 @@ public class Reserva {
 
     @Column(name= "fecha")
     private String fecha;
+
+    @Column(name= "hora")
+    private String hora;
     @Column(name= "pista")
     private int pista;
     @Column(name= "id_usuario")
     private int id_usuario;
 
-    public Reserva(Long ID, String fecha, int pista, int id_usuario) {
+    public Reserva() {
+    }
+
+    public Reserva(Long ID, String fecha, String hora, int pista, int id_usuario) {
         this.ID = ID;
         this.fecha = fecha;
+        this.hora = hora;
         this.pista = pista;
         this.id_usuario = id_usuario;
     }
@@ -37,6 +44,14 @@ public class Reserva {
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    public String getHora() {
+        return hora;
+    }
+
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
     public int getPista() {

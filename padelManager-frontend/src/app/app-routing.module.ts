@@ -9,6 +9,7 @@ import { HomeComponent } from './estaticos/home/home.component';
 import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagina-no-autorizado.component';
 import { guardAuthGuard } from './guard-auth.guard';
 import { BlogComponent } from './estaticos/blog/blog.component';
+import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
 
 const routes: Routes = [
   {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAuthGuard]},
@@ -17,6 +18,8 @@ const routes: Routes = [
   {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAuthGuard]},
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
+
+  {path: 'reservas', component: FormularioReservasComponent},
 
   {path: '', component: HomeComponent}, //Home
 

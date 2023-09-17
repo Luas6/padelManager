@@ -14,6 +14,7 @@ import { JwtInterceptorInterceptor } from './jwt-interceptor.interceptor';
 import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagina-no-autorizado.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BlogComponent } from './estaticos/blog/blog.component';
+import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { BlogComponent } from './estaticos/blog/blog.component';
     LoginComponent,
     HomeComponent,
     PaginaNoAutorizadoComponent,
-    BlogComponent
+    BlogComponent,
+    FormularioReservasComponent
   ],
   imports: [
     BrowserModule,
