@@ -32,8 +32,10 @@
                     <option value="4">4</option>
                 </select>
             </div>
-
-            <button type="submit" class="btn btn-primary">Reservar</button>
+            <div *ngIf="errorMensaje" class="alert alert-danger py-2">
+                {{ errorMensaje }}
+              </div>
+            <button type="submit" class="btn btn-primary py-4">Reservar</button>
         </form>
     </div>
 </section>

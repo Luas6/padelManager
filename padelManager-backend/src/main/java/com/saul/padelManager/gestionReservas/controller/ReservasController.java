@@ -2,11 +2,11 @@ package com.saul.padelManager.gestionReservas.controller;
 
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
+import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -18,6 +18,11 @@ public class ReservasController {
     @Autowired
     public ReservasController(ReservasRepository reservasRepository) {
         this.reservasRepository = reservasRepository;
+    }
+
+    @GetMapping("/reservas")
+    public List<Reserva> getAllReservas(){
+        return reservasRepository.findAll();
     }
 
     @PostMapping("/reservas")

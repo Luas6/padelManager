@@ -12,6 +12,10 @@ export class ReservasService {
 
   constructor(private httpClient : HttpClient) { }
 
+  getListaReservas(): Observable<Reserva[]>{
+    return this.httpClient.get<Reserva[]>(this.reservasURL);
+  }
+
   crearReserva(reserva: Reserva): Observable<Reserva[]>{
     return this.httpClient.post<Reserva[]>(this.reservasURL,reserva);
   }
