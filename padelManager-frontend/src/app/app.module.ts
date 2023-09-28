@@ -37,6 +37,7 @@ import { FormularioReservasComponent } from './reservas/form-reservar/formulario
     NgbModule
   ],
   providers: [
+    JwtInterceptorInterceptor,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorInterceptor, multi: true}
   ],
   bootstrap: [AppComponent]
