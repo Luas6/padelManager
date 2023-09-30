@@ -1,18 +1,18 @@
 <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
     <ul class="navbar-nav px-5">
         <li class="nav-item">
-            <a routerLink="" routerLinkActive="active" class="nav-link">Home</a>
+            <a routerLink="" routerLinkActive="active" class="nav-link">Home </a>
         </li>
         <li class="nav-item">
             <a routerLink="usuarios" routerLinkActive="active" class="nav-link">Usuarios</a>
         </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
+        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === false">
             <a routerLink="crear-usuario" routerLinkActive="active" class="nav-link">Registro</a>
         </li>
-        <li class="nav-item" *ngIf="!isLoggedIn">
+        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === false">
             <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Login</a>
         </li>
-        <li class="nav-item" *ngIf="isLoggedIn">
+        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === true">
             <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Cerrar sesión</a>
         </li>
     </ul>
