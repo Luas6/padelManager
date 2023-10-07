@@ -27,6 +27,7 @@ export class AuthService {
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
     this.setLoggedIn(true);
+    console.log("Hola"+this.isLoggedIn())
     return this.http.post<RespuestaLogin>(this.loginURL, usuario);
   }
 

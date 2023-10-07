@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Usuario } from '../usuario';
 import { UsuarioService } from '../usuario.service';
 import { Router } from '@angular/router';
-import { NgForm, FormGroup, FormControl, Validators} from '@angular/forms'; // Importa FormGroup y FormControl
+import { FormGroup, FormControl, Validators} from '@angular/forms'; // Importa FormGroup y FormControl
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
