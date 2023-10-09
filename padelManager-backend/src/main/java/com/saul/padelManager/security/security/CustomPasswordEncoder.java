@@ -1,4 +1,4 @@
-package com.saul.padelManager.gestionUsuarios.security;
+package com.saul.padelManager.security.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package com.saul.padelManager.gestionUsuarios.security;
+package com.saul.padelManager.security.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;

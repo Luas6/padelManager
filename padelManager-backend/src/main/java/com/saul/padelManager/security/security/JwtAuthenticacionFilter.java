@@ -1,4 +1,4 @@
-package com.saul.padelManager.gestionUsuarios.security;
+package com.saul.padelManager.security.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
