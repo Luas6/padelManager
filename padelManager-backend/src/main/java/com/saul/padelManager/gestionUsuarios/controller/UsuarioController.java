@@ -5,8 +5,10 @@ import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
+import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
 import com.saul.padelManager.security.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -18,92 +20,44 @@ import java.util.Optional;
 @RequestMapping("/api/v1/")
 public class UsuarioController {
 
+    private final UsuarioService usuarioService;
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private JwtUtils jwtUtils;
-    @Autowired
-    public UsuarioController(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
-        this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
-    /* Login Usuario*/
+
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> loginUsuario(@RequestBody LoginCredenciales usuario) {
-
-        String correo = usuario.correo();
-        String contrasena = usuario.contrasena();
-
-        Optional<Usuario> usuarioEncontradoEmail = usuarioRepository.findByCorreo(correo);
-        if (usuarioEncontradoEmail.isPresent()) {
-            Usuario usuarioEncontrado = usuarioEncontradoEmail.get();
-            String passwordAVerificar=usuarioEncontrado.getContrasena();
-            //System.out.println(passwordEncoder.encode(passwordAVerificar));
-            boolean contrasenasCoinciden = passwordEncoder.matches(contrasena, passwordAVerificar);
-
-            if(!contrasenasCoinciden){
-                //Contraseña incorrecta
-                return ResponseEntity.notFound().build();
-            }
-
-            String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
-            //HttpHeaders headers = new HttpHeaders();
-            //headers.add("Authorization", "Bearer " + jwt);
-            TokenResponse tokenResponse = new TokenResponse(jwt);
-            return ResponseEntity.ok(tokenResponse);
-            //return ResponseEntity.ok(jwt);
-            //return ResponseEntity.ok(usuarioEncontrado);
-
-        } else {
-            //Usuario no encontrado
-            return ResponseEntity.notFound().build();
-        }
+        TokenResponse tokenResponse = usuarioService.loginUsuario(usuario);
+        return ResponseEntity.ok(tokenResponse);
     }
 
-    /*Register*/
-    // Crear Usuario
     @PostMapping("/registro")
     public Usuario createUsuario(@RequestBody Usuario usuario) {
-        usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
-        return usuarioRepository.save(usuario);
+        return usuarioService.createUsuario(usuario);
     }
 
-    /* CRUD Usuarios*/
-
-    // Sacar todos los usuarios
     @GetMapping("/usuarios")
-    public List<Usuario> getAllUsuarios(){
-        return usuarioRepository.findAll();
+    public List<Usuario> getAllUsuarios() {
+        return usuarioService.getAllUsuarios();
     }
 
-    // Recuperar usuario por id
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
+        Usuario usuario = usuarioService.getUsuarioById(id);
         return ResponseEntity.ok(usuario);
     }
 
     @PutMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id,@RequestBody Usuario usuario) {
-        Usuario usuarioACambiar = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
-        //Setteo los cambios con los nuevos
-        usuarioACambiar.setNombre(usuario.getNombre());
-        usuarioACambiar.setApellidos(usuario.getApellidos());
-        usuarioACambiar.setCorreo(usuario.getCorreo());
-        usuarioRepository.save(usuarioACambiar);
-        return ResponseEntity.ok(usuarioACambiar);
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        Usuario usuarioActualizado = usuarioService.updateUsuario(id, usuario);
+        return ResponseEntity.ok(usuarioActualizado);
     }
 
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Employee not exist with id :" + id));
-        usuarioRepository.delete(usuario);
-        return ResponseEntity.ok(usuario);
+        usuarioService.deleteUsuario(id);
+        return ResponseEntity.ok().build();
     }
-    /* Fin CRUD Usuarios*/
-
 }
