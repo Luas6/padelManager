@@ -42,7 +42,7 @@ export class ActualizarUsuarioComponent {
   }
 
   actualizarUsuario(){
-    this.usuarioService.actualizarUsuario(this.id, this.usuario).subscribe( data =>{
+    this.usuarioService.actualizarUsuario(this.id, this.actualizarUsuarioForm.value).subscribe( data =>{
       this.goToUsuarioList();
     }
     , error => console.log(error));
