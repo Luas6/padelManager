@@ -23,7 +23,7 @@ public class JwtAuthenticacionFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
         Enumeration<String> x = request.getHeaders("");
-        System.out.println(request);
+        //System.out.println(request);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             String token = authorizationHeader.substring(7); // Quita "Bearer " del encabezado
 

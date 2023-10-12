@@ -1,26 +1,44 @@
-<div class="col-md-6 offset-md-3">
-    <h3> Actualizar Usuario </h3>
-    <form (ngSubmit) = "onSubmit()">
-    
-        <div class="form-group py-2">
-            <label> Nombre</label>
-            <input type="text" class ="form-control" id = "nombre"
-                [(ngModel)] = "usuario.nombre" name = "nombre">
-        </div>
-    
-        <div class="form-group py-2">
-            <label> Last Name</label>
-            <input type="text" class ="form-control" id = "apellidos"
-                [(ngModel)] = "usuario.apellidos" name = "apellidos">
-        </div>
-    
-        <div class="form-group py-2">
-            <label> Email</label>
-            <input type="text" class ="form-control" id = "correo"
-                [(ngModel)] = "usuario.correo" name = "correo">
-        </div>
-    
-        <button class = "btn btn-success my-4" type ="submit">Submit</button>
-    
-    </form>
-</div> 
+<section id="actualizar-usuarios">
+    <div class="col-md-6 offset-md-3">
+        <h3> Actualizar Usuario </h3>
+        <form (ngSubmit)="onSubmit()" [formGroup]="actualizarUsuarioForm">
+
+            <div class="form-group py-2">
+                <label> Nombre</label>
+                <input type="text" class="form-control" id="nombre" formControlName="nombre">
+                <div
+                    *ngIf="actualizarUsuarioForm.controls['nombre'].invalid && (actualizarUsuarioForm.controls['nombre'].dirty || actualizarUsuarioForm.controls['nombre'].touched)">
+                    <div *ngIf="actualizarUsuarioForm.controls['nombre'].hasError('required')" class="error">El nombre es
+                        obligatorio.</div>
+                </div>
+            </div>
+
+            <div class="form-group py-2">
+                <label> Last Name</label>
+                <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
+                <div
+                    *ngIf="actualizarUsuarioForm.controls['apellidos'].invalid && (actualizarUsuarioForm.controls['apellidos'].dirty || actualizarUsuarioForm.controls['apellidos'].touched)">
+                    <div *ngIf="actualizarUsuarioForm.controls['apellidos'].hasError('required')" class="error">Los apellidos son
+                        obligatorios.</div>
+                </div>
+            </div>
+
+            <div class="form-group py-2">
+                <label>Email</label>
+                <input type="text" class="form-control" id="correo" formControlName="correo">
+                <div
+                    *ngIf="actualizarUsuarioForm.controls['correo'].invalid && (actualizarUsuarioForm.controls['correo'].dirty || actualizarUsuarioForm.controls['correo'].touched)">
+                    <div *ngIf="actualizarUsuarioForm.controls['correo'].hasError('required')" class="error">El correo es
+                        obligatorio.</div>
+                    <div *ngIf="actualizarUsuarioForm.controls['correo'].hasError('pattern')" class="error">El correo no tiene un
+                        formato válido.</div>
+                </div>
+            </div>
+
+            <div *ngIf="mensajeError" class="mensaje-error">{{ mensajeError }}</div>
+
+            <button class="btn btn-success my-4" type="submit">Submit</button>
+
+        </form>
+    </div>
+</section>

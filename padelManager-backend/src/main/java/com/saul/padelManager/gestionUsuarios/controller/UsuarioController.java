@@ -1,20 +1,14 @@
 package com.saul.padelManager.gestionUsuarios.controller;
 
-import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundException;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
-import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
-import com.saul.padelManager.security.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/")

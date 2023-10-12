@@ -1,6 +1,6 @@
 package com.saul.padelManager.gestionUsuarios.service;
 
-import com.saul.padelManager.gestionUsuarios.exceptions.ResourceNotFoundException;
+import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
