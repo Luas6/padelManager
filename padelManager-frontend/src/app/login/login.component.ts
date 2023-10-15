@@ -66,6 +66,8 @@ export class LoginComponent implements OnInit{
         this.mensajeError = 'Contraseña incorrecta';
       } else if (error.status === 404) {
         this.mensajeError = 'Usuario no encontrado';
+      }else{
+        this.mensajeError = 'Error al hacer login. Inténtalo de nuevo más tarde';
       }
     });
   }

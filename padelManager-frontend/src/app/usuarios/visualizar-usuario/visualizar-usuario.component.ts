@@ -19,6 +19,6 @@ export class VisualizarUsuarioComponent {
 
     this.usuarioService.getUsuarioById(this.id).subscribe(data => {
       this.usuario = data;
-    }, error => console.log("Error visualizar-usuario.component"+ error));
+    }, error => console.log("Error al cargar el usuario"+ error));
   }
 }

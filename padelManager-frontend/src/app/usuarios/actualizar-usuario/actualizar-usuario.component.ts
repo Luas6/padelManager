@@ -37,15 +37,27 @@ export class ActualizarUsuarioComponent {
     if(this.actualizarUsuarioForm.valid){
       this.actualizarUsuario();
     }else{
-      this.mensajeError = 'Usuario o Contraseña no válidos';
+      this.mensajeError = 'Revisa los campos del formulario';
     }
   }
 
-  actualizarUsuario(){
-    this.usuarioService.actualizarUsuario(this.id, this.actualizarUsuarioForm.value).subscribe( data =>{
-      this.goToUsuarioList();
-    }
-    , error => console.log(error));
+  actualizarUsuario() {
+    this.usuarioService.actualizarUsuario(this.id, this.actualizarUsuarioForm.value).subscribe(
+      (data) => {
+        this.goToUsuarioList();
+      },
+      (error: any) => {
+       if (error.status === 404) {
+          this.mensajeError = 'Usuario no encontrado';
+        } else if (error.status === 409) {
+          this.mensajeError = 'Correo ya en uso';
+        } else if (error.status === 400) {
+          this.mensajeError = 'Formato de correo electrónico inválido';
+        } else {
+          this.mensajeError = 'Error al hacer login. Inténtalo de nuevo más tarde';
+        }
+      }
+    );
   }
 
   goToUsuarioList(){

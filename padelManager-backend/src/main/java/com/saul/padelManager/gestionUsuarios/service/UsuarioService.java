@@ -1,6 +1,8 @@
 package com.saul.padelManager.gestionUsuarios.service;
 
 import com.saul.padelManager.utils.exceptions.BadCredentialsException;
+import com.saul.padelManager.utils.exceptions.CorreoExistenteException;
+import com.saul.padelManager.utils.exceptions.InvalidFormatException;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
@@ -97,7 +99,7 @@ public class UsuarioService {
     private void comprobarCorreoEnUso(Usuario usuario) {
         Optional<Usuario> comprobarCorreo = usuarioRepository.findByCorreo(usuario.getCorreo());
         if (comprobarCorreo.isPresent()){
-            throw new ResourceNotFoundException("Correo ya en uso");
+            throw new CorreoExistenteException("Correo ya en uso");
         }
     }
     private void validarCorreo(String correo) {
@@ -105,7 +107,7 @@ public class UsuarioService {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
         if (!matcher.matches()) {
-            throw new ResourceNotFoundException("Correo no válido");
+            throw new InvalidFormatException("Correo no válido");
         }
     }
 
