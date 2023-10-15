@@ -61,10 +61,12 @@ export class LoginComponent implements OnInit{
       }
 
     },
-    error => {
-      // Error en la solicitud
-      this.mensajeError = 'Error en la solicitud. Por favor, intenta nuevamente.';
-      console.log(error);
+    (error: any) => {
+      if (error.status === 401) {
+        this.mensajeError = 'Contraseña incorrecta';
+      } else if (error.status === 404) {
+        this.mensajeError = 'Usuario no encontrado';
+      }
     });
   }
 }
