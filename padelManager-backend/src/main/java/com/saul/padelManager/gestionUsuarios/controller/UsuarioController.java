@@ -4,7 +4,10 @@ import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
+import com.saul.padelManager.utils.exceptions.ErrorResponse;
+import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +25,14 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> loginUsuario(@RequestBody LoginCredenciales usuario) {
-        TokenResponse tokenResponse = usuarioService.loginUsuario(usuario);
-        return ResponseEntity.ok(tokenResponse);
+    public ResponseEntity<?> loginUsuario(@RequestBody LoginCredenciales usuario) {
+        try {
+            TokenResponse tokenResponse = usuarioService.loginUsuario(usuario);
+            return ResponseEntity.ok(tokenResponse);
+        } catch (ResourceNotFoundException e) {
+            ErrorResponse errorResponse = new ErrorResponse(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+        }
     }
 
     @PostMapping("/registro")
@@ -53,5 +61,11 @@ public class UsuarioController {
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id) {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.ok().build();
+    }
+
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        ErrorResponse errorResponse = new ErrorResponse(ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 }
