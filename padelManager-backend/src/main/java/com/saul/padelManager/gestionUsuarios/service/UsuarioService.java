@@ -1,5 +1,6 @@
 package com.saul.padelManager.gestionUsuarios.service;
 
+import com.saul.padelManager.utils.exceptions.BadCredentialsException;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
@@ -43,7 +44,7 @@ public class UsuarioService {
             boolean contrasenasCoinciden = passwordEncoder.matches(contrasena, passwordAVerificar);
 
             if (!contrasenasCoinciden) {
-                throw new ResourceNotFoundException("Contraseña incorrecta");
+                throw new BadCredentialsException("Contraseña incorrecta");
             }
 
             String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
