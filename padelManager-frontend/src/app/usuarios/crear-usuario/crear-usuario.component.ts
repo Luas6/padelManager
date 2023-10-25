@@ -13,7 +13,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class CrearUsuarioComponent implements OnInit {
 
   usuarioForm: FormGroup; // Declara el FormGroup
-
+  mensajeError: string = '';
   formError = false;
   private modalRef: any;
   @ViewChild('errorModal') errorModal: any;
@@ -36,11 +36,21 @@ export class CrearUsuarioComponent implements OnInit {
   }
 
   saveUsuario() {
-    this.usuarioService.crearUsuario(this.usuarioForm.value).subscribe(data => {
+    this.usuarioService.crearUsuario(this.usuarioForm.value).subscribe(
+      (data) => {
       console.log(data);
       this.goToUsuarioList();
     },
-    error => console.log(error));
+    (error: any) => {
+      if (error.status === 409) {
+         this.mensajeError = 'Correo ya en uso';
+       } else if (error.status === 400) {
+         this.mensajeError = 'Revisa los campos obligatorios y que todo tenga el formato correcto';
+       } else {
+         this.mensajeError = 'Error al crear usuario. Inténtalo de nuevo más tarde';
+       }
+     }
+    );
   }
 
   goToUsuarioList() {

@@ -21,14 +21,14 @@ export class LoginComponent implements OnInit{
     private router: Router)
     { 
       this.loginForm = new FormGroup({
-        correo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]),
         contrasena: new FormControl('', [Validators.required]),
       });
     }
 
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
-    console.log(this.isLoggedIn) // Verifica si la sesión está iniciada
+    //console.log(this.isLoggedIn) // Verifica si la sesión está iniciada
   }
 
   logout(): void {
@@ -48,7 +48,9 @@ export class LoginComponent implements OnInit{
   }
 
   loginUsuario() {
-    this.authService.loginUsuario(this.loginForm.value).subscribe(data => {
+    this.authService.loginUsuario(this.loginForm.value).subscribe(
+      (data) => {
+        console.log(data);
       if (data.token) {
         // Almacenar el token en el local storage para su uso posterior
         localStorage.setItem('jwtToken', data.token);
@@ -66,6 +68,8 @@ export class LoginComponent implements OnInit{
         this.mensajeError = 'Contraseña incorrecta';
       } else if (error.status === 404) {
         this.mensajeError = 'Usuario no encontrado';
+      } else if (error.status === 400) {
+        this.mensajeError = 'Revisa los campos obligatorios y que todo tenga el formato correcto';
       }else{
         this.mensajeError = 'Error al hacer login. Inténtalo de nuevo más tarde';
       }

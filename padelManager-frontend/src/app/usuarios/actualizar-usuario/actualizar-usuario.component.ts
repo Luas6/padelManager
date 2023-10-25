@@ -52,7 +52,7 @@ export class ActualizarUsuarioComponent {
         } else if (error.status === 409) {
           this.mensajeError = 'Correo ya en uso';
         } else if (error.status === 400) {
-          this.mensajeError = 'Formato de correo electrónico inválido';
+          this.mensajeError = 'Revisa los campos obligatorios y que todo tenga el formato correcto';
         } else {
           this.mensajeError = 'Error al hacer login. Inténtalo de nuevo más tarde';
         }

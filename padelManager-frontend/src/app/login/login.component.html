@@ -22,7 +22,7 @@
                     <label>Contraseña</label>
                     <input type="password" class="form-control" id="contrasena" formControlName="contrasena">
                     <div *ngIf="loginForm.controls['contrasena'].invalid && (loginForm.controls['contrasena'].dirty || loginForm.controls['contrasena'].touched)">
-                        <div *ngIf="loginForm.controls['contrasena'].hasError('required')" class="error">El contraseña es obligatoria.</div>
+                        <div *ngIf="loginForm.controls['contrasena'].hasError('required')" class="error">La contraseña es obligatoria.</div>
                       </div>
                 </div>
 

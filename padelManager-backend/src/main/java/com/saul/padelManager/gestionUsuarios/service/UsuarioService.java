@@ -1,9 +1,6 @@
 package com.saul.padelManager.gestionUsuarios.service;
 
-import com.saul.padelManager.utils.exceptions.BadCredentialsException;
-import com.saul.padelManager.utils.exceptions.CorreoExistenteException;
-import com.saul.padelManager.utils.exceptions.InvalidFormatException;
-import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
+import com.saul.padelManager.utils.exceptions.*;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
@@ -33,11 +30,12 @@ public class UsuarioService {
     }
 
     public TokenResponse loginUsuario(LoginCredenciales usuario) {
+        //Lo valido para evitar posibles inyecciones sql
+        validarCorreo(usuario.correo());
+        comprobarNotNull(usuario.contrasena());
+
         String correo = usuario.correo();
         String contrasena = usuario.contrasena();
-
-        //Lo valido para evitar posibles inyecciones sql
-        validarCorreo(correo);
 
         Optional<Usuario> usuarioEncontradoEmail = usuarioRepository.findByCorreo(correo);
         if (usuarioEncontradoEmail.isPresent()) {
@@ -62,6 +60,8 @@ public class UsuarioService {
 
 
     public Usuario createUsuario(Usuario usuario) {
+        comprobarNotNull(usuario.getNombre());
+        comprobarNotNull(usuario.getContrasena());
         comprobarCorreoEnUso(usuario);
         validarCorreo(usuario.getCorreo());
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
@@ -78,6 +78,8 @@ public class UsuarioService {
     }
 
     public Usuario updateUsuario(Long id, Usuario usuario) {
+        comprobarNotNull(usuario.getNombre());
+        comprobarNotNull(usuario.getContrasena());
         Usuario usuarioACambiar = usuarioRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
         comprobarCorreoEnUso(usuario);
@@ -103,6 +105,7 @@ public class UsuarioService {
         }
     }
     private void validarCorreo(String correo) {
+        comprobarNotNull(correo);
         String regex = "[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(correo);
@@ -110,6 +113,10 @@ public class UsuarioService {
             throw new InvalidFormatException("Correo no válido");
         }
     }
-
+    private static <T> void comprobarNotNull(T value) {
+        if (value == null || value instanceof String && ((String) value).isEmpty()) {
+            throw new CampoRequeridoException("Faltan campos en la solicitud");
+        }
+    }
 
 }
