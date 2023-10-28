@@ -13,7 +13,7 @@ export class AppComponent {
   isLoggedIn$: BehaviorSubject<boolean>;
   constructor(private authService: AuthService,
     private router: Router) {
-      this.isLoggedIn$ = new BehaviorSubject<boolean>(false);
+      this.isLoggedIn$ = new BehaviorSubject<boolean>(this.authService.isLoggedIn());
      }
     
   ngOnInit(): void {

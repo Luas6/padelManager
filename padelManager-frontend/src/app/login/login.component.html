@@ -1,6 +1,6 @@
 <section id="login-usuarios">
 
-    <div *ngIf="isLoggedIn; else myLoginForm">
+    <div *ngIf="isLoggedIn$ | async; else myLoginForm">
         <!-- Mostrar pantalla de cierre de sesión si la sesión está iniciada -->
         <h2>Sesión iniciada</h2>
         <button (click)="logout()">Cerrar sesión</button>

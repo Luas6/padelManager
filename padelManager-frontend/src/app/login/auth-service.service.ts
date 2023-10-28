@@ -14,10 +14,23 @@ export class AuthService {
 
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    this.checkTokenInLocalStorage();
+  }
+
+  private checkTokenInLocalStorage() {
+    const jwtToken = localStorage.getItem('jwtToken');
+    if (jwtToken) {
+      this.setLoggedIn(true);
+    }
+  }
 
   isLoggedIn() {
     return this.isLoggedIn$.value;
+  }
+
+  isLoggedInAsObservable() {
+    return this.isLoggedIn$.asObservable();
   }
 
   setLoggedIn(value: boolean) {
@@ -26,8 +39,6 @@ export class AuthService {
 
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
-    this.setLoggedIn(true);
-    //console.log("Hola"+this.isLoggedIn())
     return this.http.post<RespuestaLogin>(this.loginURL, usuario);
   }
 
@@ -38,5 +49,9 @@ export class AuthService {
   logout(): void {
     this.setLoggedIn(false);
     localStorage.removeItem('jwtToken');
+  }
+
+  login(): void {
+    this.setLoggedIn(true);
   }
 }
