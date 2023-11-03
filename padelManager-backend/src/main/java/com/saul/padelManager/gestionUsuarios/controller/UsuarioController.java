@@ -4,6 +4,7 @@ import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
+import com.saul.padelManager.utils.ConstantesProyecto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping(ConstantesProyecto.BASE_API_PATH)
 public class UsuarioController {
 
     private final UsuarioService usuarioService;

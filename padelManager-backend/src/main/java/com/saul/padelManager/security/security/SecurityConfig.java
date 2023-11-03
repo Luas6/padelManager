@@ -1,5 +1,6 @@
 package com.saul.padelManager.security.security;
 
+import com.saul.padelManager.utils.ConstantesProyecto;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,9 +32,19 @@ public class SecurityConfig {
         return security.cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/registro", "/api/v1/login", "/api/v1/reservas", "/api/v1/reservas/*", "/api/v1/enviar-correo").permitAll()
+                .requestMatchers(
+                        ConstantesProyecto.BASE_API_PATH + "registro",
+                        ConstantesProyecto.BASE_API_PATH + "login",
+                        ConstantesProyecto.BASE_API_PATH + "reservas",
+                        ConstantesProyecto.BASE_API_PATH + "reservas/*",
+                        ConstantesProyecto.BASE_API_PATH + "reservas/*/*",
+                        ConstantesProyecto.BASE_API_PATH + "enviar-correo"
+                ).permitAll()
                 .and()
-                .authorizeHttpRequests().requestMatchers("/api/v1/usuarios", "/api/v1/usuarios/*")
+                .authorizeHttpRequests().requestMatchers(
+                        ConstantesProyecto.BASE_API_PATH + "usuarios",
+                        ConstantesProyecto.BASE_API_PATH + "usuarios/*"
+                )
                 .authenticated()
                 .and()
                 .sessionManagement()

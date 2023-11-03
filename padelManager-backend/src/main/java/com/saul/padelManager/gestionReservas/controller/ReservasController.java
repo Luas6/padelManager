@@ -2,13 +2,14 @@ package com.saul.padelManager.gestionReservas.controller;
 
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.service.ReservasService;
+import com.saul.padelManager.utils.ConstantesProyecto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping(ConstantesProyecto.BASE_API_PATH)
 public class ReservasController {
 
     private final ReservasService reservasService;
