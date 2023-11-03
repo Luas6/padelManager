@@ -31,7 +31,7 @@ public class SecurityConfig {
         return security.cors().and()
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/registro", "/api/v1/login", "/api/v1/reservas", "/api/v1/enviar-correo").permitAll()
+                .requestMatchers("/api/v1/registro", "/api/v1/login", "/api/v1/reservas", "/api/v1/reservas/*", "/api/v1/enviar-correo").permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers("/api/v1/usuarios", "/api/v1/usuarios/*")
                 .authenticated()
