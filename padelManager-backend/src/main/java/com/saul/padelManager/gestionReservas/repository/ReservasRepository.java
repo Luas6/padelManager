@@ -8,4 +8,6 @@ import java.util.Optional;
 
 public interface ReservasRepository extends JpaRepository <Reserva,Long> {
     Optional<List<Reserva>> findByFecha(String fecha);
+
+    List<Reserva> findByFechaAndHora(String fecha, String hora);
 }

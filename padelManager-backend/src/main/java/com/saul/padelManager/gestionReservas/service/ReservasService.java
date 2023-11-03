@@ -6,6 +6,7 @@ import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +34,24 @@ public class ReservasService {
             throw new ResourceNotFoundException("Reservas no encontradas");
         }
         return reservasOptional.get();
+    }
+
+    public List<Integer> getPistasDisponibles(String dia, String hora) {
+
+        List<Reserva> reservas = reservasRepository.findByFechaAndHora(dia, hora);
+
+        List<Integer> pistasDisponibles = new ArrayList<>();
+        for (int i=1;i<5;i++){
+            pistasDisponibles.add(i);
+        }
+        for (Reserva reserva : reservas) {
+            int pistaOcupada = reserva.getPista();
+            if (pistasDisponibles.contains(pistaOcupada)) {
+                pistasDisponibles.remove(Integer.valueOf(pistaOcupada));
+                //Sin el Integer.ofValue trata el numero como el indice de la pista en vez de como la pista a eliminar
+            }
+        }
+
+        return pistasDisponibles;
     }
 }
