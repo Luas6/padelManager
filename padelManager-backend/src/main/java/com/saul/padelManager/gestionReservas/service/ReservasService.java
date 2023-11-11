@@ -2,6 +2,7 @@ package com.saul.padelManager.gestionReservas.service;
 
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
+import com.saul.padelManager.utils.ConstantesProyecto;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class ReservasService {
         List<Reserva> reservas = reservasRepository.findByFechaAndHora(dia, hora);
 
         List<Integer> pistasDisponibles = new ArrayList<>();
-        for (int i=1;i<5;i++){
+        for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++){
             pistasDisponibles.add(i);
         }
         for (Reserva reserva : reservas) {
@@ -53,5 +54,33 @@ public class ReservasService {
         }
 
         return pistasDisponibles;
+    }
+
+    public List<String> getHorasDisponibles(String fecha) {
+        List<String> horasDisponibles = new ArrayList<>();
+        List<Integer> pistasDisponibles = new ArrayList<>();
+
+        for (String hora : ConstantesProyecto.HORAS_DISPONIBLES) {
+            // Verifica la disponibilidad de pistas para la hora actual
+            pistasDisponibles.clear();
+            for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++) {
+                pistasDisponibles.add(i);
+            }
+
+            List<Reserva> reservas = getReservasByFecha(fecha);
+            for (Reserva reserva : reservas) {
+                if (reserva.getHora().equals(hora)) {
+                    int pistaOcupada = reserva.getPista();
+                    if (pistasDisponibles.contains(pistaOcupada)) {
+                        pistasDisponibles.remove(Integer.valueOf(pistaOcupada));
+                    }
+                }
+            }
+            // Comprueba 1 pista disponible
+            if (!pistasDisponibles.isEmpty()) {
+                horasDisponibles.add(hora);
+            }
+        }
+        return horasDisponibles;
     }
 }

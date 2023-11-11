@@ -37,7 +37,8 @@ public class SecurityConfig {
                         ConstantesProyecto.BASE_API_PATH + "login",
                         ConstantesProyecto.BASE_API_PATH + "reservas",
                         ConstantesProyecto.BASE_API_PATH + "reservas/*",
-                        ConstantesProyecto.BASE_API_PATH + "reservas/*/*",
+                        ConstantesProyecto.BASE_API_PATH + "disponibles/*",
+                        ConstantesProyecto.BASE_API_PATH + "disponibles/*/*",
                         ConstantesProyecto.BASE_API_PATH + "enviar-correo"
                 ).permitAll()
                 .and()
