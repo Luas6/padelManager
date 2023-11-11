@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ConstantesProyecto {
     public static final String BASE_API_PATH = "/api/v1/";
+    public static final String BASE_CORS_PATH = "/api/v1/**";
 
     public static final int NUMERO_PISTAS = 4;
 
