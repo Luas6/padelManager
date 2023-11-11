@@ -21,8 +21,8 @@ export class FormularioReservasComponent {
   constructor(private reservasService: ReservasService,
     private router: Router) {
       this.reservasForm = new FormGroup({
-        hora: new FormControl('', [Validators.required]),
-        pista: new FormControl('', [Validators.required]),
+        hora: new FormControl({value: '', disabled: true}, [Validators.required]),
+        pista: new FormControl({value: '', disabled: true}, [Validators.required]),
         fecha: new FormControl('', [Validators.required]),
       });
     }
@@ -35,7 +35,9 @@ export class FormularioReservasComponent {
 
     if (fechaSeleccionada) {
       this.reservasService.getHorasDisponibles(fechaSeleccionada).subscribe((horas: string[]) => {
+        console.log("Horas"+horas);        
         this.horasDisponibles = horas;
+        this.reservasForm.get('hora')?.enable();
       });
     }
   }
@@ -47,6 +49,7 @@ export class FormularioReservasComponent {
     if (fechaSeleccionada && horaSeleccionada) {
       this.reservasService.getPistasDisponibles(fechaSeleccionada, horaSeleccionada).subscribe((pistas: number[]) => {
         this.pistasDisponibles = pistas;
+        this.reservasForm.get('pista')?.enable();
       });
     }
   }

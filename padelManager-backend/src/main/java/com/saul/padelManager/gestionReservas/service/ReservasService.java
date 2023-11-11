@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,7 +68,12 @@ public class ReservasService {
                 pistasDisponibles.add(i);
             }
 
-            List<Reserva> reservas = getReservasByFecha(fecha);
+            List<Reserva> reservas;
+            try {
+                reservas = getReservasByFecha(fecha);
+            } catch (ResourceNotFoundException ex) {
+                reservas = Collections.emptyList();
+            }
             for (Reserva reserva : reservas) {
                 if (reserva.getHora().equals(hora)) {
                     int pistaOcupada = reserva.getPista();

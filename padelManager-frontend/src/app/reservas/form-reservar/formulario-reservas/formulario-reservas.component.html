@@ -14,16 +14,16 @@
 
             <div class="form-group py-2">
                 <label for="hora">Hora:</label>
-                <select class="form-control" id="hora" name="hora" formControlName="hora" (change)="loadPistasDisponibles()">
+                <select class="form-control" id="hora" name="hora" formControlName="hora" (change)="loadPistasDisponibles()" [disabled]="!reservasForm.get('fecha')?.value">
                     <option value="" disabled selected>Selecciona una hora</option>
-                    <option value="09:00">09:00 - 10:30</option>
-                    <option value="10:30">10:30 - 12:00</option>
-                    <option value="12:00">12:00 - 13:30</option>
+                    <option value="09:00" [disabled]="!horasDisponibles.includes('09:00')">09:00 - 10:30</option>
+                    <option value="10:30" [disabled]="!horasDisponibles.includes('10:30')">10:30 - 12:00</option>
+                    <option value="12:00" [disabled]="!horasDisponibles.includes('12:00')">12:00 - 13:30</option>
                     <option value="" disabled>Descanso</option>
-                    <option value="16:30">16:30 - 18:00</option>
-                    <option value="18:00">18:00 - 19:30</option>
-                    <option value="19:30">19:30 - 21:00</option>
-                    <option value="21:00">21:00 - 22:30</option>
+                    <option value="16:30" [disabled]="!horasDisponibles.includes('16:30')">16:30 - 18:00</option>
+                    <option value="18:00" [disabled]="!horasDisponibles.includes('18:00')">18:00 - 19:30</option>
+                    <option value="19:30" [disabled]="!horasDisponibles.includes('19:30')">19:30 - 21:00</option>
+                    <option value="21:00" [disabled]="!horasDisponibles.includes('21:00')">21:00 - 22:30</option>
                 </select>
                 <div *ngIf="reservasForm.controls['hora'].invalid && (reservasForm.controls['hora'].dirty || reservasForm.controls['hora'].touched)">
                     <div *ngIf="reservasForm.controls['hora'].hasError('required')" class="error">
@@ -34,12 +34,12 @@
 
             <div class="form-group py-2">
                 <label for="pista">Pista:</label>
-                <select class="form-control" id="pista" name="pista" formControlName="pista">
+                <select class="form-control" id="pista" name="pista" formControlName="pista" [disabled]="!reservasForm.get('hora')?.value">
                     <option value="" disabled selected>Selecciona una pista</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
+                    <option value="1" [disabled]="!pistasDisponibles.includes(1)">1</option>
+                    <option value="2" [disabled]="!pistasDisponibles.includes(2)">2</option>
+                    <option value="3" [disabled]="!pistasDisponibles.includes(3)">3</option>
+                    <option value="4" [disabled]="!pistasDisponibles.includes(4)">4</option>
                 </select>
                 <div *ngIf="reservasForm.controls['pista'].invalid && (reservasForm.controls['pista'].dirty || reservasForm.controls['pista'].touched)">
                     <div *ngIf="reservasForm.controls['pista'].hasError('required')" class="error">
