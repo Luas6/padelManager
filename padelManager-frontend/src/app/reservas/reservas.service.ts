@@ -9,6 +9,7 @@ import { Reserva } from './reserva';
 export class ReservasService {
 
   private reservasURL = 'http://localhost:8080/api/v1/reservas';
+  private disponiblesURL = 'http://localhost:8080/api/v1/disponibles';
 
   constructor(private httpClient : HttpClient) { }
 
@@ -18,5 +19,13 @@ export class ReservasService {
 
   crearReserva(reserva: Reserva): Observable<Reserva[]>{
     return this.httpClient.post<Reserva[]>(this.reservasURL,reserva);
+  }
+
+  getHorasDisponibles(fecha: string): Observable<string[]>{
+    return this.httpClient.get<string[]>(`${this.disponiblesURL}/${fecha}`);
+  }
+
+  getPistasDisponibles(fecha: string, hora: string): Observable<number[]>{
+    return this.httpClient.get<number[]>(`${this.disponiblesURL}/${fecha}/${hora}`);
   }
 }

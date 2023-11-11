@@ -11,7 +11,10 @@ import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 })
 export class FormularioReservasComponent {
   reserva: Reserva = new Reserva();
-  listaDeReservasExistente: Reserva[] = [];
+
+  horasDisponibles: string[] = [];
+  pistasDisponibles: number[] = [];
+  
   reservasForm: FormGroup;
   errorMensaje: string = '';
 
@@ -25,10 +28,31 @@ export class FormularioReservasComponent {
     }
 
   ngOnInit(): void {
-    this.getReservasExistente();
+  }
+
+  loadHorasDisponibles() {
+    const fechaSeleccionada = this.reservasForm.get('fecha')?.value;
+
+    if (fechaSeleccionada) {
+      this.reservasService.getHorasDisponibles(fechaSeleccionada).subscribe((horas: string[]) => {
+        this.horasDisponibles = horas;
+      });
+    }
+  }
+
+  loadPistasDisponibles() {
+    const fechaSeleccionada = this.reservasForm.get('fecha')?.value;
+    const horaSeleccionada = this.reservasForm.get('hora')?.value;
+
+    if (fechaSeleccionada && horaSeleccionada) {
+      this.reservasService.getPistasDisponibles(fechaSeleccionada, horaSeleccionada).subscribe((pistas: number[]) => {
+        this.pistasDisponibles = pistas;
+      });
+    }
   }
 
   saveReserva() {
+    console.log(this.reservasForm.value);
     this.reservasService.crearReserva(this.reservasForm.value).subscribe(data => {
     },
       error => console.log(error));
@@ -43,14 +67,10 @@ export class FormularioReservasComponent {
       this.saveReserva();
       this.goToHome();
     } else {
-      this.errorMensaje = "La fecha y hora seleccionadas ya están reservadas.";
+      this.errorMensaje = "Revisa los campos del formulario";
     }
 
   }
 
-  getReservasExistente() {
-    this.reservasService.getListaReservas().subscribe((reservas: Reserva[]) => {
-      this.listaDeReservasExistente = reservas;
-    });
-  }
+  
 }

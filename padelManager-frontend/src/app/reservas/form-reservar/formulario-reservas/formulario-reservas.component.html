@@ -4,7 +4,7 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="reservasForm">
             <div class="form-group py-2">
                 <label for="fecha">Fecha:</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" formControlName="fecha">
+                <input type="date" class="form-control" id="fecha" name="fecha" formControlName="fecha" (change)="loadHorasDisponibles()">
                 <div *ngIf="reservasForm.controls['fecha'].invalid && (reservasForm.controls['fecha'].dirty || reservasForm.controls['fecha'].touched)">
                     <div *ngIf="reservasForm.controls['fecha'].hasError('required')" class="error">
                         La fecha es obligatoria.
@@ -14,7 +14,7 @@
 
             <div class="form-group py-2">
                 <label for="hora">Hora:</label>
-                <select class="form-control" id="hora" name="hora" formControlName="hora">
+                <select class="form-control" id="hora" name="hora" formControlName="hora" (change)="loadPistasDisponibles()">
                     <option value="" disabled selected>Selecciona una hora</option>
                     <option value="09:00">09:00 - 10:30</option>
                     <option value="10:30">10:30 - 12:00</option>

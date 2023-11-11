@@ -29,9 +29,9 @@ public class ReservasController {
         return reservasService.getReservasByFecha(fecha);
     }
 
-    @GetMapping("/disponibles/{dia}/{hora}")
-    public List<Integer> getPistasDisponibles(@PathVariable String dia, @PathVariable String hora) {
-        return reservasService.getPistasDisponibles(dia, hora);
+    @GetMapping("/disponibles/{fecha}/{hora}")
+    public List<Integer> getPistasDisponibles(@PathVariable String fecha, @PathVariable String hora) {
+        return reservasService.getPistasDisponibles(fecha, hora);
     }
     @GetMapping("/disponibles/{fecha}")
     public List<String> getHorasDisponibles(@PathVariable String fecha) {

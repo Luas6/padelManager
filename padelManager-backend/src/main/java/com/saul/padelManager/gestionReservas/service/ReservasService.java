@@ -37,9 +37,9 @@ public class ReservasService {
         return reservasOptional.get();
     }
 
-    public List<Integer> getPistasDisponibles(String dia, String hora) {
+    public List<Integer> getPistasDisponibles(String fecha, String hora) {
 
-        List<Reserva> reservas = reservasRepository.findByFechaAndHora(dia, hora);
+        List<Reserva> reservas = reservasRepository.findByFechaAndHora(fecha, hora);
 
         List<Integer> pistasDisponibles = new ArrayList<>();
         for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++){
