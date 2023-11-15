@@ -89,4 +89,12 @@ public class ReservasService {
         }
         return horasDisponibles;
     }
+
+    public List<Reserva> getReservasByUsuario(Long id_usuario) {
+        Optional<List<Reserva>> reservasOptional = reservasRepository.findByIdUsuario(id_usuario);
+        if(reservasOptional.isEmpty() || reservasOptional.get().isEmpty()){
+            throw new ResourceNotFoundException("Reservas no encontradas");
+        }
+        return reservasOptional.get();
+    }
 }

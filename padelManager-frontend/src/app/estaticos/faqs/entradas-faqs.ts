@@ -1,11 +1,11 @@
 export const FAQS = [
     {
-      pregunta: '¿Con cuanta antelación puedo reservar una pista?',
+      pregunta: '¿Con cuánta antelación puedo reservar una pista?',
       respuesta: 'Una cosa que nos diferencia del resto, es que aquí podrás reservar con toda la antelación que quieras, sin límites.'
     },
     {
       pregunta: '¿Cuál es la política de cancelación?',
-      respuesta: 'Puedes cancelar tu reserva hasta 24 horas antes de la hora programada.'
+      respuesta: 'Puedes cancelar tu reserva hasta 24 horas antes de la hora programada. En caso contrario tu usuario podría ser bloqueado durante un tiempo.'
     },
     {
       pregunta: '¿Cuánto tiempo puedo reservar una pista?',

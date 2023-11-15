@@ -16,18 +16,18 @@ public class Reserva {
     private String hora;
     @Column(name= "pista")
     private int pista;
-    @Column(name= "id_usuario")
-    private int id_usuario;
+    @Column(name= "idUsuario")
+    private Long idUsuario;
 
     public Reserva() {
     }
 
-    public Reserva(Long ID, String fecha, String hora, int pista, int id_usuario) {
+    public Reserva(Long ID, String fecha, String hora, int pista, Long idUsuario) {
         this.ID = ID;
         this.fecha = fecha;
         this.hora = hora;
         this.pista = pista;
-        this.id_usuario = id_usuario;
+        this.idUsuario = idUsuario;
     }
 
     public Long getID() {
@@ -62,11 +62,11 @@ public class Reserva {
         this.pista = pista;
     }
 
-    public int getId_usuario() {
-        return id_usuario;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+    public void setIdUsuario(Long id_usuario) {
+        this.idUsuario = id_usuario;
     }
 }
