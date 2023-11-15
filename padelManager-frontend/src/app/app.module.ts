@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +17,7 @@ import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagin
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BlogComponent } from './estaticos/blog/blog.component';
 import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
+import { FaqsComponent } from './estaticos/faqs/faqs.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +30,8 @@ import { FormularioReservasComponent } from './reservas/form-reservar/formulario
     HomeComponent,
     PaginaNoAutorizadoComponent,
     BlogComponent,
-    FormularioReservasComponent
+    FormularioReservasComponent,
+    FaqsComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { FormularioReservasComponent } from './reservas/form-reservar/formulario
     HttpClientModule,
     FormsModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatExpansionModule,
+    BrowserAnimationsModule
   ],
   providers: [
     JwtInterceptorInterceptor,
