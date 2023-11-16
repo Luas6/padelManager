@@ -24,6 +24,7 @@ export class FormularioReservasComponent {
         hora: new FormControl({value: '', disabled: true}, [Validators.required]),
         pista: new FormControl({value: '', disabled: true}, [Validators.required]),
         fecha: new FormControl('', [Validators.required]),
+        idUsuario: new FormControl(null)
       });
     }
 
@@ -61,14 +62,28 @@ export class FormularioReservasComponent {
       error => console.log(error));
   }
 
+  private comprobarIdSesion() {
+    const idSesion = localStorage.getItem('idSesion');
+    if (idSesion) {
+      console.log(idSesion)
+      this.reservasForm.controls['idUsuario'].setValue(parseInt(idSesion, 10));
+      return true;
+    }
+    return false;
+  }
+
   goToHome() {
     this.router.navigate(['']);
   }
 
   onSubmit() {
     if (this.reservasForm.valid) {
-      this.saveReserva();
-      this.goToHome();
+      if(this.comprobarIdSesion()){
+        this.saveReserva();
+        this.goToHome();
+      }else{
+        this.errorMensaje = "Asegurese de iniciar sesión";
+      }
     } else {
       this.errorMensaje = "Revisa los campos del formulario";
     }

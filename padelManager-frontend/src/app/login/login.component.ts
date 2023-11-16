@@ -52,9 +52,10 @@ export class LoginComponent implements OnInit{
     this.authService.loginUsuario(this.loginForm.value).subscribe(
       (data) => {
         console.log(data);
-        if (data.token) {
+        if (data.token && data.id) {
           // Almacenar el token en el local storage para su uso posterior
           localStorage.setItem('jwtToken', data.token);
+          localStorage.setItem('idSesion', (data.id).toString());
           this.authService.login();
           //console.log(this.authService.isLoggedIn());
           // Redireccionar a una página después del inicio de sesión exitoso
