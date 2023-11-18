@@ -1,23 +1,39 @@
-<nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-    <ul class="navbar-nav px-5">
+<nav class="navbar navbar-expand-sm bg-primary navbar-dark justify-content-between">
+    <ul class="navbar-nav px-5 gap-2">
         <li class="nav-item">
-            <a routerLink="" routerLinkActive="active" class="nav-link">Home </a>
+            <a routerLink="" routerLinkActive="active" class="nav-link">Home</a>
         </li>
         <li class="nav-item">
             <a routerLink="usuarios" routerLinkActive="active" class="nav-link">Usuarios</a>
         </li>
-        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === false">
-            <a routerLink="crear-usuario" routerLinkActive="active" class="nav-link">Registro</a>
+    </ul>
+    <ul class="navbar-nav px-5">
+        <li class="nav-item dropdown" *ngIf="!(isLoggedIn$ | async)">
+            <div ngbDropdown class="d-inline-block">
+                <button class="nav-link dropdown-toggle" id="loginDropdown" ngbDropdownToggle>
+                    👤
+                </button>
+                <div class="dropdown-menu" aria-labelledby="loginDropdown" ngbDropdownMenu>
+                    <a routerLink="crear-usuario" class="dropdown-item">Registro</a>
+                    <a routerLink="login-usuario" class="dropdown-item">Login</a>
+                </div>
+            </div>
         </li>
-        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === false">
-            <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Login</a>
-        </li>
-        <li class="nav-item" *ngIf="(isLoggedIn$ | async) === true">
-            <a routerLink="login-usuario" routerLinkActive="active" class="nav-link">Cerrar sesión</a>
+        
+        <!-- Cuando el usuario ESTÁ autenticado -->
+        <li class="nav-item dropdown" *ngIf="(isLoggedIn$ | async)">
+            <div ngbDropdown class="d-inline-block">
+                <button class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle>
+                    👤
+                </button>
+                <div class="dropdown-menu" aria-labelledby="userDropdown" ngbDropdownMenu>
+                    <a routerLink="perfil-usuario" class="dropdown-item">Ver Perfil</a>
+                    <a routerLink="login-usuario" class="dropdown-item">Cerrar Sesión</a>
+                </div>
+            </div>
         </li>
     </ul>
 </nav>
-
 <section class="container py-5">
     <router-outlet></router-outlet>
 </section>
