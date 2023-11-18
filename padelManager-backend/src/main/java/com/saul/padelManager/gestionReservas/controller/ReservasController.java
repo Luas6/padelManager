@@ -4,6 +4,7 @@ import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.service.ReservasService;
 import com.saul.padelManager.utils.ConstantesProyecto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,13 @@ public class ReservasController {
     }
 
     @PostMapping("/reservas")
-    public Reserva reservaUsuario(@RequestBody Reserva reserva) {
-        return reservasService.reservaUsuario(reserva);
+    public Reserva createUsuario(@RequestBody Reserva reserva) {
+        return reservasService.createReserva(reserva);
+    }
+
+    @DeleteMapping("/reservas/{id}")
+    public ResponseEntity<Reserva> deleteUsuario(@PathVariable Long id) {
+        reservasService.deleteUsuario(id);
+        return ResponseEntity.ok().build();
     }
 }

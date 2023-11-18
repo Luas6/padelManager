@@ -3,6 +3,7 @@ package com.saul.padelManager.gestionReservas.service;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
 import com.saul.padelManager.utils.ConstantesProyecto;
+import com.saul.padelManager.utils.FuncionesUtil;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,12 @@ public class ReservasService {
         return reservasRepository.findAll();
     }
 
-    public Reserva reservaUsuario(Reserva reserva) {
+    public Reserva createReserva(Reserva reserva) {
+        FuncionesUtil.comprobarNotNull(reserva.getFecha());
+        FuncionesUtil.comprobarNotNull(reserva.getHora());
+        FuncionesUtil.comprobarNotNull(reserva.getPista());
+        FuncionesUtil.comprobarNotNull(reserva.getIdUsuario());
+
         return reservasRepository.save(reserva);
     }
 
@@ -97,4 +103,11 @@ public class ReservasService {
         }
         return reservasOptional.get();
     }
+
+    public void deleteUsuario(Long id) {
+        Reserva reserva = reservasRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
+        reservasRepository.delete(reserva);
+    }
+
 }
