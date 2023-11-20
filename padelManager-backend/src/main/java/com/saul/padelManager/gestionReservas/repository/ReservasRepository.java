@@ -12,4 +12,7 @@ public interface ReservasRepository extends JpaRepository <Reserva,Long> {
     List<Reserva> findByFechaAndHora(String fecha, String hora);
 
     Optional<List<Reserva>> findByIdUsuario(Long idUsuario);
+
+    boolean existsByFechaAndHoraAndPista(String fecha, String hora, int pista);
+
 }

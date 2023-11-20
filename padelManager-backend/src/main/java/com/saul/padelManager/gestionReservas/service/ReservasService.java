@@ -4,6 +4,7 @@ import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
 import com.saul.padelManager.utils.ConstantesProyecto;
 import com.saul.padelManager.utils.FuncionesUtil;
+import com.saul.padelManager.utils.exceptions.ReservaExistenteException;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class ReservasService {
         FuncionesUtil.comprobarNotNull(reserva.getHora());
         FuncionesUtil.comprobarNotNull(reserva.getPista());
         FuncionesUtil.comprobarNotNull(reserva.getIdUsuario());
-
+        comprobarReservaExistente(reserva);
         return reservasRepository.save(reserva);
     }
 
@@ -108,6 +109,12 @@ public class ReservasService {
         Reserva reserva = reservasRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
         reservasRepository.delete(reserva);
+    }
+
+    private void comprobarReservaExistente(Reserva reserva) {
+        if (reservasRepository.existsByFechaAndHoraAndPista(reserva.getFecha(), reserva.getHora(), reserva.getPista())) {
+            throw new ReservaExistenteException("Ya hay una reserva en esta hora fecha y día.");
+        }
     }
 
 }

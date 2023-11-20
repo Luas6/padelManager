@@ -3,7 +3,7 @@
     <div *ngIf="isLoggedIn$ | async; else myLoginForm">
         <!-- Mostrar pantalla de cierre de sesión si la sesión está iniciada -->
         <h2>Sesión iniciada</h2>
-        <button (click)="logout()">Cerrar sesión</button>
+        <button (click)="logout()" class="btn btn-danger">Cerrar sesión</button>
     </div>
     <ng-template #myLoginForm>
         <div class="col-md-6 offset-md-3">
