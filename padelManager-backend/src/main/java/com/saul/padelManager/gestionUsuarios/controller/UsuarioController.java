@@ -4,9 +4,15 @@ import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
 import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
+import com.saul.padelManager.security.security.JwtUtils;
+import com.saul.padelManager.security.security.SecurityUtils;
 import com.saul.padelManager.utils.ConstantesProyecto;
+import com.saul.padelManager.utils.exceptions.BadCredentialsException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,9 +55,10 @@ public class UsuarioController {
         Usuario usuarioActualizado = usuarioService.updateUsuario(id, usuario);
         return ResponseEntity.ok(usuarioActualizado);
     }
-
     @DeleteMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id) {
+    public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id , HttpServletRequest request) {
+
+        SecurityUtils.validarPropietarioParaEliminarUsuario(id, request);
         usuarioService.deleteUsuario(id);
         return ResponseEntity.ok().build();
     }

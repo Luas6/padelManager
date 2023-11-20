@@ -46,6 +46,15 @@ public class JwtUtils {
         }
     }
 
+    public static Long getUserIdFromToken(String token) {
+        try {
+            Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+            return Long.parseLong(claims.getId());
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
     // Clase de ayuda para almacenar los datos extraídos del JWT
     public static record JwtData (Long userId,String userEmail){ }
 }
