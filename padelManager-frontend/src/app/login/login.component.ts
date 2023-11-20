@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit{
   logout(): void {
     console.log("Logout")
     this.authService.logout(); // Lógica para cerrar la sesión en tu servicio de autenticación
-    //this.isLoggedIn = false;
   }
   
   onSubmit() {

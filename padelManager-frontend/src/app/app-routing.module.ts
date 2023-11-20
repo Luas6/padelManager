@@ -10,6 +10,7 @@ import { PaginaNoAutorizadoComponent } from './utiles/pagina-no-autorizado/pagin
 import { guardAuthGuard } from './guard-auth.guard';
 import { BlogComponent } from './estaticos/blog/blog.component';
 import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
+import { PerfilUsuarioComponent } from './usuarios/perfil-usuario/perfil-usuario.component';
 
 const routes: Routes = [
   {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAuthGuard]},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAuthGuard]},
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
+  {path: 'perfil', component: PerfilUsuarioComponent},
 
   {path: 'reservas', component: FormularioReservasComponent},
 

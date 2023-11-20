@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BlogComponent } from './estaticos/blog/blog.component';
 import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
 import { FaqsComponent } from './estaticos/faqs/faqs.component';
+import { PerfilUsuarioComponent } from './usuarios/perfil-usuario/perfil-usuario.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FaqsComponent } from './estaticos/faqs/faqs.component';
     PaginaNoAutorizadoComponent,
     BlogComponent,
     FormularioReservasComponent,
-    FaqsComponent
+    FaqsComponent,
+    PerfilUsuarioComponent
   ],
   imports: [
     BrowserModule,

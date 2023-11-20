@@ -1,0 +1,12 @@
+<div *ngIf="usuario">
+    <h2>Perfil de {{ usuario.nombre }}</h2>
+    
+    <!-- Mostrar la información del usuario aquí, por ejemplo: -->
+    <p>Nombre: {{ usuario.nombre }}</p>
+    <p>Email: {{ usuario.correo }}</p>
+
+  </div>
+  
+<div *ngIf="!usuario">
+    <p>No se pudo cargar la información del usuario.</p>
+</div>
