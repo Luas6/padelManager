@@ -29,9 +29,9 @@ public class ReservasService {
     }
 
     public Reserva createReserva(Reserva reserva) {
-        FuncionesUtil.comprobarNotNull(reserva.getFecha());
-        FuncionesUtil.comprobarNotNull(reserva.getHora());
-        FuncionesUtil.comprobarNotNull(reserva.getPista());
+        FuncionesUtil.esFechaValida(reserva.getFecha());
+        FuncionesUtil.esHoraValida(reserva.getHora());
+        FuncionesUtil.esPistaValida(reserva.getPista());
         FuncionesUtil.comprobarNotNull(reserva.getIdUsuario());
         comprobarReservaExistente(reserva);
         return reservasRepository.save(reserva);
