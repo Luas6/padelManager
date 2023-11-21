@@ -36,6 +36,18 @@ public class ReservasController {
         return reservasService.getReservasByUsuario(usuarioId);
     }
 
+    @PostMapping("/reservas")
+    public Reserva createUsuario(@RequestBody Reserva reserva) {
+        return reservasService.createReserva(reserva);
+    }
+
+    @PreAuthorize("@securityUtils.validarPropietarioReserva(#id, #request)")
+    @DeleteMapping("/reservas/{id}")
+    public ResponseEntity<Reserva> deleteReserva(@PathVariable Long id) {
+        reservasService.deleteReserva(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/disponibles/{fecha}/{hora}")
     public List<Integer> getPistasDisponibles(@PathVariable String fecha, @PathVariable String hora) {
         return reservasService.getPistasDisponibles(fecha, hora);
@@ -43,17 +55,5 @@ public class ReservasController {
     @GetMapping("/disponibles/{fecha}")
     public List<String> getHorasDisponibles(@PathVariable String fecha) {
         return reservasService.getHorasDisponibles(fecha);
-    }
-
-    @PostMapping("/reservas")
-    public Reserva createUsuario(@RequestBody Reserva reserva) {
-        return reservasService.createReserva(reserva);
-    }
-
-    @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
-    @DeleteMapping("/reservas/{id}")
-    public ResponseEntity<Reserva> deleteUsuario(@PathVariable Long id) {
-        reservasService.deleteUsuario(id);
-        return ResponseEntity.ok().build();
     }
 }

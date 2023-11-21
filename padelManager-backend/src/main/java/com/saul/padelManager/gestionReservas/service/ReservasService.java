@@ -37,12 +37,34 @@ public class ReservasService {
         return reservasRepository.save(reserva);
     }
 
+    public Reserva getReservaById(Long id) {
+        Optional<Reserva> reservasOptional = reservasRepository.findById(id);
+        if(reservasOptional.isEmpty()){
+            throw new ResourceNotFoundException("Reservas no encontradas");
+        }
+        return reservasOptional.get();
+    }
+
     public List<Reserva> getReservasByFecha(String fecha) {
         Optional<List<Reserva>> reservasOptional = reservasRepository.findByFecha(fecha);
         if(reservasOptional.isEmpty() || reservasOptional.get().isEmpty()){
             throw new ResourceNotFoundException("Reservas no encontradas");
         }
         return reservasOptional.get();
+    }
+
+    public List<Reserva> getReservasByUsuario(Long id_usuario) {
+        Optional<List<Reserva>> reservasOptional = reservasRepository.findByIdUsuario(id_usuario);
+        if(reservasOptional.isEmpty() || reservasOptional.get().isEmpty()){
+            throw new ResourceNotFoundException("Reservas no encontradas");
+        }
+        return reservasOptional.get();
+    }
+
+    public void deleteReserva(Long id) {
+        Reserva reserva = reservasRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
+        reservasRepository.delete(reserva);
     }
 
     public List<Integer> getPistasDisponibles(String fecha, String hora) {
@@ -97,19 +119,6 @@ public class ReservasService {
         return horasDisponibles;
     }
 
-    public List<Reserva> getReservasByUsuario(Long id_usuario) {
-        Optional<List<Reserva>> reservasOptional = reservasRepository.findByIdUsuario(id_usuario);
-        if(reservasOptional.isEmpty() || reservasOptional.get().isEmpty()){
-            throw new ResourceNotFoundException("Reservas no encontradas");
-        }
-        return reservasOptional.get();
-    }
-
-    public void deleteUsuario(Long id) {
-        Reserva reserva = reservasRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
-        reservasRepository.delete(reserva);
-    }
 
     private void comprobarReservaExistente(Reserva reserva) {
         if (reservasRepository.existsByFechaAndHoraAndPista(reserva.getFecha(), reserva.getHora(), reserva.getPista())) {
