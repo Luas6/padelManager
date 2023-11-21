@@ -5,6 +5,7 @@ import com.saul.padelManager.gestionReservas.service.ReservasService;
 import com.saul.padelManager.utils.ConstantesProyecto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -49,6 +50,7 @@ public class ReservasController {
         return reservasService.createReserva(reserva);
     }
 
+    @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
     @DeleteMapping("/reservas/{id}")
     public ResponseEntity<Reserva> deleteUsuario(@PathVariable Long id) {
         reservasService.deleteUsuario(id);
