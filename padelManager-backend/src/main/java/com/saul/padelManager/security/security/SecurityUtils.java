@@ -11,17 +11,19 @@ public class SecurityUtils {
 
     @Autowired
     private ReservasService reservasService;
-    public static void validarPropietario(Long id, HttpServletRequest request) {
+    public static boolean validarPropietario(Long id, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         Long idUsuarioAutenticado = JwtUtils.getUserIdFromToken(token);
         compararIds(id, idUsuarioAutenticado);
+        return true;
     }
 
-    public void validarPropietarioReserva(Long idReserva, HttpServletRequest request) {
+    public boolean validarPropietarioReserva(Long idReserva, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         Long idUsuarioAutenticado = JwtUtils.getUserIdFromToken(token);
         Reserva reserva = reservasService.getReservaById(idReserva);
         compararIds(reserva.getIdUsuario(), idUsuarioAutenticado);
+        return true;
     }
 
     private static void compararIds(Long id, Long idUsuarioAutenticado) {

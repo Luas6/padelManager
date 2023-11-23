@@ -48,6 +48,10 @@ public class JwtUtils {
 
     public static Long getUserIdFromToken(String token) {
         try {
+            if (token != null && token.startsWith("Bearer ")) {
+                // Elimina los primeros 7 caracteres ("Bearer ") del token
+                token = token.substring(7);
+            }
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
             return Long.parseLong(claims.getId());
         } catch (Exception ex) {

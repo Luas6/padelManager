@@ -43,7 +43,7 @@ public class ReservasController {
         return reservasService.createReserva(reserva);
     }
 
-    //@PreAuthorize("@securityUtils.validarPropietarioReserva(#id, #request)")
+    @PreAuthorize("@securityUtils.validarPropietarioReserva(#id, #request)")
     @DeleteMapping("/reservas/{id}")
     public ResponseEntity<Reserva> deleteReserva(@PathVariable Long id , HttpServletRequest request) {
         reservasService.deleteReserva(id);
