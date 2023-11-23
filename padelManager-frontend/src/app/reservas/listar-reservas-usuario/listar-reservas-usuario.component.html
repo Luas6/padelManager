@@ -1,0 +1,29 @@
+<div class="container col-lg-10 mx-auto">
+    <h2 class="text-center"> Tus reservas</h2>
+    <table class = "table table-striped">
+        <thead>
+            <tr>
+                <th> Fecha</th>
+                <th> Hora </th>
+                <th> Pista</th>
+                <th> Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor = "let reserva of reservas" >
+                <td> {{ reserva.fecha }} </td>
+                <td> {{ reserva.hora }} </td>
+                <td> {{ reserva.pista }} </td>
+                <td>
+                    <!--
+                    <div class="d-flex justify-content-between">
+                        <button (click)="actualizarUsuario(usuario.id)" class="btn btn-primary">U</button>
+                        <button (click)="visualizarUsuario(usuario.id)" class="btn btn-secondary">R</button>
+                        <button (click)="eliminarUsuario(usuario.id)" class="btn btn-danger">D</button>
+                    </div>-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+

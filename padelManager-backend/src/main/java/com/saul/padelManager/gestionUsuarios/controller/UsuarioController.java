@@ -47,14 +47,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
+    //@PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
     @PutMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuario, HttpServletRequest request) {
         Usuario usuarioActualizado = usuarioService.updateUsuario(id, usuario);
         return ResponseEntity.ok(usuarioActualizado);
     }
 
-    @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
+    //@PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id , HttpServletRequest request) {
 

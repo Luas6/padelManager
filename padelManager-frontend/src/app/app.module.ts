@@ -19,6 +19,7 @@ import { BlogComponent } from './estaticos/blog/blog.component';
 import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
 import { FaqsComponent } from './estaticos/faqs/faqs.component';
 import { PerfilUsuarioComponent } from './usuarios/perfil-usuario/perfil-usuario.component';
+import { ListarReservasUsuarioComponent } from './reservas/listar-reservas-usuario/listar-reservas-usuario.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { PerfilUsuarioComponent } from './usuarios/perfil-usuario/perfil-usuario
     BlogComponent,
     FormularioReservasComponent,
     FaqsComponent,
-    PerfilUsuarioComponent
+    PerfilUsuarioComponent,
+    ListarReservasUsuarioComponent
   ],
   imports: [
     BrowserModule,

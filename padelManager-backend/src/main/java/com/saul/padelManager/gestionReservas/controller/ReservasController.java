@@ -3,6 +3,7 @@ package com.saul.padelManager.gestionReservas.controller;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.service.ReservasService;
 import com.saul.padelManager.utils.ConstantesProyecto;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,8 +32,9 @@ public class ReservasController {
         return reservasService.getReservasByFecha(fecha);
     }
 
+    //@PreAuthorize("@securityUtils.validarPropietario(#usuarioId, #request)")
     @GetMapping("/reservas/usuario/{usuarioId}")
-    public List<Reserva> getReservasByUsuario(@PathVariable Long usuarioId) {
+    public List<Reserva> getReservasByUsuario(@PathVariable Long usuarioId , HttpServletRequest request) {
         return reservasService.getReservasByUsuario(usuarioId);
     }
 
@@ -41,9 +43,9 @@ public class ReservasController {
         return reservasService.createReserva(reserva);
     }
 
-    @PreAuthorize("@securityUtils.validarPropietarioReserva(#id, #request)")
+    //@PreAuthorize("@securityUtils.validarPropietarioReserva(#id, #request)")
     @DeleteMapping("/reservas/{id}")
-    public ResponseEntity<Reserva> deleteReserva(@PathVariable Long id) {
+    public ResponseEntity<Reserva> deleteReserva(@PathVariable Long id , HttpServletRequest request) {
         reservasService.deleteReserva(id);
         return ResponseEntity.ok().build();
     }
