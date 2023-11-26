@@ -54,3 +54,17 @@
         </form>
     </div>
 </section>
+
+<ng-template #exitoModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Reservado</h4>
+    </div>
+    <div class="modal-body">
+      <p>Su reserva ha sido procesada con éxito.
+        Te esperamos en nuestras instalaciones.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success" (click)="close()">Cerrar</button>
+    </div>
+  </ng-template>

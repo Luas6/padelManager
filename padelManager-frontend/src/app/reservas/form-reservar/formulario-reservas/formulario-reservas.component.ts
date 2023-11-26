@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Reserva } from '../../reserva';
 import { ReservasService } from '../../reservas.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-formulario-reservas',
@@ -18,8 +19,14 @@ export class FormularioReservasComponent {
   reservasForm: FormGroup;
   errorMensaje: string = '';
 
+  private modalRef: any;
+  @ViewChild('exitoModal') exitoModal: any;
+
+
   constructor(private reservasService: ReservasService,
-    private router: Router) {
+    private router: Router,
+    private modalService: NgbModal,
+    ) {
       this.reservasForm = new FormGroup({
         hora: new FormControl({value: '', disabled: true}, [Validators.required]),
         pista: new FormControl({value: '', disabled: true}, [Validators.required]),
@@ -76,11 +83,20 @@ export class FormularioReservasComponent {
     this.router.navigate(['']);
   }
 
+  open(content: any) {
+    this.modalRef = this.modalService.open(content);
+  }
+
+  close() {
+    this.modalRef.close();
+    this.goToHome();
+  }
+  
   onSubmit() {
     if (this.reservasForm.valid) {
       if(this.comprobarIdSesion()){
         this.saveReserva();
-        this.goToHome();
+        this.open(this.exitoModal);
       }else{
         this.errorMensaje = "Asegurese de iniciar sesión";
       }
