@@ -30,13 +30,24 @@ export class FormularioReservasComponent {
       this.reservasForm = new FormGroup({
         hora: new FormControl({value: '', disabled: true}, [Validators.required]),
         pista: new FormControl({value: '', disabled: true}, [Validators.required]),
-        fecha: new FormControl('', [Validators.required]),
+        fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
         idUsuario: new FormControl(null)
       });
+      this.loadHorasDisponibles();
     }
 
   ngOnInit(): void {
   }
+
+  onFechaChange(increment: number) {
+    const currentDate = this.reservasForm.get('fecha')?.value;
+    if (currentDate) {
+        const newDate = new Date(currentDate);
+        newDate.setDate(newDate.getDate() + increment);
+        this.reservasForm.get('fecha')?.setValue(newDate.toISOString().split('T')[0]);
+        this.loadHorasDisponibles();
+    }
+}
 
   loadHorasDisponibles() {
     const fechaSeleccionada = this.reservasForm.get('fecha')?.value;

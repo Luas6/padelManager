@@ -4,13 +4,22 @@
         <form (ngSubmit)="onSubmit()" [formGroup]="reservasForm">
             <div class="form-group py-2">
                 <label for="fecha">Fecha:</label>
-                <input type="date" class="form-control" id="fecha" name="fecha" formControlName="fecha" (change)="loadHorasDisponibles()">
+                <div class="input-group">
+                    <button type="button" class="btn btn-secondary" (click)="onFechaChange(-1)">
+                        <img src="/assets/images/arrow-left.svg" class="flecha" alt="Flecha izquierda" />
+                    </button>
+                    <input type="date" class="form-control" id="fecha" name="fecha" formControlName="fecha" (change)="loadHorasDisponibles()">
+                    <button type="button" class="btn btn-secondary" (click)="onFechaChange(1)">
+                        <img src="/assets/images/arrow-right.svg" class="flecha" alt="Flecha derecha" />
+                    </button>
+                </div>
                 <div *ngIf="reservasForm.controls['fecha'].invalid && (reservasForm.controls['fecha'].dirty || reservasForm.controls['fecha'].touched)">
                     <div *ngIf="reservasForm.controls['fecha'].hasError('required')" class="error">
                         La fecha es obligatoria.
                     </div>
                 </div>
             </div>
+            
 
             <div class="form-group py-2">
                 <label for="hora">Hora:</label>
