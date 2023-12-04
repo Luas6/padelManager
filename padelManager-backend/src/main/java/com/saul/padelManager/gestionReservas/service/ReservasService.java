@@ -32,7 +32,7 @@ public class ReservasService {
         FuncionesUtil.esFechaValida(reserva.getFecha());
         FuncionesUtil.esHoraValida(reserva.getHora());
         FuncionesUtil.esPistaValida(reserva.getPista());
-        FuncionesUtil.comprobarNotNull(reserva.getIdUsuario());
+        FuncionesUtil.comprobarNotNull(reserva.getUsuarios());
         comprobarReservaExistente(reserva);
         return reservasRepository.save(reserva);
     }
@@ -54,11 +54,8 @@ public class ReservasService {
     }
 
     public List<Reserva> getReservasByUsuario(Long id_usuario) {
-        Optional<List<Reserva>> reservasOptional = reservasRepository.findByIdUsuario(id_usuario);
-        if(reservasOptional.isEmpty() || reservasOptional.get().isEmpty()){
-            throw new ResourceNotFoundException("Reservas no encontradas");
-        }
-        return reservasOptional.get();
+        List<Reserva> reservasOptional = reservasRepository.findByUsuarioId(id_usuario);
+        return reservasOptional;
     }
 
     public void deleteReserva(Long id) {

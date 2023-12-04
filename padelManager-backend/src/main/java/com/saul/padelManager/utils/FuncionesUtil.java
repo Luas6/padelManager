@@ -7,10 +7,12 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 
 public class FuncionesUtil {
     public static <T> void comprobarNotNull(T value) {
-        if (value == null || value instanceof String && ((String) value).isEmpty()) {
+        if (value == null || (value instanceof List && ((List<?>) value).isEmpty()) ||
+                (value instanceof String && ((String) value).isEmpty())) {
             throw new CampoRequeridoException("Faltan campos en la solicitud");
         }
     }

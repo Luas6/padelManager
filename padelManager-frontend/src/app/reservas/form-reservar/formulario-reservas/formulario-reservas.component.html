@@ -43,13 +43,11 @@
 
             <div class="form-group py-2">
                 <label for="pista">Pista:</label>
-                <select class="form-control" id="pista" name="pista" formControlName="pista" [disabled]="!reservasForm.get('hora')?.value">
-                    <option value="" disabled selected>Selecciona una pista</option>
-                    <option value="1" [disabled]="!pistasDisponibles.includes(1)">1</option>
-                    <option value="2" [disabled]="!pistasDisponibles.includes(2)">2</option>
-                    <option value="3" [disabled]="!pistasDisponibles.includes(3)">3</option>
-                    <option value="4" [disabled]="!pistasDisponibles.includes(4)">4</option>
-                </select>
+                <div class="pistas-container">
+                    <div *ngFor="let pista of pistasDisponibles" class="pista-item">
+                        <span>{{ pista }}</span>
+                    </div>
+                </div>
                 <div *ngIf="reservasForm.controls['pista'].invalid && (reservasForm.controls['pista'].dirty || reservasForm.controls['pista'].touched)">
                     <div *ngIf="reservasForm.controls['pista'].hasError('required')" class="error">
                         La pista es obligatoria.
