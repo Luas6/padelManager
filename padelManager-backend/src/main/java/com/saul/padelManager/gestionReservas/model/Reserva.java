@@ -19,7 +19,7 @@ public class Reserva {
     private String hora;
     @Column(name= "pista")
     private int pista;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "reserva_usuario",
             joinColumns = @JoinColumn(name = "reserva_id"),

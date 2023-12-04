@@ -1,5 +1,6 @@
 package com.saul.padelManager.gestionUsuarios.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.saul.padelManager.gestionUsuarios.repository.RolRepository;
 import jakarta.persistence.*;
 
@@ -15,8 +16,14 @@ public class Usuario {
     private String nombre;
     @Column(name= "apellidos")
     private String apellidos;
+
+    @Column(name= "nivel")
+    private Float nivel;
+
+    @JsonIgnore
     @Column(name= "correo")
     private String correo;
+    @JsonIgnore
     @Column(name = "contrasena")
     private String contrasena;
 
@@ -27,12 +34,13 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellidos, String correo, String contrasena, Rol rol) {
+    public Usuario(long id, String nombre, String apellidos, Float nivel, String correo, String contrasena) {
+        this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
+        this.nivel = nivel;
         this.correo = correo;
         this.contrasena = contrasena;
-        //this.rol = new Rol("cliente");
     }
 
     public long getId() {
@@ -57,6 +65,14 @@ public class Usuario {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
+    }
+
+    public Float getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(Float nivel) {
+        this.nivel = nivel;
     }
 
     public String getCorreo() {
