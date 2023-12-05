@@ -4,6 +4,8 @@ import { ReservasService } from '../../reservas.service';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EstadoReserva } from './EstadoReserva';
+import { PistaDetallada } from './PistaDetallada';
 
 @Component({
   selector: 'app-formulario-reservas',
@@ -14,7 +16,7 @@ export class FormularioReservasComponent {
   reserva: Reserva = new Reserva();
 
   horasDisponibles: string[] = [];
-  pistasDisponibles: number[] = [];
+  pistasDetalladas: PistaDetallada[] = [];
   
   reservasForm: FormGroup;
   errorMensaje: string = '';
@@ -61,15 +63,20 @@ export class FormularioReservasComponent {
     }
   }
 
-  loadPistasDisponibles() {
+  loadPistasDetalladas() {
     const fechaSeleccionada = this.reservasForm.get('fecha')?.value;
     const horaSeleccionada = this.reservasForm.get('hora')?.value;
-
+  
     if (fechaSeleccionada && horaSeleccionada) {
-      this.reservasService.getPistasDisponibles(fechaSeleccionada, horaSeleccionada).subscribe((pistas: number[]) => {
-        this.pistasDisponibles = pistas;
-        this.reservasForm.get('pista')?.enable();
-      });
+      this.reservasService.getPistasDetalladas(fechaSeleccionada, horaSeleccionada).subscribe(
+        (pistas: PistaDetallada[]) => {
+          this.pistasDetalladas = pistas;
+          this.reservasForm.get('pista')?.enable();
+        },
+        error => {
+          console.error(error);
+        }
+      );
     }
   }
 
@@ -88,6 +95,18 @@ export class FormularioReservasComponent {
       return true;
     }
     return false;
+  }
+
+  getEstadoReserva(reserva: Reserva): EstadoReserva {
+    if (!reserva) {
+      return EstadoReserva.Disponible;
+    }
+  
+    if (reserva.usuarios && reserva.usuarios.length === 4) {
+      return EstadoReserva.Cerrada;
+    }
+  
+    return EstadoReserva.Abierta;
   }
 
   goToHome() {

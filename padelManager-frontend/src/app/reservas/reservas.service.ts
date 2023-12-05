@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Reserva } from './reserva';
+import { PistaDetallada } from './form-reservar/formulario-reservas/PistaDetallada';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class ReservasService {
   private reservasUsuarioURL = 'http://localhost:8080/api/v1/reservas/usuario';
 
   private disponiblesURL = 'http://localhost:8080/api/v1/disponibles';
+  private detalladasURL = 'http://localhost:8080/api/v1/detalladas';
 
   constructor(private httpClient : HttpClient) { }
 /*
@@ -31,7 +33,7 @@ export class ReservasService {
     return this.httpClient.get<string[]>(`${this.disponiblesURL}/${fecha}`);
   }
 
-  getPistasDisponibles(fecha: string, hora: string): Observable<number[]>{
-    return this.httpClient.get<number[]>(`${this.disponiblesURL}/${fecha}/${hora}`);
+  getPistasDetalladas(fecha: string, hora: string): Observable<PistaDetallada[]>{
+    return this.httpClient.get<PistaDetallada[]>(`${this.detalladasURL}/${fecha}/${hora}`);
   }
 }

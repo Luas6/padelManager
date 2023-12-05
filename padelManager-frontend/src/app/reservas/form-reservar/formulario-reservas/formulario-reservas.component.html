@@ -23,7 +23,7 @@
 
             <div class="form-group py-2">
                 <label for="hora">Hora:</label>
-                <select class="form-control" id="hora" name="hora" formControlName="hora" (change)="loadPistasDisponibles()" [disabled]="!reservasForm.get('fecha')?.value">
+                <select class="form-control" id="hora" name="hora" formControlName="hora" (change)="loadPistasDetalladas()" [disabled]="!reservasForm.get('fecha')?.value">
                     <option value="" disabled selected>Selecciona una hora</option>
                     <option value="09:00" [disabled]="!horasDisponibles.includes('09:00')">09:00 - 10:30</option>
                     <option value="10:30" [disabled]="!horasDisponibles.includes('10:30')">10:30 - 12:00</option>
@@ -44,8 +44,10 @@
             <div class="form-group py-2">
                 <label for="pista">Pista:</label>
                 <div class="pistas-container">
-                    <div *ngFor="let pista of pistasDisponibles" class="pista-item">
-                        <span>{{ pista }}</span>
+                    <div *ngFor="let pista of pistasDetalladas" class="pista-item" [ngClass]="{'pista-ocupada': !pista.disponible}">
+                        <span>{{ pista.numero }}</span>
+                        <span *ngIf="!pista.disponible">Reservada</span>
+                        <!-- Puedes agregar más detalles aquí según sea necesario -->
                     </div>
                 </div>
                 <div *ngIf="reservasForm.controls['pista'].invalid && (reservasForm.controls['pista'].dirty || reservasForm.controls['pista'].touched)">

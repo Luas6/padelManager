@@ -9,10 +9,7 @@ import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReservasService {
@@ -64,23 +61,28 @@ public class ReservasService {
         reservasRepository.delete(reserva);
     }
 
-    public List<Integer> getPistasDisponibles(String fecha, String hora) {
+    public List<Map<String, Object>> getPistasDetalladas(String fecha, String hora) {
 
         List<Reserva> reservas = reservasRepository.findByFechaAndHora(fecha, hora);
 
-        List<Integer> pistasDisponibles = new ArrayList<>();
-        for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++){
-            pistasDisponibles.add(i);
-        }
-        for (Reserva reserva : reservas) {
-            int pistaOcupada = reserva.getPista();
-            if (pistasDisponibles.contains(pistaOcupada)) {
-                pistasDisponibles.remove(Integer.valueOf(pistaOcupada));
-                //Sin el Integer.ofValue trata el numero como el indice de la pista en vez de como la pista a eliminar
+        List<Map<String, Object>> pistasDetalladas = new ArrayList<>();
+        for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++) {
+            Map<String, Object> pistaInfo = new HashMap<>();
+            pistaInfo.put("numero", i);
+            pistaInfo.put("disponible", true);
+
+            for (Reserva reserva : reservas) {
+                if (reserva.getPista() == i) {
+                    pistaInfo.put("disponible", false);
+                    pistaInfo.put("reserva", reserva);
+                    break;
+                }
             }
+
+            pistasDetalladas.add(pistaInfo);
         }
 
-        return pistasDisponibles;
+        return pistasDetalladas;
     }
 
     public List<String> getHorasDisponibles(String fecha) {

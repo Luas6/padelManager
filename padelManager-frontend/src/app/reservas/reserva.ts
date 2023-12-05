@@ -3,6 +3,6 @@ export class Reserva {
     fecha?: string;
     hora?: string;
     pista?: string;
-    idUsuarios?: number[] | null[];
+    usuarios?: number[] | null[];
     abierta?: boolean;
 }

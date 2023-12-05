@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(ConstantesProyecto.BASE_API_PATH)
@@ -50,9 +51,9 @@ public class ReservasController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/disponibles/{fecha}/{hora}")
-    public List<Integer> getPistasDisponibles(@PathVariable String fecha, @PathVariable String hora) {
-        return reservasService.getPistasDisponibles(fecha, hora);
+    @GetMapping("/detalladas/{fecha}/{hora}")
+    public List<Map<String, Object>> getPistasDetalladas(@PathVariable String fecha, @PathVariable String hora) {
+        return reservasService.getPistasDetalladas(fecha, hora);
     }
     @GetMapping("/disponibles/{fecha}")
     public List<String> getHorasDisponibles(@PathVariable String fecha) {
