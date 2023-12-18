@@ -2,9 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { Reserva } from '../../reserva';
 import { ReservasService } from '../../reservas.service';
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EstadoReserva } from './EstadoReserva';
 import { PistaDetallada } from './PistaDetallada';
 
 @Component({
@@ -33,7 +32,7 @@ export class FormularioReservasComponent {
         hora: new FormControl({value: '', disabled: true}, [Validators.required]),
         pista: new FormControl({value: '', disabled: true}, [Validators.required]),
         fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
-        idUsuario: new FormControl(null)
+        usuarios: new FormControl(null)
       });
       this.loadHorasDisponibles();
     }
@@ -80,6 +79,10 @@ export class FormularioReservasComponent {
     }
   }
 
+  seleccionarPista(numeroPista: number) {
+    this.reservasForm.get('pista')?.setValue(numeroPista);
+  }
+
   saveReserva() {
     console.log(this.reservasForm.value);
     this.reservasService.crearReserva(this.reservasForm.value).subscribe(data => {
@@ -91,22 +94,10 @@ export class FormularioReservasComponent {
     const idSesion = localStorage.getItem('idSesion');
     if (idSesion) {
       console.log(idSesion)
-      this.reservasForm.controls['idUsuario'].setValue(parseInt(idSesion, 10));
+      this.reservasForm.controls['usuarios'].setValue(parseInt(idSesion, 10));
       return true;
     }
     return false;
-  }
-
-  getEstadoReserva(reserva: Reserva): EstadoReserva {
-    if (!reserva) {
-      return EstadoReserva.Disponible;
-    }
-  
-    if (reserva.usuarios && reserva.usuarios.length === 4) {
-      return EstadoReserva.Cerrada;
-    }
-  
-    return EstadoReserva.Abierta;
   }
 
   goToHome() {

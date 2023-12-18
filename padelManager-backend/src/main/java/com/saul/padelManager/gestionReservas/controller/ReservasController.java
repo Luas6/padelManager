@@ -40,7 +40,7 @@ public class ReservasController {
     }
 
     @PostMapping("/reservas")
-    public Reserva createUsuario(@RequestBody Reserva reserva) {
+    public Reserva createReserva(@RequestBody Reserva reserva) {
         return reservasService.createReserva(reserva);
     }
 

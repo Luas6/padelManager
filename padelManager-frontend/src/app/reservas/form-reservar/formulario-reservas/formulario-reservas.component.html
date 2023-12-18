@@ -45,10 +45,12 @@
                 <label for="pista">Pista:</label>
                 <div class="pistas-container">
                     <div *ngFor="let pista of pistasDetalladas" class="pista-item" [ngClass]="{'pista-ocupada': !pista.disponible}">
-                        <span>{{ pista.numero }}</span>
+                        <button *ngIf="pista.disponible" (click)="seleccionarPista(pista.numero)">
+                          {{ pista.numero }}
+                        </button>
                         <span *ngIf="!pista.disponible">Reservada</span>
                         <!-- Puedes agregar más detalles aquí según sea necesario -->
-                    </div>
+                      </div>
                 </div>
                 <div *ngIf="reservasForm.controls['pista'].invalid && (reservasForm.controls['pista'].dirty || reservasForm.controls['pista'].touched)">
                     <div *ngIf="reservasForm.controls['pista'].hasError('required')" class="error">
