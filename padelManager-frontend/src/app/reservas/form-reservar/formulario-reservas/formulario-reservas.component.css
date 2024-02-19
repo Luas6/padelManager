@@ -6,3 +6,19 @@
     width: 30px;
     height: 30px;
 }
+
+#registro-reservas .pista{
+    padding: 20px;
+}
+
+#registro-reservas .pista-libre{
+    box-shadow: 0 0 0 5px rgb(48, 194, 34);
+}
+
+#registro-reservas .pista-reservada{
+    box-shadow: 0 0 0 5px #df1717;
+}
+
+#registro-reservas .seleccionada{
+    box-shadow: 0 0 0 5px #f2ff37;
+}

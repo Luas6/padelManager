@@ -16,12 +16,14 @@ export class FormularioReservasComponent {
 
   horasDisponibles: string[] = [];
   pistasDetalladas: PistaDetallada[] = [];
+  pistaSeleccionada: number | null = null;
   
   reservasForm: FormGroup;
   errorMensaje: string = '';
 
   private modalRef: any;
   @ViewChild('exitoModal') exitoModal: any;
+  @ViewChild('reservaModal') reservaModal: any;
 
 
   constructor(private reservasService: ReservasService,
@@ -32,7 +34,8 @@ export class FormularioReservasComponent {
         hora: new FormControl({value: '', disabled: true}, [Validators.required]),
         pista: new FormControl({value: '', disabled: true}, [Validators.required]),
         fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
-        usuarios: new FormControl(null)
+        usuarios: new FormControl(null),
+        abierta: new FormControl(false)
       });
       this.loadHorasDisponibles();
     }
@@ -81,6 +84,17 @@ export class FormularioReservasComponent {
 
   seleccionarPista(numeroPista: number) {
     this.reservasForm.get('pista')?.setValue(numeroPista);
+    this.pistaSeleccionada = numeroPista;
+    this.open(this.reservaModal);
+  }
+
+  abrirPista() {
+    this.reservasForm.get('abierta')?.setValue(true);
+    this.onSubmit();
+  }
+  reservarPistaCompleta(){
+    this.reservasForm.get('abierta')?.setValue(false);
+    this.onSubmit();
   }
 
   saveReserva() {
@@ -93,8 +107,9 @@ export class FormularioReservasComponent {
   private comprobarIdSesion() {
     const idSesion = localStorage.getItem('idSesion');
     if (idSesion) {
-      console.log(idSesion)
-      this.reservasForm.controls['usuarios'].setValue(parseInt(idSesion, 10));
+      console.log(idSesion);
+      const usuario = { "id": parseInt(idSesion, 10) };
+      this.reservasForm.controls['usuarios'].setValue([usuario]);
       return true;
     }
     return false;
@@ -110,13 +125,14 @@ export class FormularioReservasComponent {
 
   close() {
     this.modalRef.close();
-    this.goToHome();
   }
   
   onSubmit() {
     if (this.reservasForm.valid) {
+        console.log("FormSubmit")
       if(this.comprobarIdSesion()){
         this.saveReserva();
+        this.close();
         this.open(this.exitoModal);
       }else{
         this.errorMensaje = "Asegurese de iniciar sesión";
@@ -124,8 +140,5 @@ export class FormularioReservasComponent {
     } else {
       this.errorMensaje = "Revisa los campos del formulario";
     }
-
   }
-
-  
 }

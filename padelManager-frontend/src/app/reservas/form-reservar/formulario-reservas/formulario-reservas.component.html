@@ -43,12 +43,17 @@
 
             <div class="form-group py-2">
                 <label for="pista">Pista:</label>
-                <div class="pistas-container">
-                    <div *ngFor="let pista of pistasDetalladas" class="pista-item" [ngClass]="{'pista-ocupada': !pista.disponible}">
-                        <button *ngIf="pista.disponible" (click)="seleccionarPista(pista.numero)">
-                          {{ pista.numero }}
-                        </button>
-                        <span *ngIf="!pista.disponible">Reservada</span>
+                <div class="pistas-container d-flex mt-2">
+                    <div *ngFor="let pista of pistasDetalladas" class="pista-item col-3 mx-2 d-flex justify-content-center" [ngClass]="{'pista-ocupada': !pista.disponible}">
+                        <div *ngIf="pista.disponible" class="pista pista-libre" [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada}">
+                            <span> Pista {{ pista.numero }}</span>
+                            <button type="button" (click)="seleccionarPista(pista.numero)">
+                                Reservar
+                            </button>
+                        </div>
+                        <div *ngIf="!pista.disponible" class="pista pista-reservada">
+                            <span> Pista {{ pista.numero }} reservada</span>
+                        </div>
                         <!-- Puedes agregar más detalles aquí según sea necesario -->
                       </div>
                 </div>
@@ -61,7 +66,7 @@
             <div *ngIf="errorMensaje" class="alert alert-danger py-2">
                 {{ errorMensaje }}
             </div>
-            <button type="submit" class="btn btn-primary py-2">Reservar</button>
+            <!--<button type="submit" class="btn btn-primary py-2">Reservar</button>-->
         </form>
     </div>
 </section>
@@ -79,3 +84,17 @@
       <button type="button" class="btn btn-success" (click)="close()">Cerrar</button>
     </div>
   </ng-template>
+
+  <ng-template #reservaModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Reserva</h4>
+    </div>
+    <div class="modal-body">
+        <p>¿Qué acción deseas realizar?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="reservarPistaCompleta()">Reservar Pista Completa</button>
+        <button type="button" class="btn btn-success" (click)="abrirPista()">Abrir Pista</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+    </div>
+</ng-template>

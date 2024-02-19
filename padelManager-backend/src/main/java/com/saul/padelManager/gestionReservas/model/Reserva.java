@@ -27,12 +27,12 @@ public class Reserva {
     )
     private List<Usuario> usuarios = new ArrayList<>(4);
     @Column(name= "abierta")
-    private boolean abierta;
+    private Boolean abierta;
 
     public Reserva() {
     }
 
-    public Reserva(Long ID, String fecha, String hora, int pista, List<Usuario> usuarios, boolean abierta) {
+    public Reserva(Long ID, String fecha, String hora, int pista, List<Usuario> usuarios, Boolean abierta) {
         this.ID = ID;
         this.fecha = fecha;
         this.hora = hora;
@@ -81,11 +81,11 @@ public class Reserva {
         this.usuarios = usuarios;
     }
 
-    public boolean isAbierta() {
+    public Boolean isAbierta() {
         return abierta;
     }
 
-    public void setAbierta(boolean abierta) {
+    public void setAbierta(Boolean abierta) {
         this.abierta = abierta;
     }
 }
