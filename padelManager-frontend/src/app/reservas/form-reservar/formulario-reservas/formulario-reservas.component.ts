@@ -17,7 +17,7 @@ export class FormularioReservasComponent {
   horasDisponibles: string[] = [];
   pistasDetalladas: PistaDetallada[] = [];
   pistaSeleccionada: number | null = null;
-  
+
   reservasForm: FormGroup;
   errorMensaje: string = '';
 
@@ -29,16 +29,16 @@ export class FormularioReservasComponent {
   constructor(private reservasService: ReservasService,
     private router: Router,
     private modalService: NgbModal,
-    ) {
-      this.reservasForm = new FormGroup({
-        hora: new FormControl({value: '', disabled: true}, [Validators.required]),
-        pista: new FormControl({value: '', disabled: true}, [Validators.required]),
-        fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
-        usuarios: new FormControl(null),
-        abierta: new FormControl(false)
-      });
-      this.loadHorasDisponibles();
-    }
+  ) {
+    this.reservasForm = new FormGroup({
+      hora: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      pista: new FormControl({ value: '', disabled: true }, [Validators.required]),
+      fecha: new FormControl(new Date().toISOString().split('T')[0], [Validators.required]),
+      usuarios: new FormControl(null),
+      abierta: new FormControl(false)
+    });
+    this.loadHorasDisponibles();
+  }
 
   ngOnInit(): void {
   }
@@ -46,19 +46,19 @@ export class FormularioReservasComponent {
   onFechaChange(increment: number) {
     const currentDate = this.reservasForm.get('fecha')?.value;
     if (currentDate) {
-        const newDate = new Date(currentDate);
-        newDate.setDate(newDate.getDate() + increment);
-        this.reservasForm.get('fecha')?.setValue(newDate.toISOString().split('T')[0]);
-        this.loadHorasDisponibles();
+      const newDate = new Date(currentDate);
+      newDate.setDate(newDate.getDate() + increment);
+      this.reservasForm.get('fecha')?.setValue(newDate.toISOString().split('T')[0]);
+      this.loadHorasDisponibles();
     }
-}
+  }
 
   loadHorasDisponibles() {
     const fechaSeleccionada = this.reservasForm.get('fecha')?.value;
 
     if (fechaSeleccionada) {
       this.reservasService.getHorasDisponibles(fechaSeleccionada).subscribe((horas: string[]) => {
-        console.log("Horas"+horas);        
+        console.log("Horas" + horas);
         this.horasDisponibles = horas;
         this.reservasForm.get('hora')?.enable();
       });
@@ -68,7 +68,7 @@ export class FormularioReservasComponent {
   loadPistasDetalladas() {
     const fechaSeleccionada = this.reservasForm.get('fecha')?.value;
     const horaSeleccionada = this.reservasForm.get('hora')?.value;
-  
+
     if (fechaSeleccionada && horaSeleccionada) {
       this.reservasService.getPistasDetalladas(fechaSeleccionada, horaSeleccionada).subscribe(
         (pistas: PistaDetallada[]) => {
@@ -92,7 +92,7 @@ export class FormularioReservasComponent {
     this.reservasForm.get('abierta')?.setValue(true);
     this.onSubmit();
   }
-  reservarPistaCompleta(){
+  reservarPistaCompleta() {
     this.reservasForm.get('abierta')?.setValue(false);
     this.onSubmit();
   }
@@ -126,15 +126,15 @@ export class FormularioReservasComponent {
   close() {
     this.modalRef.close();
   }
-  
+
   onSubmit() {
     if (this.reservasForm.valid) {
-        console.log("FormSubmit")
-      if(this.comprobarIdSesion()){
+      console.log("FormSubmit")
+      if (this.comprobarIdSesion()) {
         this.saveReserva();
         this.close();
         this.open(this.exitoModal);
-      }else{
+      } else {
         this.errorMensaje = "Asegurese de iniciar sesión";
       }
     } else {

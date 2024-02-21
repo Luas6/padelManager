@@ -70,20 +70,28 @@ public class ReservasService {
     public List<Map<String, Object>> getPistasDetalladas(String fecha, String hora) {
 
         List<Reserva> reservas = reservasRepository.findByFechaAndHora(fecha, hora);
-
         List<Map<String, Object>> pistasDetalladas = new ArrayList<>();
         for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++) {
+            int huecos=0;
+            boolean disponible=true;
+            boolean abierta=false;
             Map<String, Object> pistaInfo = new HashMap<>();
-            pistaInfo.put("numero", i);
-            pistaInfo.put("disponible", true);
-
             for (Reserva reserva : reservas) {
                 if (reserva.getPista() == i) {
-                    pistaInfo.put("disponible", false);
-                    pistaInfo.put("reserva", reserva);
+                    if(reserva.isAbierta()){
+                        huecos=4-reserva.getUsuarios().size();
+                        abierta=true;
+                    }else{
+                        disponible=false;
+                    }
                     break;
                 }
             }
+
+            pistaInfo.put("numero", i);
+            pistaInfo.put("disponible", disponible);
+            pistaInfo.put("huecos", huecos);
+            pistaInfo.put("abierta", abierta);
 
             pistasDetalladas.add(pistaInfo);
         }
