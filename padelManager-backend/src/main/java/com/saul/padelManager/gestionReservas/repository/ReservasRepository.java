@@ -19,4 +19,5 @@ public interface ReservasRepository extends JpaRepository <Reserva,Long> {
     List<Reserva> findByUsuarioId(@Param("idUsuario") Long idUsuario);
     boolean existsByFechaAndHoraAndPista(String fecha, String hora, int pista);
 
+    List<Reserva> findByAbiertaTrue();
 }

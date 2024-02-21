@@ -41,7 +41,8 @@ public class SecurityConfig {
                         ConstantesProyecto.BASE_API_PATH + "disponibles/*",
                         ConstantesProyecto.BASE_API_PATH + "disponibles/*/*",
                         ConstantesProyecto.BASE_API_PATH + "detalladas/*/*",
-                        ConstantesProyecto.BASE_API_PATH + "enviar-correo"
+                        ConstantesProyecto.BASE_API_PATH + "enviar-correo",
+                        ConstantesProyecto.BASE_API_PATH + "abiertas"
                 ).permitAll()
                 .and()
                 .authorizeHttpRequests().requestMatchers(

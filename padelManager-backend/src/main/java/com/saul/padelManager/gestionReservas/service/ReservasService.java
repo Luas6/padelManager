@@ -1,11 +1,15 @@
 package com.saul.padelManager.gestionReservas.service;
 
+import com.saul.padelManager.gestionReservas.model.AbiertasForm;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
+import com.saul.padelManager.gestionUsuarios.model.Usuario;
+import com.saul.padelManager.gestionUsuarios.service.UsuarioService;
 import com.saul.padelManager.utils.ConstantesProyecto;
 import com.saul.padelManager.utils.FuncionesUtil;
 import com.saul.padelManager.utils.exceptions.ReservaExistenteException;
 import com.saul.padelManager.utils.exceptions.ResourceNotFoundException;
+import com.saul.padelManager.utils.exceptions.UsuarioConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +25,8 @@ public class ReservasService {
         this.reservasRepository = reservasRepository;
     }
 
+    @Autowired
+    UsuarioService usuarioService;
     public List<Reserva> getAllReservas() {
         return reservasRepository.findAll();
     }
@@ -118,11 +124,43 @@ public class ReservasService {
         return horasDisponibles;
     }
 
-
     private void comprobarReservaExistente(Reserva reserva) {
         if (reservasRepository.existsByFechaAndHoraAndPista(reserva.getFecha(), reserva.getHora(), reserva.getPista())) {
             throw new ReservaExistenteException("Ya hay una reserva en esta hora fecha y día.");
         }
     }
 
+    public void unirseAReserva(AbiertasForm abiertasForm) {
+        Long idReserva = abiertasForm.idReserva();
+        Long idUsuario = abiertasForm.idUsuario();
+
+        FuncionesUtil.comprobarNotNull(idReserva);
+        FuncionesUtil.comprobarNotNull(idUsuario);
+
+        Reserva reserva = getReservaById(idReserva);
+        if (!reserva.isAbierta()) {
+            throw new ReservaExistenteException("La reserva no está abierta para unirse.");
+        }
+        List<Usuario> usuarios = reserva.getUsuarios();
+        if(usuarios.size()>3){
+            throw new UsuarioConflictException("La reserva ya está llena");
+        }
+        for (Usuario usuario : usuarios) {
+            if (usuario.getId()== idUsuario) {
+                throw new UsuarioConflictException("El usuario ya está unido a esta reserva.");
+            }
+        }
+
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
+        usuarios.add(usuario);
+        if(usuarios.size()>3){
+            reserva.setAbierta(false);
+        }
+        reservasRepository.save(reserva);
+    }
+
+    public List<Reserva> getReservasAbiertas() {
+        return reservasRepository.findByAbiertaTrue();
+    }
 }
+
