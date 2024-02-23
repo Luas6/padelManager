@@ -1,6 +1,7 @@
 package com.saul.padelManager.gestionUsuarios.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.saul.padelManager.gestionUsuarios.repository.RolRepository;
 import jakarta.persistence.*;
 
@@ -20,10 +21,9 @@ public class Usuario {
     @Column(name= "nivel")
     private Float nivel;
 
-    @JsonIgnore
     @Column(name= "correo")
     private String correo;
-    @JsonIgnore
+
     @Column(name = "contrasena")
     private String contrasena;
 
@@ -82,11 +82,12 @@ public class Usuario {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
-
+    @JsonIgnore
     public String getContrasena() {
         return contrasena;
     }
 
+    @JsonProperty
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
     }

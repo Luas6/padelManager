@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PistaDetallada } from './PistaDetallada';
+import { PistaAbierta } from './PistaAbierta';
 
 @Component({
   selector: 'app-formulario-reservas',
@@ -17,7 +18,7 @@ export class FormularioReservasComponent {
   horasDisponibles: string[] = [];
   pistasDetalladas: PistaDetallada[] = [];
   pistaSeleccionada: number | null = null;
-
+  pistaAbierta: PistaAbierta = new PistaAbierta();
   reservasForm: FormGroup;
   errorMensaje: string = '';
 
@@ -86,6 +87,19 @@ export class FormularioReservasComponent {
     this.reservasForm.get('pista')?.setValue(numeroPista);
     this.pistaSeleccionada = numeroPista;
     this.open(this.reservaModal);
+  }
+
+  unirseAPista(id_pista: number){
+    this.pistaAbierta.idReserva = id_pista;
+    const idSesion = localStorage.getItem('idSesion');
+    if(idSesion!=null){
+      this.pistaAbierta.idUsuario = +idSesion;
+      this.reservasService.unirseAReserva(this.pistaAbierta).subscribe(data => {
+      },
+        error => console.log(error));
+    }else{
+      this.errorMensaje = "Asegurese de iniciar sesión";
+    }
   }
 
   abrirPista() {

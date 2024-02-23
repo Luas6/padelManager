@@ -75,6 +75,7 @@ public class ReservasService {
             int huecos=0;
             boolean disponible=true;
             boolean abierta=false;
+            Long reserva_id = null;
             Map<String, Object> pistaInfo = new HashMap<>();
             for (Reserva reserva : reservas) {
                 if (reserva.getPista() == i) {
@@ -84,6 +85,7 @@ public class ReservasService {
                     }else{
                         disponible=false;
                     }
+                    reserva_id = reserva.getID();
                     break;
                 }
             }
@@ -92,6 +94,7 @@ public class ReservasService {
             pistaInfo.put("disponible", disponible);
             pistaInfo.put("huecos", huecos);
             pistaInfo.put("abierta", abierta);
+            pistaInfo.put("reserva_id", reserva_id);
 
             pistasDetalladas.add(pistaInfo);
         }

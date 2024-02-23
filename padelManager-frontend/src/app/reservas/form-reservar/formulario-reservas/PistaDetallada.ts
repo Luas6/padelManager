@@ -3,4 +3,5 @@ export interface PistaDetallada {
   disponible: boolean;
   huecos: number;
   abierta: boolean;
+  reserva_id: number | null;
 }

@@ -49,7 +49,7 @@
                 <label for="pista">Pista:</label>
                 <div class="pistas-container d-flex mt-2">
                     <div *ngFor="let pista of pistasDetalladas"
-                        class="pista-item col-3 mx-2 d-flex justify-content-center" [ngClass]="{
+                        class="pista-item col-3 d-flex justify-content-center" [ngClass]="{
                             'pista-ocupada': !pista.disponible,
                             'pista-abierta': pista.disponible && pista.abierta
                         }">
@@ -62,13 +62,13 @@
                             </button>
                         </div>
                         <!-- Pista abierta -->
-                        <div *ngIf="pista.disponible && pista.abierta" class="pista pista-libre pista-abierta"
+                        <div *ngIf="pista.disponible && pista.abierta && pista.reserva_id != null" class="pista pista-libre pista-abierta"
                             [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}">
                             <span> Pista {{ pista.numero }} abierta</span>
                             <span> Quedan {{ pista.huecos }} huecos</span>
-                            <!--<button type="button" (click)="unirseAPista(pista.numero)">
+                            <button type="button" (click)="unirseAPista(pista.reserva_id)">
                                 Reservar
-                            </button>-->
+                            </button>
                         </div>
                         <div *ngIf="!pista.disponible" class="pista pista-reservada">
                             <span> Pista {{ pista.numero }} reservada</span>
