@@ -49,29 +49,26 @@
                 <label for="pista">Pista:</label>
                 <div class="pistas-container d-flex mt-2">
                     <div *ngFor="let pista of pistasDetalladas"
-                        class="pista-item col-3 d-flex justify-content-center" [ngClass]="{
-                            'pista-ocupada': !pista.disponible,
-                            'pista-abierta': pista.disponible && pista.abierta
-                        }">
+                        class="pista-item col-3 d-flex justify-content-center">
                         <!-- Pista libre -->
                         <div *ngIf="pista.disponible && !pista.abierta" class="pista pista-libre"
                             [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}">
-                            <span> Pista {{ pista.numero }}</span>
+                            <span class="text-center"> Pista {{ pista.numero }}</span>
                             <button type="button" (click)="seleccionarPista(pista.numero)">
                                 Reservar
                             </button>
                         </div>
                         <!-- Pista abierta -->
-                        <div *ngIf="pista.disponible && pista.abierta && pista.reserva_id != null" class="pista pista-libre pista-abierta"
+                        <div *ngIf="pista.disponible && pista.abierta && pista.reserva_id != null" class="pista pista-abierta"
                             [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}">
-                            <span> Pista {{ pista.numero }} abierta</span>
-                            <span> Quedan {{ pista.huecos }} huecos</span>
-                            <button type="button" (click)="unirseAPista(pista.reserva_id)">
+                            <span class="text-center"> Pista {{ pista.numero }} abierta</span>
+                            <span class="text-center"> Quedan {{ pista.huecos }} huecos</span>
+                            <button type="button" (click)="seleccionarPistaAbierta(pista.reserva_id)">
                                 Reservar
                             </button>
                         </div>
                         <div *ngIf="!pista.disponible" class="pista pista-reservada">
-                            <span> Pista {{ pista.numero }} reservada</span>
+                            <span class="text-center"> Pista {{ pista.numero }} reservada</span>
                         </div>
                         <!-- Puedes agregar más detalles aquí según sea necesario -->
                     </div>
@@ -115,6 +112,19 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="reservarPistaCompleta()">Reservar Pista Completa</button>
         <button type="button" class="btn btn-success" (click)="abrirPista()">Abrir Pista</button>
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
+    </div>
+</ng-template>
+
+<ng-template #abiertaModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Confirmar Reserva</h4>
+    </div>
+    <div class="modal-body">
+        <p>¿Qué acción deseas realizar?</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="unirseAPista()">Unirse a Pista</button>
         <button type="button" class="btn btn-secondary" (click)="modal.dismiss()">Cancelar</button>
     </div>
 </ng-template>

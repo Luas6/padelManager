@@ -1,8 +1,10 @@
+import { Usuario } from "../usuarios/usuario";
+
 export class Reserva {
     id!: number;
     fecha?: string;
     hora?: string;
     pista?: string;
-    usuarios?: number[] | null[];
+    usuarios?: Usuario[];
     abierta?: boolean;
 }

@@ -13,7 +13,10 @@ import com.saul.padelManager.utils.exceptions.UsuarioConflictException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ReservasService {
@@ -57,8 +60,14 @@ public class ReservasService {
     }
 
     public List<Reserva> getReservasByUsuario(Long id_usuario) {
-        List<Reserva> reservasOptional = reservasRepository.findByUsuarioId(id_usuario);
-        return reservasOptional;
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String fechaActual = now.format(formatter);
+
+        List<Reserva> reservas = reservasRepository.findByUsuarioId(id_usuario);
+        return reservas.stream()
+                .filter(reserva -> reserva.getFecha().compareTo(fechaActual) > 0)
+                .collect(Collectors.toList());
     }
 
     public void deleteReserva(Long id) {

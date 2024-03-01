@@ -10,7 +10,9 @@
 #registro-reservas .pista{
     display: flex;
     flex-direction: column;
+    margin: 0 20px;
     padding: 20px;
+    width: 100%;
 }
 
 #registro-reservas .pista-libre{
@@ -19,6 +21,10 @@
 
 #registro-reservas .pista-reservada{
     box-shadow: 0 0 0 5px #df1717;
+}
+
+#registro-reservas .pista-abierta{
+    box-shadow: 0 0 0 5px #2817df;
 }
 
 #registro-reservas .seleccionada{

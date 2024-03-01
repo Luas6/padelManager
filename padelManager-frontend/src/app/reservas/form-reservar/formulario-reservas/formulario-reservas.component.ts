@@ -25,6 +25,7 @@ export class FormularioReservasComponent {
   private modalRef: any;
   @ViewChild('exitoModal') exitoModal: any;
   @ViewChild('reservaModal') reservaModal: any;
+  @ViewChild('abiertaModal') abiertaModal: any;
 
 
   constructor(private reservasService: ReservasService,
@@ -64,6 +65,10 @@ export class FormularioReservasComponent {
         this.reservasForm.get('hora')?.enable();
       });
     }
+
+    if(this.reservasForm.get('hora')?.value){
+      this.loadPistasDetalladas();
+    }
   }
 
   loadPistasDetalladas() {
@@ -88,11 +93,17 @@ export class FormularioReservasComponent {
     this.pistaSeleccionada = numeroPista;
     this.open(this.reservaModal);
   }
+  
+  seleccionarPistaAbierta(numeroPista: number) {
+    this.pistaSeleccionada = numeroPista;
+    this.open(this.abiertaModal);
+  }
 
-  unirseAPista(id_pista: number){
-    this.pistaAbierta.idReserva = id_pista;
+  unirseAPista(){
     const idSesion = localStorage.getItem('idSesion');
-    if(idSesion!=null){
+    if(idSesion!=null && this.pistaSeleccionada!=null){
+    this.pistaAbierta.idReserva = this.pistaSeleccionada;
+    
       this.pistaAbierta.idUsuario = +idSesion;
       this.reservasService.unirseAReserva(this.pistaAbierta).subscribe(data => {
       },

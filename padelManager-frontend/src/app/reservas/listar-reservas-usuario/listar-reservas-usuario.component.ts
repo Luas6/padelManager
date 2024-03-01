@@ -25,6 +25,9 @@ export class ListarReservasUsuarioComponent {
       const idUsuario = +idSesion;
       this.reservasService.getReservaUsuario(idUsuario).subscribe(
         (reservas: Reserva[]) => {
+          reservas.forEach(element => {
+            console.log(element);
+          });
           this.reservas = reservas;
         },
         (error) => {

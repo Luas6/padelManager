@@ -1,29 +1,40 @@
 <div class="container col-lg-10 mx-auto">
     <h2 class="text-center"> Tus reservas</h2>
-    <table class = "table table-striped">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th> Fecha</th>
                 <th> Hora </th>
                 <th> Pista</th>
-                <th> Acciones</th>
+                <th> Abierta</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor = "let reserva of reservas" >
+            <tr *ngFor="let reserva of reservas">
                 <td> {{ reserva.fecha }} </td>
                 <td> {{ reserva.hora }} </td>
                 <td> {{ reserva.pista }} </td>
+
                 <td>
-                    <!--
-                    <div class="d-flex justify-content-between">
-                        <button (click)="actualizarUsuario(usuario.id)" class="btn btn-primary">U</button>
-                        <button (click)="visualizarUsuario(usuario.id)" class="btn btn-secondary">R</button>
-                        <button (click)="eliminarUsuario(usuario.id)" class="btn btn-danger">D</button>
-                    </div>-->
+                    <span *ngIf="reserva.abierta; else cerrada">
+                        <span ngbPopover="Aún no están los 4 jugadores" triggers="mouseenter" popoverTitle="Mensaje"
+                            placement="top">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </span>
+                        Abierta
+                    </span>
+                    <ng-template #cerrada>Cerrada</ng-template>
                 </td>
-            </tr>
+                <td>
+                    <ul>
+                      <li *ngIf="reserva.usuarios">
+                        <ng-container *ngFor="let usuario of reserva.usuarios">
+                          <span *ngIf="usuario && usuario.nombre && usuario.apellidos">{{ usuario.nombre }}</span>
+                        </ng-container>
+                      </li>
+                    </ul>
+                  </td>
+
         </tbody>
     </table>
 </div>
-
