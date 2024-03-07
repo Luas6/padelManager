@@ -7,16 +7,26 @@
     height: 30px;
 }
 
+#registro-reservas .pistas-container{
+    flex-wrap: wrap;
+    row-gap: 30px;
+}
+
 #registro-reservas .pista{
     display: flex;
     flex-direction: column;
     margin: 0 20px;
     padding: 20px;
     width: 100%;
+    justify-content: space-between;
+}
+
+#registro-reservas .hueco-libre{
+    color: #258d1b;
 }
 
 #registro-reservas .pista-libre{
-    box-shadow: 0 0 0 5px rgb(48, 194, 34);
+    box-shadow: 0 0 0 5px #30c222;
 }
 
 #registro-reservas .pista-reservada{
@@ -29,4 +39,8 @@
 
 #registro-reservas .seleccionada{
     box-shadow: 0 0 0 5px #f2ff37;
+}
+
+#registro-reservas .pista-propia {
+    box-shadow: 0 0 10px 4px #be06a0;
 }

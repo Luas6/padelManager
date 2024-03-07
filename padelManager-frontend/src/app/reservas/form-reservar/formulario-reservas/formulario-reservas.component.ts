@@ -80,6 +80,16 @@ export class FormularioReservasComponent {
         (pistas: PistaDetallada[]) => {
           this.pistasDetalladas = pistas;
           this.reservasForm.get('pista')?.enable();
+          // Obtener el ID del usuario de la sesión
+          const idSesion = localStorage.getItem('idSesion');
+          if (idSesion) {
+            const idUsuario = parseInt(idSesion, 10);
+
+            // Iterar sobre las pistas y establecer la propiedad pista_propia
+            this.pistasDetalladas.forEach(pista => {
+              pista.pista_propia = pista.usuarios.some(usuario => usuario.id === idUsuario);
+            });
+          }
         },
         error => {
           console.error(error);
@@ -129,6 +139,7 @@ export class FormularioReservasComponent {
       error => console.log(error));
   }
 
+//Recuperar JWT
   private comprobarIdSesion() {
     const idSesion = localStorage.getItem('idSesion');
     if (idSesion) {
@@ -140,10 +151,12 @@ export class FormularioReservasComponent {
     return false;
   }
 
+  //Routing
   goToHome() {
     this.router.navigate(['']);
   }
 
+  //Funciones para los modales
   open(content: any) {
     this.modalRef = this.modalService.open(content);
   }

@@ -2,7 +2,6 @@ package com.saul.padelManager.gestionUsuarios.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.saul.padelManager.gestionUsuarios.repository.RolRepository;
 import jakarta.persistence.*;
 
 import java.util.Objects;

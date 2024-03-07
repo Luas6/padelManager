@@ -49,28 +49,53 @@
                 <label for="pista">Pista:</label>
                 <div class="pistas-container d-flex mt-2">
                     <div *ngFor="let pista of pistasDetalladas"
-                        class="pista-item col-3 d-flex justify-content-center">
+                        class="pista-item col-12 col-md-6 col-xl-3 d-flex justify-content-center">
                         <!-- Pista libre -->
                         <div *ngIf="pista.disponible && !pista.abierta" class="pista pista-libre"
                             [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}">
                             <span class="text-center"> Pista {{ pista.numero }}</span>
+                            <div *ngIf="pista.usuarios && pista.usuarios.length > 0">
+                                <ul>
+                                    <li *ngFor="let usuario of pista.usuarios">{{ usuario.nombre }}</li>
+                                </ul>
+                            </div>
                             <button type="button" (click)="seleccionarPista(pista.numero)">
                                 Reservar
                             </button>
                         </div>
                         <!-- Pista abierta -->
                         <div *ngIf="pista.disponible && pista.abierta && pista.reserva_id != null" class="pista pista-abierta"
-                            [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}">
-                            <span class="text-center"> Pista {{ pista.numero }} abierta</span>
-                            <span class="text-center"> Quedan {{ pista.huecos }} huecos</span>
+                            [ngClass]="{'seleccionada': pista.numero === pistaSeleccionada, 'pista-ocupada': !pista.disponible}"
+                            [ngClass]="{ 'pista-propia': pista.pista_propia }">
+                            <span class="text-center"> Quedan {{ 4 - pista.usuarios.length }} huecos</span>
+                            <div class="row">
+                                <div class="col-6" *ngFor="let _ of [0, 1, 2, 3]; let i=index">
+                                    <div *ngIf="pista.usuarios[i]; else libre" class="text-center">
+                                        {{ pista.usuarios[i].nombre }}
+                                    </div>
+                                    <ng-template #libre class="text-center">
+                                        <div class="text-center hueco-libre">
+                                            Libre
+                                        </div>
+                                    </ng-template>
+                                </div>
+                            </div>
+                            
+                            
                             <button type="button" (click)="seleccionarPistaAbierta(pista.reserva_id)">
                                 Reservar
                             </button>
                         </div>
-                        <div *ngIf="!pista.disponible" class="pista pista-reservada">
+                        <!-- Pista cerrada -->
+                        <div *ngIf="!pista.disponible" class="pista pista-reservada"
+                        [ngClass]="{ 'pista-propia': pista.pista_propia }">
+                            <div *ngIf="pista.usuarios && pista.usuarios.length > 0">
+                                <ul>
+                                    <li *ngFor="let usuario of pista.usuarios">{{ usuario.nombre }}</li>
+                                </ul>
+                            </div>
                             <span class="text-center"> Pista {{ pista.numero }} reservada</span>
                         </div>
-                        <!-- Puedes agregar más detalles aquí según sea necesario -->
                     </div>
                 </div>
                 <div

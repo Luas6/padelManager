@@ -1,6 +1,7 @@
 package com.saul.padelManager.gestionReservas.controller;
 
 import com.saul.padelManager.gestionReservas.model.AbiertasForm;
+import com.saul.padelManager.gestionReservas.model.PistaDetallada;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.service.ReservasService;
 import com.saul.padelManager.utils.ConstantesProyecto;
@@ -53,7 +54,7 @@ public class ReservasController {
     }
 
     @GetMapping("/detalladas/{fecha}/{hora}")
-    public List<Map<String, Object>> getPistasDetalladas(@PathVariable String fecha, @PathVariable String hora) {
+    public List<PistaDetallada> getPistasDetalladas(@PathVariable String fecha, @PathVariable String hora) {
         return reservasService.getPistasDetalladas(fecha, hora);
     }
     @GetMapping("/disponibles/{fecha}")

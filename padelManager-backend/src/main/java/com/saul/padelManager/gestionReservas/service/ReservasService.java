@@ -1,6 +1,7 @@
 package com.saul.padelManager.gestionReservas.service;
 
 import com.saul.padelManager.gestionReservas.model.AbiertasForm;
+import com.saul.padelManager.gestionReservas.model.PistaDetallada;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.repository.ReservasRepository;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
@@ -58,15 +59,15 @@ public class ReservasService {
         }
         return reservasOptional.get();
     }
-
     public List<Reserva> getReservasByUsuario(Long id_usuario) {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String fechaActual = now.format(formatter);
 
         List<Reserva> reservas = reservasRepository.findByUsuarioId(id_usuario);
         return reservas.stream()
-                .filter(reserva -> reserva.getFecha().compareTo(fechaActual) > 0)
+                .filter(reserva -> {
+                    LocalDateTime reservaDateTime = LocalDateTime.parse(reserva.getFecha() + " " + reserva.getHora(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+                    return reservaDateTime.isAfter(now);
+                })
                 .collect(Collectors.toList());
     }
 
@@ -76,36 +77,32 @@ public class ReservasService {
         reservasRepository.delete(reserva);
     }
 
-    public List<Map<String, Object>> getPistasDetalladas(String fecha, String hora) {
-
+    public List<PistaDetallada> getPistasDetalladas(String fecha, String hora) {
         List<Reserva> reservas = reservasRepository.findByFechaAndHora(fecha, hora);
-        List<Map<String, Object>> pistasDetalladas = new ArrayList<>();
+        List<PistaDetallada> pistasDetalladas = new ArrayList<>();
+
         for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++) {
-            int huecos=0;
-            boolean disponible=true;
-            boolean abierta=false;
+            int huecos = 0;
+            boolean disponible = true;
+            boolean abierta = false;
             Long reserva_id = null;
-            Map<String, Object> pistaInfo = new HashMap<>();
+            List<Usuario> usuarios = new ArrayList<>(); // Lista para almacenar los usuarios asociados a la pista
+
             for (Reserva reserva : reservas) {
                 if (reserva.getPista() == i) {
-                    if(reserva.isAbierta()){
-                        huecos=4-reserva.getUsuarios().size();
-                        abierta=true;
-                    }else{
-                        disponible=false;
+                    if (reserva.isAbierta()) {
+                        huecos = 4 - reserva.getUsuarios().size();
+                        abierta = true;
+                    } else {
+                        disponible = false;
                     }
                     reserva_id = reserva.getID();
+                    usuarios = reserva.getUsuarios(); // Obtener los usuarios asociados a la pista
                     break;
                 }
             }
 
-            pistaInfo.put("numero", i);
-            pistaInfo.put("disponible", disponible);
-            pistaInfo.put("huecos", huecos);
-            pistaInfo.put("abierta", abierta);
-            pistaInfo.put("reserva_id", reserva_id);
-
-            pistasDetalladas.add(pistaInfo);
+            pistasDetalladas.add(new PistaDetallada(i, disponible, huecos, abierta, reserva_id, usuarios));
         }
 
         return pistasDetalladas;
