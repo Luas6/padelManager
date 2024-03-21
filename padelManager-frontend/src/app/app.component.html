@@ -8,6 +8,7 @@
         </li>
     </ul>
     <ul class="navbar-nav px-5">
+        <!-- Usuario NO autenticado -->
         <li class="nav-item dropdown" *ngIf="!(isLoggedIn$ | async)">
             <div ngbDropdown class="d-inline-block">
                 <button class="nav-link dropdown-toggle" id="loginDropdown" ngbDropdownToggle>
@@ -20,7 +21,7 @@
             </div>
         </li>
         
-        <!-- Cuando el usuario ESTÁ autenticado -->
+        <!-- Usuario autenticado -->
         <li class="nav-item dropdown" *ngIf="(isLoggedIn$ | async)">
             <div ngbDropdown class="d-inline-block">
                 <button class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle>

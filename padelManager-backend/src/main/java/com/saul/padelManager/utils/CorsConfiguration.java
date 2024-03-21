@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Arrays;
+
 import static com.saul.padelManager.utils.ConstantesProyecto.BASE_CORS_PATH;
 
 @Configuration
@@ -17,7 +19,7 @@ public class CorsConfiguration {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping(BASE_CORS_PATH)
                         .allowCredentials(true)
-                        .allowedOrigins("http://localhost:4200")
+                        .allowedOrigins(ConstantesProyecto.getRutaAngular())
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("Authorization", "Content-Type")
                         .maxAge(3600L);

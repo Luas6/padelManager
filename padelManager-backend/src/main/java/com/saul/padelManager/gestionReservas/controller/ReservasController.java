@@ -34,8 +34,7 @@ public class ReservasController {
     public List<Reserva> getReservasByFecha(@PathVariable String fecha) {
         return reservasService.getReservasByFecha(fecha);
     }
-
-    //@PreAuthorize("@securityUtils.validarPropietario(#usuarioId, #request)")
+    @PreAuthorize("@securityUtils.validarPropietario(#usuarioId, #request)")
     @GetMapping("/reservas/usuario/{usuarioId}")
     public List<Reserva> getReservasByUsuario(@PathVariable Long usuarioId , HttpServletRequest request) {
         return reservasService.getReservasByUsuario(usuarioId);
