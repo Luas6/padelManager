@@ -3,18 +3,20 @@ import { Usuario } from '../usuarios/usuario';
 import { RespuestaLogin } from '../usuarios/respuesta-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  private loginURL = 'http://localhost:8080/api/v1/login';
+  private loginUrl: string;
   private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
 
   constructor(private http: HttpClient) {
+    this.loginUrl = `${environment.LOGIN_URL}/login`;
     this.checkTokenInLocalStorage();
   }
 
@@ -39,7 +41,7 @@ export class AuthService {
 
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
-    return this.http.post<RespuestaLogin>(this.loginURL, usuario);
+    return this.http.post<RespuestaLogin>(this.loginUrl, usuario);
   }
 
   /*isLoggedIn(): boolean {
