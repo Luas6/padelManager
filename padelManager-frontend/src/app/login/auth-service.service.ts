@@ -16,7 +16,7 @@ export class AuthService {
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
 
   constructor(private http: HttpClient) {
-    this.loginUrl = `${environment.LOGIN_URL}/login`;
+    this.loginUrl = `${environment.BACKEND_URL}/login`;
     this.checkTokenInLocalStorage();
   }
 

@@ -20,9 +20,7 @@ const routes: Routes = [
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
   {path: 'perfil', component: PerfilUsuarioComponent},
-
   {path: 'reservas', component: FormularioReservasComponent},
-
   {path: '', component: HomeComponent}, //Home
 
   {path: 'blog', component: BlogComponent}
