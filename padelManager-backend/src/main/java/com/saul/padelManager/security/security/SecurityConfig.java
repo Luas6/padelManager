@@ -35,9 +35,6 @@ public class SecurityConfig {
                 .requestMatchers(
                         ConstantesProyecto.BASE_API_PATH + "registro",
                         ConstantesProyecto.BASE_API_PATH + "login",
-                        ConstantesProyecto.BASE_API_PATH + "reservas",
-                        ConstantesProyecto.BASE_API_PATH + "reservas/*",
-                        ConstantesProyecto.BASE_API_PATH + "reservas/usuario/*",
                         ConstantesProyecto.BASE_API_PATH + "disponibles/*",
                         ConstantesProyecto.BASE_API_PATH + "disponibles/*/*",
                         ConstantesProyecto.BASE_API_PATH + "detalladas/*/*",
@@ -47,7 +44,11 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests().requestMatchers(
                         ConstantesProyecto.BASE_API_PATH + "usuarios",
-                        ConstantesProyecto.BASE_API_PATH + "usuarios/*"
+                        ConstantesProyecto.BASE_API_PATH + "usuarios/*",
+                        ConstantesProyecto.BASE_API_PATH + "checklogin",
+                        ConstantesProyecto.BASE_API_PATH + "reservas",
+                        ConstantesProyecto.BASE_API_PATH + "reservas/*",
+                        ConstantesProyecto.BASE_API_PATH + "reservas/usuario/*"
                 )
                 .authenticated()
                 .and()

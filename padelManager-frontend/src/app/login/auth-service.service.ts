@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
   
   private loginURL = 'http://localhost:8080/api/v1/login';
+  private checkloginURL = 'http://localhost:8080/api/v1/checklogin';
   private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
@@ -20,8 +21,18 @@ export class AuthService {
 
   private checkTokenInLocalStorage() {
     const jwtToken = localStorage.getItem('jwtToken');
+    //console.log("Function: checkTokenInLocalStorage"+jwtToken)
     if (jwtToken) {
-      this.setLoggedIn(true);
+      this.checkloginUsuario().subscribe(
+        (data) => {
+          this.login();
+        },
+        (error: any) => {
+          this.logout();
+        }
+      );
+    }else{
+      this.logout();
     }
   }
 
@@ -40,6 +51,10 @@ export class AuthService {
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
     return this.http.post<RespuestaLogin>(this.loginURL, usuario);
+  }
+
+  checkloginUsuario() {
+    return this.http.get(this.checkloginURL);
   }
 
   /*isLoggedIn(): boolean {

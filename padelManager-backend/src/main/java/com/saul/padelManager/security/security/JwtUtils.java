@@ -29,13 +29,11 @@ public class JwtUtils {
                 .compact();
         return jwts;
     }
-
     // Método para validar un JWT y obtener los datos contenidos en él
     public static JwtData validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
             Claims body = claimsJws.getBody();
-
             Long userId = Long.parseLong(body.getId());
             String userEmail = body.getSubject();
 

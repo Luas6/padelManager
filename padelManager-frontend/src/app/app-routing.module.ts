@@ -19,9 +19,9 @@ const routes: Routes = [
   {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAuthGuard]},
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
-  {path: 'perfil', component: PerfilUsuarioComponent},
+  {path: 'perfil', component: PerfilUsuarioComponent, canActivate: [guardAuthGuard]},
 
-  {path: 'reservas', component: FormularioReservasComponent},
+  {path: 'reservas', component: FormularioReservasComponent, canActivate: [guardAuthGuard]},
 
   {path: '', component: HomeComponent}, //Home
 

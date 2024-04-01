@@ -62,4 +62,9 @@ public class UsuarioController {
         usuarioService.deleteUsuario(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/checklogin")
+    public ResponseEntity<Boolean> comprobarLoginUsuario() {
+        return ResponseEntity.ok(true);
+    }
 }

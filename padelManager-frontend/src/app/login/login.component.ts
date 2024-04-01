@@ -56,8 +56,6 @@ export class LoginComponent implements OnInit{
           localStorage.setItem('jwtToken', data.token);
           localStorage.setItem('idSesion', (data.id).toString());
           this.authService.login();
-          //console.log(this.authService.isLoggedIn());
-          // Redireccionar a una página después del inicio de sesión exitoso
           this.router.navigate(['']);
         } else {
           this.mensajeError = 'Usuario o Contraseña incorrectos';
