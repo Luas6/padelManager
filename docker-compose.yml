@@ -2,22 +2,24 @@ version: '3.8'
 
 services:
   mysql-db:
-    build: ./padelManager-mysql  # Directorio donde se encuentra el Dockerfile de MySQL
+    build: ./padelManager-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root1234
       MYSQL_DATABASE: padelmanager
     ports:
-      - "3306:3306"  # El puerto 3306 dentro del contenedor de MySQL se mapea al puerto 3306 en el host
+      - "3306:3306"
     networks:
       - my_network
 
   backend:
-    build: ./padelManager-backend
+    build: 
+      context: ./padelManager-backend  # Cambia el contexto de construcción al directorio del backend
+      dockerfile: Dockerfile  # Especifica el nombre del Dockerfile si no se llama Dockerfile por defecto
     environment:
       - MYSQL_URL=jdbc:mysql://mysql-db:3306/padelmanager
       - RUTA_ANGULAR=http://localhost:4200
     ports:
-      - "8080:8080"  # El puerto 8080 dentro del contenedor de Spring Boot se mapea al puerto 8080 en el host
+      - "8080:8080"
     depends_on:
       - mysql-db
     networks:
@@ -26,7 +28,7 @@ services:
   frontend:
     build: ./padelManager-frontend
     ports:
-      - "4200:80"  # El puerto 4200 dentro del contenedor de Angular se mapea al puerto 4200 en el host
+      - "4200:80"
     depends_on:
       - backend
       - mysql-db
