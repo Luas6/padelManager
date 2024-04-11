@@ -11,17 +11,22 @@ import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
 export class AppComponent {
   title = 'padelManager-frontend';
   isLoggedIn$: BehaviorSubject<boolean>;
-  constructor(private authService: AuthService,
-    private router: Router) {
+  isAdmin$: BehaviorSubject<boolean>;
+  constructor(private authService: AuthService) {
       this.isLoggedIn$ = new BehaviorSubject<boolean>(this.authService.isLoggedIn());
+      this.isAdmin$ = new BehaviorSubject<boolean>(this.authService.isAdmin());
      }
     
   ngOnInit(): void {
-    this.isLoggedIn$.next(this.authService.isLoggedIn()); // Verifica si la sesión está iniciada
+    this.isLoggedIn$.next(this.authService.isLoggedIn());
+    this.isAdmin$.next(this.authService.isAdmin());
 
     this.authService.isLoggedInChange$.subscribe((isLoggedIn: boolean) => {
       this.isLoggedIn$.next(isLoggedIn);
-      // Aquí puedes ejecutar cualquier código que desees cuando isLoggedIn cambie.
+    });
+    this.authService.isAdminChange$.subscribe((isAdmin: boolean) => {
+      this.isAdmin$.next(isAdmin);
+
     });
 
 

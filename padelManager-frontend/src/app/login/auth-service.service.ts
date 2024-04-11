@@ -12,8 +12,10 @@ export class AuthService {
   private loginURL = 'http://localhost:8080/api/v1/login';
   private checkloginURL = 'http://localhost:8080/api/v1/checklogin';
   private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
+  isAdminChange$ = this.isAdmin$.asObservable();
 
   constructor(private http: HttpClient) {
     this.checkTokenInLocalStorage();
@@ -36,6 +38,27 @@ export class AuthService {
     }
   }
 
+  loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
+    return this.http.post<RespuestaLogin>(this.loginURL, usuario);
+  }
+
+  checkloginUsuario() {
+    return this.http.get(this.checkloginURL);
+  }
+
+
+  logout(): void {
+    this.setLoggedIn(false);
+    this.setAdmin(false);
+    localStorage.removeItem('jwtToken');
+  }
+
+  login(): void {
+    this.setLoggedIn(true);
+  }
+
+  /* Setters Observables*/
+  
   isLoggedIn() {
     return this.isLoggedIn$.value;
   }
@@ -48,25 +71,16 @@ export class AuthService {
     this.isLoggedIn$.next(value);
   }
 
-
-  loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
-    return this.http.post<RespuestaLogin>(this.loginURL, usuario);
+  isAdmin() {
+    return this.isAdmin$.value;
   }
 
-  checkloginUsuario() {
-    return this.http.get(this.checkloginURL);
+  isAdminAsObservable() {
+    return this.isAdmin$.asObservable();
   }
 
-  /*isLoggedIn(): boolean {
-    return localStorage.getItem('jwtToken') !== null;
-  }*/
-
-  logout(): void {
-    this.setLoggedIn(false);
-    localStorage.removeItem('jwtToken');
+  setAdmin(value: boolean) {
+    this.isAdmin$.next(value);
   }
 
-  login(): void {
-    this.setLoggedIn(true);
-  }
 }

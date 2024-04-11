@@ -49,14 +49,10 @@ public class UsuarioService {
             }
 
             String jwt = jwtUtils.generateToken(usuarioEncontrado.getId(), usuarioEncontrado.getCorreo());
-            return new TokenResponse(jwt,usuarioEncontrado.getId());
+            return new TokenResponse(jwt,usuarioEncontrado.getId(),usuarioEncontrado.getAdministrador());
         } else {
             throw new ResourceNotFoundException("Usuario no encontrado");
         }
-    }
-
-    public TokenResponse invalidTokenResponse(){
-        return new TokenResponse(null,null);
     }
 
 

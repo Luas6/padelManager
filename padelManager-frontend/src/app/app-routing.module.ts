@@ -11,12 +11,13 @@ import { guardAuthGuard } from './guard-auth.guard';
 import { BlogComponent } from './estaticos/blog/blog.component';
 import { FormularioReservasComponent } from './reservas/form-reservar/formulario-reservas/formulario-reservas.component';
 import { PerfilUsuarioComponent } from './usuarios/perfil-usuario/perfil-usuario.component';
+import { guardAdminGuard } from './guard-admin.guard';
 
 const routes: Routes = [
-  {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAuthGuard]},
+  {path: 'usuarios', component: ListaUsuariosComponent, canActivate: [guardAdminGuard]},
   {path: 'crear-usuario', component: CrearUsuarioComponent},
-  {path: 'actualizar-usuario/:id', component: ActualizarUsuarioComponent, canActivate: [guardAuthGuard]},
-  {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAuthGuard]},
+  {path: 'actualizar-usuario/:id', component: ActualizarUsuarioComponent, canActivate: [guardAdminGuard]},
+  {path: 'visualizar-usuario/:id', component: VisualizarUsuarioComponent, canActivate: [guardAdminGuard]},
   {path: 'login-usuario', component: LoginComponent},
   {path: 'no-autorizado', component: PaginaNoAutorizadoComponent},
   {path: 'perfil', component: PerfilUsuarioComponent, canActivate: [guardAuthGuard]},
