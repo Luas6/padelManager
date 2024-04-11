@@ -18,13 +18,16 @@ public class Usuario {
     private String apellidos;
 
     @Column(name= "nivel")
-    private Float nivel;
+    private Float nivel=3.5F;
 
     @Column(name= "correo")
     private String correo;
 
     @Column(name = "contrasena")
     private String contrasena;
+
+    @Column(name = "administrador")
+    private Boolean administrador=false;
 
     /*
     @ManyToOne(optional = false)
@@ -33,13 +36,14 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(long id, String nombre, String apellidos, Float nivel, String correo, String contrasena) {
+    public Usuario(long id, String nombre, String apellidos, Float nivel, String correo, String contrasena, Boolean administrador) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.nivel = nivel;
         this.correo = correo;
         this.contrasena = contrasena;
+        this.administrador = administrador;
     }
 
     public long getId() {
@@ -91,14 +95,26 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
+    @JsonIgnore
+    public Boolean getAdministrador() {
+        return administrador;
+    }
+
+    @JsonProperty
+    public void setAdministrador(Boolean administrador) {
+        this.administrador = administrador;
+    }
+
     @Override
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", apellidos='" + apellidos + '\'' +
+                ", nivel=" + nivel +
                 ", correo='" + correo + '\'' +
                 ", contrasena='" + contrasena + '\'' +
+                ", administrador=" + administrador +
                 '}';
     }
 
@@ -107,11 +123,11 @@ public class Usuario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return id == usuario.id && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(correo, usuario.correo) && Objects.equals(contrasena, usuario.contrasena);
+        return id == usuario.id && Objects.equals(nombre, usuario.nombre) && Objects.equals(apellidos, usuario.apellidos) && Objects.equals(nivel, usuario.nivel) && Objects.equals(correo, usuario.correo) && Objects.equals(contrasena, usuario.contrasena) && Objects.equals(administrador, usuario.administrador);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, apellidos, correo, contrasena);
+        return Objects.hash(id, nombre, apellidos, nivel, correo, contrasena, administrador);
     }
 }

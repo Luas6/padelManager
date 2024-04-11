@@ -2,21 +2,36 @@ package com.saul.padelManager.security.security;
 import com.saul.padelManager.gestionReservas.model.Reserva;
 import com.saul.padelManager.gestionReservas.service.ReservasService;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
+import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import com.saul.padelManager.utils.exceptions.BadCredentialsException;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
 public class SecurityUtils {
 
+    private final UsuarioRepository usuarioRepository;
+
+    private final ReservasService reservasService;
+
     @Autowired
-    private ReservasService reservasService;
-    public static boolean validarPropietario(Long id, HttpServletRequest request) {
+    public SecurityUtils(UsuarioRepository usuarioRepository, ReservasService reservasService) {
+        this.usuarioRepository = usuarioRepository;
+        this.reservasService = reservasService;
+    }
+
+    public boolean validarPropietario(Long id, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         Long idUsuarioAutenticado = JwtUtils.getUserIdFromToken(token);
+        Optional<Usuario> u = usuarioRepository.findById(idUsuarioAutenticado);
+        if(u.isPresent() && u.get().getAdministrador()==true){
+            return true;
+        }
         compararIds(id, idUsuarioAutenticado);
         return true;
     }
@@ -24,6 +39,10 @@ public class SecurityUtils {
     public boolean validarPropietarioReserva(Long idReserva, HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         Long idUsuarioAutenticado = JwtUtils.getUserIdFromToken(token);
+        Optional<Usuario> u = usuarioRepository.findById(idUsuarioAutenticado);
+        if(u.isPresent() && u.get().getAdministrador()==true){
+            return true;
+        }
         Reserva reserva = reservasService.getReservaById(idReserva);
         compararIds(reserva.getUsuarios().stream().map(Usuario::getId).collect(Collectors.toList()), idUsuarioAutenticado);
         return true;
