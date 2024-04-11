@@ -67,4 +67,10 @@ public class UsuarioController {
     public ResponseEntity<Boolean> comprobarLoginUsuario() {
         return ResponseEntity.ok(true);
     }
+
+    @PreAuthorize("@securityUtils.validarAdminUsuario(#request)")
+    @GetMapping("/checkadmin")
+    public ResponseEntity<Boolean> comprobarAdminUsuario(HttpServletRequest request) {
+        return ResponseEntity.ok(true);
+    }
 }

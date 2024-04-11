@@ -11,6 +11,7 @@ export class AuthService {
   
   private loginURL = 'http://localhost:8080/api/v1/login';
   private checkloginURL = 'http://localhost:8080/api/v1/checklogin';
+  private checkadminURL = 'http://localhost:8080/api/v1/checkadmin';
   private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -28,6 +29,7 @@ export class AuthService {
       this.checkloginUsuario().subscribe(
         (data) => {
           this.login();
+          this.checkAdmin();
         },
         (error: any) => {
           this.logout();
@@ -38,12 +40,25 @@ export class AuthService {
     }
   }
 
+  private checkAdmin(){
+    this.checkAdminUsuario().subscribe(
+      (data) => {
+        this.setAdmin(true);
+      }
+    );
+
+  }
+
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
     return this.http.post<RespuestaLogin>(this.loginURL, usuario);
   }
 
   checkloginUsuario() {
     return this.http.get(this.checkloginURL);
+  }
+
+  checkAdminUsuario() {
+    return this.http.get(this.checkadminURL);
   }
 
 

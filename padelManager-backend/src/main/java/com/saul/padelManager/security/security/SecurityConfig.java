@@ -46,6 +46,7 @@ public class SecurityConfig {
                         ConstantesProyecto.BASE_API_PATH + "usuarios",
                         ConstantesProyecto.BASE_API_PATH + "usuarios/*",
                         ConstantesProyecto.BASE_API_PATH + "checklogin",
+                        ConstantesProyecto.BASE_API_PATH + "checkadmin",
                         ConstantesProyecto.BASE_API_PATH + "reservas",
                         ConstantesProyecto.BASE_API_PATH + "reservas/*",
                         ConstantesProyecto.BASE_API_PATH + "reservas/usuario/*"
