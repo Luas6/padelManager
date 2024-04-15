@@ -7,9 +7,10 @@ import { Injectable } from '@angular/core';
 })
 
 
-export class guardAdminGuard implements CanActivate{
-  constructor(private authService: AuthService, private router: Router) {}
-  canActivate(): boolean{
+export class guardAdminGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) { }
+  async canActivate(): Promise<boolean> {
+    await this.authService.checkTokenInLocalStorage();
     if (!this.authService.isLoggedIn() || !this.authService.isAdmin()) {
       this.router.navigate(['/no-autorizado']);
       return false;

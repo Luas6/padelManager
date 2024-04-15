@@ -18,36 +18,30 @@ export class AuthService {
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
   isAdminChange$ = this.isAdmin$.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.checkTokenInLocalStorage();
-  }
+  constructor(private http: HttpClient) {}
 
-  private checkTokenInLocalStorage() {
+  public async checkTokenInLocalStorage() {
     const jwtToken = localStorage.getItem('jwtToken');
-    //console.log("Function: checkTokenInLocalStorage"+jwtToken)
+    //console.log("Function: checkTokenInLocalStorage "+ jwtToken + " " +this.isLoggedIn() + " " + this.isAdmin())
     if (jwtToken) {
-      this.checkloginUsuario().subscribe(
-        (data) => {
-          this.login();
-          this.checkAdmin();
-        },
-        (error: any) => {
-          this.logout();
+      try {
+        await this.checkloginUsuario().toPromise();
+        this.login();
+        await this.checkAdminUsuario().toPromise();
+        try {
+          const data = await this.checkAdminUsuario().toPromise();
+          this.setAdmin(true);
+        } catch (error) {
         }
-      );
-    }else{
+      } catch (error) {
+        this.logout();
+      }
+    } else {
       this.logout();
     }
+    //console.log("Function: checkTokenInLocalStorage 2 "+ jwtToken + " " +this.isLoggedIn() + " " + this.isAdmin())
   }
-
-  private checkAdmin(){
-    this.checkAdminUsuario().subscribe(
-      (data) => {
-        this.setAdmin(true);
-      }
-    );
-
-  }
+  
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
     return this.http.post<RespuestaLogin>(this.loginURL, usuario);

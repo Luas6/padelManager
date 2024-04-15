@@ -8,7 +8,8 @@ import { Injectable } from '@angular/core';
 
 export class  guardAuthGuard implements CanActivate{
   constructor(private authService: AuthService, private router: Router) {}
-  canActivate(): boolean{
+  async canActivate(): Promise<boolean> {
+    await this.authService.checkTokenInLocalStorage();
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/no-autorizado']);
       return false;
