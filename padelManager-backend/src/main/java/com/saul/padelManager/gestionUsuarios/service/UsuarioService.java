@@ -1,5 +1,6 @@
 package com.saul.padelManager.gestionUsuarios.service;
 
+import com.saul.padelManager.envioCorreos.service.CorreoService;
 import com.saul.padelManager.utils.FuncionesUtil;
 import com.saul.padelManager.utils.exceptions.*;
 import com.saul.padelManager.gestionUsuarios.model.LoginCredenciales;
@@ -7,6 +8,7 @@ import com.saul.padelManager.gestionUsuarios.model.TokenResponse;
 import com.saul.padelManager.gestionUsuarios.model.Usuario;
 import com.saul.padelManager.gestionUsuarios.repository.UsuarioRepository;
 import com.saul.padelManager.security.security.JwtUtils;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,12 +24,13 @@ public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-
+    private final CorreoService correoService;
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, JwtUtils jwtUtils, CorreoService correoService) {
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
+        this.correoService = correoService;
     }
 
     public TokenResponse loginUsuario(LoginCredenciales usuario) {
@@ -62,6 +65,10 @@ public class UsuarioService {
         comprobarCorreoEnUso(usuario);
         validarCorreo(usuario.getCorreo());
         usuario.setContrasena(passwordEncoder.encode(usuario.getContrasena()));
+        try {
+            correoService.enviarCorreoBienvenida(usuario.getCorreo());
+        } catch (MessagingException e) {
+        }
         return usuarioRepository.save(usuario);
     }
 

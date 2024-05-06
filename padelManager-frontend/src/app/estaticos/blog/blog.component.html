@@ -12,7 +12,7 @@
           <div class="col col-lg-10 col-xl-9">
             <ngb-carousel>
                 <ng-template ngbSlide *ngFor="let blog of blogs; let i = index">
-                  <div class="blog-post p-4 pb-5"[ngClass]="'bg-color-' + (i + 1)">
+                  <div class="blog-post p-4 pb-5" [ngClass]="'bg-color-' + ((i % 4) + 1)">
                     <div class="contenido-card-blog">
                       <h2>{{ blog.titulo }}</h2>
                       <p>Fecha de publicación: {{ blog.fecha }}</p>

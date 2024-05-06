@@ -14,25 +14,28 @@
 /* blog.component.css */
 #home-blog .bg-color-1 {
     background-color: #08a7cf;
-    /* Color de fondo para la diapositiva 1 */
 }
 
 #home-blog .bg-color-2 {
     background-color: #08cf5b;
-    /* Color de fondo para la diapositiva 2 */
 }
 
 #home-blog .bg-color-3 {
     background-color: #cf08c5;
-    /* Color de fondo para la diapositiva 3 */
 }
 
 #home-blog .bg-color-4 {
     background-color: #cfbb08;
-    /* Color de fondo para la diapositiva 4 */
 }
 
 #home-blog .contenido-card-blog {
-    margin-left: 53px;
-    margin-right: 53px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+@media only screen and (min-width: 560px) {
+    #home-blog .contenido-card-blog {
+        margin-left: 60px;
+        margin-right: 60px;
+    }
 }

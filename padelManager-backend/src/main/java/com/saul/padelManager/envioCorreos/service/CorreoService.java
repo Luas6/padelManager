@@ -18,14 +18,12 @@ public class CorreoService {
     @Autowired
     private JavaMailSender mailSender;
 
-    private CorreosPlantillas correosPlantillas;
-
     public void enviarCorreoBienvenida(String destinatario) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
         helper.setTo(destinatario);
         helper.setSubject("Bienvenido a PadelManager");
-        helper.setText(this.correosPlantillas.correoBienvenida,true);
+        helper.setText(CorreosPlantillas.correoBienvenida,true);
         mailSender.send(message);
     }
 }
