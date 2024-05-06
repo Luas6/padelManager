@@ -4,17 +4,23 @@ import { HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Usuario } from './usuario';
 import { RespuestaLogin } from './respuesta-login';
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private usuariosURL = 'http://localhost:8080/api/v1/usuarios';
-  private loginURL = 'http://localhost:8080/api/v1/login';
-  private registroURL = 'http://localhost:8080/api/v1/registro';
+  private usuariosURL: string;
+  private loginURL: string;
+  private registroURL: string;
 
-  constructor( private httpClient : HttpClient) { }
+  constructor( private httpClient : HttpClient) {
+    this.usuariosURL = `${environment.BACKEND_URL}/usuarios`;
+    this.loginURL = `${environment.BACKEND_URL}/login`;
+    this.registroURL = `${environment.BACKEND_URL}/registro`;
+
+  }
 
   getListaUsuarios(): Observable<Usuario[]>{
     return this.httpClient.get<Usuario[]>(this.usuariosURL);

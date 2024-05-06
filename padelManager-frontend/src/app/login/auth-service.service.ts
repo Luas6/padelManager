@@ -3,22 +3,27 @@ import { Usuario } from '../usuarios/usuario';
 import { RespuestaLogin } from '../usuarios/respuesta-login';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   
-  private loginURL = 'http://localhost:8080/api/v1/login';
-  private checkloginURL = 'http://localhost:8080/api/v1/checklogin';
-  private checkadminURL = 'http://localhost:8080/api/v1/checkadmin';
+  private loginUrl: string;
+  private checkloginURL: string;
+  private checkadminURL: string;
   private isLoggedIn$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isAdmin$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   isLoggedInChange$ = this.isLoggedIn$.asObservable();
   isAdminChange$ = this.isAdmin$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    this.loginUrl = `${environment.BACKEND_URL}/login`;
+    this.checkloginURL = `${environment.BACKEND_URL}/checklogin`;
+    this.checkadminURL = `${environment.BACKEND_URL}/checkadmin`;
+  }
 
   public async checkTokenInLocalStorage() {
     const jwtToken = localStorage.getItem('jwtToken');
@@ -44,7 +49,7 @@ export class AuthService {
   
 
   loginUsuario(usuario: Usuario): Observable<RespuestaLogin> {
-    return this.http.post<RespuestaLogin>(this.loginURL, usuario);
+    return this.http.post<RespuestaLogin>(this.loginUrl, usuario);
   }
 
   checkloginUsuario() {

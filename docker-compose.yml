@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    build: ./padelManager-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root1234
+      MYSQL_DATABASE: padelmanager
+    ports:
+      - "3306:3306"
+    networks:
+      - my_network
+
+  backend:
+    build: 
+      context: ./padelManager-backend  # Cambia el contexto de construcción al directorio del backend
+      dockerfile: Dockerfile  # Especifica el nombre del Dockerfile si no se llama Dockerfile por defecto
+    environment:
+      - MYSQL_URL=jdbc:mysql://mysql-db:3306/padelmanager
+      - RUTA_ANGULAR=http://localhost:4200
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    networks:
+      - my_network
+
+  frontend:
+    build: ./padelManager-frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+      - mysql-db
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
