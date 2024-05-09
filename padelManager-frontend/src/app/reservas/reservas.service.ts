@@ -20,7 +20,7 @@ export class ReservasService {
 
   constructor(private httpClient : HttpClient) {
   this.reservasURL = `${environment.BACKEND_URL}/reservas`;
-  this.reservasUsuarioURL = `${environment.BACKEND_URL}/usuario`;
+  this.reservasUsuarioURL = `${environment.BACKEND_URL}/reservas/usuario`;
 
   this.disponiblesURL = `${environment.BACKEND_URL}/disponibles`;
   this.detalladasURL = `${environment.BACKEND_URL}/detalladas`;

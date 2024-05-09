@@ -32,11 +32,12 @@ export class AuthService {
       try {
         await this.checkloginUsuario().toPromise();
         this.login();
-        await this.checkAdminUsuario().toPromise();
+        //await this.checkAdminUsuario().toPromise();
         try {
           const data = await this.checkAdminUsuario().toPromise();
           this.setAdmin(true);
         } catch (error) {
+          this.setAdmin(false);
         }
       } catch (error) {
         this.logout();
