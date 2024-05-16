@@ -13,8 +13,8 @@ services:
 
   backend:
     build: 
-      context: ./padelManager-backend  # Cambia el contexto de construcción al directorio del backend
-      dockerfile: Dockerfile  # Especifica el nombre del Dockerfile si no se llama Dockerfile por defecto
+      context: ./padelManager-backend  
+      dockerfile: Dockerfile
     environment:
       - MYSQL_URL=jdbc:mysql://mysql-db:3306/padelmanager
       - RUTA_ANGULAR=http://localhost:4200
