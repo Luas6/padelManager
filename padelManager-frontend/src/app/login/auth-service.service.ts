@@ -27,12 +27,10 @@ export class AuthService {
 
   public async checkTokenInLocalStorage() {
     const jwtToken = localStorage.getItem('jwtToken');
-    //console.log("Function: checkTokenInLocalStorage "+ jwtToken + " " +this.isLoggedIn() + " " + this.isAdmin())
     if (jwtToken) {
       try {
         await this.checkloginUsuario().toPromise();
         this.login();
-        //await this.checkAdminUsuario().toPromise();
         try {
           const data = await this.checkAdminUsuario().toPromise();
           this.setAdmin(true);
@@ -45,7 +43,6 @@ export class AuthService {
     } else {
       this.logout();
     }
-    //console.log("Function: checkTokenInLocalStorage 2 "+ jwtToken + " " +this.isLoggedIn() + " " + this.isAdmin())
   }
   
 

@@ -13,7 +13,6 @@ export class ListarReservasUsuarioComponent {
   constructor(private reservasService: ReservasService) { }
 
   ngOnInit() {
-    // Llama a la función para cargar las reservas del usuario
     this.cargarReservasUsuario();
   }
 
@@ -21,7 +20,6 @@ export class ListarReservasUsuarioComponent {
   private cargarReservasUsuario() {
     const idSesion = localStorage.getItem('idSesion');
     if (idSesion) {
-      // Parse a numero
       const idUsuario = +idSesion;
       this.reservasService.getReservaUsuario(idUsuario).subscribe(
         (reservas: Reserva[]) => {

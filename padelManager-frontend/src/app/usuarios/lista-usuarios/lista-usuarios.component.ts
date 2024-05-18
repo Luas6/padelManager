@@ -23,7 +23,7 @@ private getUsuarios(){
 }
 
 actualizarUsuario(id:number){
-  this.router.navigate(['actualizar-usuario',id]) // Ver app-routing.module.ts
+  this.router.navigate(['actualizar-usuario',id])
 }
 
 eliminarUsuario(id:number){
@@ -33,17 +33,11 @@ eliminarUsuario(id:number){
 }
 
 visualizarUsuario(id:number){
-  this.router.navigate(['visualizar-usuario',id]) // Ver app-routing.module.ts
+  this.router.navigate(['visualizar-usuario',id])
 }
 
 ngOnInit(): void{
 this.getUsuarios();
-  /*
-  this.usuarios=  [{
-    id: 1,
-    nombre: "Juan",
-    apellidos: "Pérez",
-    correo: "juan.perez@example.com"
-  }*/
+
 }
 }

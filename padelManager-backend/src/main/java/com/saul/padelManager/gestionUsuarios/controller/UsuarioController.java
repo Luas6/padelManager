@@ -58,7 +58,6 @@ public class UsuarioController {
     @DeleteMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> deleteUsuario(@PathVariable Long id , HttpServletRequest request) {
 
-        //SecurityUtils.validarPropietario(id, request);
         usuarioService.deleteUsuario(id);
         return ResponseEntity.ok().build();
     }

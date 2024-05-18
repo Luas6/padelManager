@@ -16,10 +16,9 @@ public class JwtUtils {
     private static final String SECRET_KEY = generateSecretKey();
 
 
-    // Método para crear un JWT
     public static String generateToken(Long userId, String userEmail) {
         Date now = new Date();
-        Date expirationDate = new Date(now.getTime() + 3600000); // 1 hora de tiempo de expiración
+        Date expirationDate = new Date(now.getTime() + 3600000);
         String jwts= Jwts.builder()
                 .setId(String.valueOf(userId))
                 .setSubject(userEmail)
@@ -29,7 +28,6 @@ public class JwtUtils {
                 .compact();
         return jwts;
     }
-    // Método para validar un JWT y obtener los datos contenidos en él
     public static JwtData validateToken(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token);
@@ -39,7 +37,6 @@ public class JwtUtils {
 
             return new JwtData(userId, userEmail);
         } catch (Exception ex) {
-            // Si ocurre algún error al validar el token (token inválido o expirado, etc.)
             return null;
         }
     }
@@ -47,7 +44,6 @@ public class JwtUtils {
     public static Long getUserIdFromToken(String token) {
         try {
             if (token != null && token.startsWith("Bearer ")) {
-                // Elimina los primeros 7 caracteres ("Bearer ") del token
                 token = token.substring(7);
             }
             Claims claims = Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
@@ -57,6 +53,5 @@ public class JwtUtils {
         }
     }
 
-    // Clase de ayuda para almacenar los datos extraídos del JWT
     public static record JwtData (Long userId,String userEmail){ }
 }

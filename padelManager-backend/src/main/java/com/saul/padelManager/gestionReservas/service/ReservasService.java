@@ -86,7 +86,7 @@ public class ReservasService {
             boolean disponible = true;
             boolean abierta = false;
             Long reserva_id = null;
-            List<Usuario> usuarios = new ArrayList<>(); // Lista para almacenar los usuarios asociados a la pista
+            List<Usuario> usuarios = new ArrayList<>();
 
             for (Reserva reserva : reservas) {
                 if (reserva.getPista() == i) {
@@ -97,7 +97,7 @@ public class ReservasService {
                         disponible = false;
                     }
                     reserva_id = reserva.getID();
-                    usuarios = reserva.getUsuarios(); // Obtener los usuarios asociados a la pista
+                    usuarios = reserva.getUsuarios();
                     break;
                 }
             }
@@ -113,7 +113,6 @@ public class ReservasService {
         List<Integer> pistasDisponibles = new ArrayList<>();
 
         for (String hora : ConstantesProyecto.HORAS_DISPONIBLES) {
-            // Verifica la disponibilidad de pistas para la hora actual
             pistasDisponibles.clear();
             for (int i = 1; i <= ConstantesProyecto.NUMERO_PISTAS; i++) {
                 pistasDisponibles.add(i);
@@ -133,7 +132,6 @@ public class ReservasService {
                     }
                 }
             }
-            // Comprueba 1 pista disponible
             if (!pistasDisponibles.isEmpty()) {
                 horasDisponibles.add(hora);
             }

@@ -34,7 +34,6 @@ public class UsuarioService {
     }
 
     public TokenResponse loginUsuario(LoginCredenciales usuario) {
-        //Lo valido para evitar posibles inyecciones sql
         validarCorreo(usuario.correo());
         FuncionesUtil.comprobarNotNull(usuario.contrasena());
 
@@ -88,7 +87,6 @@ public class UsuarioService {
                 .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
         comprobarCorreoEnUso(usuario);
         validarCorreo(usuario.getCorreo());
-        // Setteo los cambios con los nuevos
         usuarioACambiar.setNombre(usuario.getNombre());
         usuarioACambiar.setApellidos(usuario.getApellidos());
         usuarioACambiar.setCorreo(usuario.getCorreo());

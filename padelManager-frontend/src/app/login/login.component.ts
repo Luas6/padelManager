@@ -33,12 +33,10 @@ export class LoginComponent implements OnInit{
   }
 
   logout(): void {
-    console.log("Logout")
-    this.authService.logout(); // Lógica para cerrar la sesión en tu servicio de autenticación
+    this.authService.logout();
   }
   
   onSubmit() {
-    //console.log(this.usuario);
     if(this.loginForm.valid){
       this.loginUsuario();
     } else {
@@ -50,9 +48,7 @@ export class LoginComponent implements OnInit{
   loginUsuario() {
     this.authService.loginUsuario(this.loginForm.value).subscribe(
       (data) => {
-        console.log(data);
         if (data.token && data.id) {
-          // Almacenar el token en el local storage para su uso posterior
           localStorage.setItem('jwtToken', data.token);
           localStorage.setItem('idSesion', (data.id).toString());
           this.authService.login();
@@ -62,7 +58,6 @@ export class LoginComponent implements OnInit{
           this.router.navigate(['']);
         } else {
           this.mensajeError = 'Usuario o Contraseña incorrectos';
-          console.log('Response status not OK:', data);
         }
       },
       (error: any) => {

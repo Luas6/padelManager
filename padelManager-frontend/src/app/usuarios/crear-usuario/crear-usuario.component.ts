@@ -12,7 +12,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 export class CrearUsuarioComponent implements OnInit {
 
-  usuarioForm: FormGroup; // Declara el FormGroup
+  usuarioForm: FormGroup;
   mensajeError: string = '';
   formError = false;
   private modalRef: any;
@@ -23,7 +23,6 @@ export class CrearUsuarioComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router
   ) {
-    // Inicializa el FormGroup y define los FormControl
     this.usuarioForm = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
       apellidos: new FormControl('', [Validators.required]),
@@ -38,7 +37,6 @@ export class CrearUsuarioComponent implements OnInit {
   saveUsuario() {
     this.usuarioService.crearUsuario(this.usuarioForm.value).subscribe(
       (data) => {
-      console.log(data);
       this.goToUsuarioList();
     },
     (error: any) => {
@@ -67,8 +65,6 @@ export class CrearUsuarioComponent implements OnInit {
 
   onSubmit() {
     if (this.usuarioForm.valid) {
-      // El formulario es válido, realiza la acción
-      //console.log(this.usuario);
       this.saveUsuario();
     } else {
       this.formError = true;

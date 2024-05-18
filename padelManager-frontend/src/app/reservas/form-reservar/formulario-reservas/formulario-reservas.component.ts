@@ -60,7 +60,6 @@ export class FormularioReservasComponent {
 
     if (fechaSeleccionada) {
       this.reservasService.getHorasDisponibles(fechaSeleccionada).subscribe((horas: string[]) => {
-        console.log("Horas" + horas);
         this.horasDisponibles = horas;
         this.reservasForm.get('hora')?.enable();
       });
@@ -80,12 +79,10 @@ export class FormularioReservasComponent {
         (pistas: PistaDetallada[]) => {
           this.pistasDetalladas = pistas;
           this.reservasForm.get('pista')?.enable();
-          // Obtener el ID del usuario de la sesión
           const idSesion = localStorage.getItem('idSesion');
           if (idSesion) {
             const idUsuario = parseInt(idSesion, 10);
 
-            // Iterar sobre las pistas y establecer la propiedad pista_propia
             this.pistasDetalladas.forEach(pista => {
               pista.pista_propia = pista.usuarios.some(usuario => usuario.id === idUsuario);
             });
@@ -139,11 +136,9 @@ export class FormularioReservasComponent {
       error => console.log(error));
   }
 
-//Recuperar JWT
   private comprobarIdSesion() {
     const idSesion = localStorage.getItem('idSesion');
     if (idSesion) {
-      console.log(idSesion);
       const usuario = { "id": parseInt(idSesion, 10) };
       this.reservasForm.controls['usuarios'].setValue([usuario]);
       return true;
@@ -151,12 +146,10 @@ export class FormularioReservasComponent {
     return false;
   }
 
-  //Routing
   goToHome() {
     this.router.navigate(['']);
   }
 
-  //Funciones para los modales
   open(content: any) {
     this.modalRef = this.modalService.open(content);
   }
@@ -167,7 +160,6 @@ export class FormularioReservasComponent {
 
   onSubmit() {
     if (this.reservasForm.valid) {
-      console.log("FormSubmit")
       if (this.comprobarIdSesion()) {
         this.saveReserva();
         this.close();
