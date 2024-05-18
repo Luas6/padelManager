@@ -17,9 +17,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - MYSQL_URL=jdbc:mysql://mysql-db:3306/padelmanager
-      - RUTA_ANGULAR=http://localhost:4200
-    ports:
-      - "8080:8080"
+      - RUTA_ANGULAR=http://frontend:80
     depends_on:
       - mysql-db
     networks:
