@@ -16,6 +16,8 @@ services:
     environment:
       - MYSQL_URL=jdbc:mysql://mysql-db:3306/padelmanager
       - RUTA_ANGULAR=http://prodiasv19.fis.usal.es:4200
+    ports:
+      - "8080:8080"
     depends_on:
       - mysql-db
     networks:

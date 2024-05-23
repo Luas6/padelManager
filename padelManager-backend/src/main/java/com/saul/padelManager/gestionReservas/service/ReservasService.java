@@ -73,7 +73,7 @@ public class ReservasService {
 
     public void deleteReserva(Long id) {
         Reserva reserva = reservasRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado con el ID: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada con el ID: " + id));
         reservasRepository.delete(reserva);
     }
 

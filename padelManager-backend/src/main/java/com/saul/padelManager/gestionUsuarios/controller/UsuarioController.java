@@ -35,12 +35,13 @@ public class UsuarioController {
     public Usuario createUsuario(@RequestBody Usuario usuario) {
         return usuarioService.createUsuario(usuario);
     }
-
+    @PreAuthorize("@securityUtils.validarAdminUsuario(#request)")
     @GetMapping("/usuarios")
     public List<Usuario> getAllUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
+    @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
     @GetMapping("/usuarios/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
         Usuario usuario = usuarioService.getUsuarioById(id);
