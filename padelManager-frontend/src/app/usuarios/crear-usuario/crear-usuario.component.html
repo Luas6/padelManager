@@ -12,7 +12,7 @@
         </div>
   
         <div class="form-group py-2">
-          <label> Last Name</label>
+          <label> Apellidos</label>
           <input type="text" class="form-control" id="apellidos" formControlName="apellidos">
           <div *ngIf="usuarioForm.controls['apellidos'].invalid && (usuarioForm.controls['apellidos'].dirty || usuarioForm.controls['apellidos'].touched)">
             <div *ngIf="usuarioForm.controls['apellidos'].hasError('required')" class="error">Los apellidos son obligatorios.</div>

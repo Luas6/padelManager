@@ -37,13 +37,13 @@ public class UsuarioController {
     }
     @PreAuthorize("@securityUtils.validarAdminUsuario(#request)")
     @GetMapping("/usuarios")
-    public List<Usuario> getAllUsuarios() {
+    public List<Usuario> getAllUsuarios(HttpServletRequest request) {
         return usuarioService.getAllUsuarios();
     }
 
     @PreAuthorize("@securityUtils.validarPropietario(#id, #request)")
     @GetMapping("/usuarios/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id) {
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id, HttpServletRequest request) {
         Usuario usuario = usuarioService.getUsuarioById(id);
         return ResponseEntity.ok(usuario);
     }
